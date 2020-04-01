@@ -1,5 +1,5 @@
-import 'package:easy_exchange/services/networking/custom-exception.dart';
-import 'package:easy_exchange/util/url.dart';
+import 'package:cazdata_frontend/services/networking/custom-exception.dart';
+import 'package:cazdata_frontend/util/url.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:io';
