@@ -7,9 +7,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
+      theme: ThemeData(primarySwatch: Colors.green, fontFamily: 'Montserrat'),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -39,67 +37,112 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('CazData'),
       ),
-      body: Center(
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      'Cuenta',
-                      style:
-                          TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: FlatButton(
-                      onPressed: () {
-                        /*...*/
-                      },
-                      color: Colors.red,
-                      textColor: Colors.white,
+      body: DefaultTextStyle(
+        style: TextStyle(
+            inherit: true,
+            fontSize: 14.0,
+            fontWeight: FontWeight.normal,
+            fontFamily: 'Montserrat',
+            decoration: TextDecoration.none,
+            decorationColor: Colors.black,
+            decorationStyle: TextDecorationStyle.solid,
+            color: Colors.black),
+        child: Center(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
                       child: Text(
-                        "Cerrar sesión",
+                        'Cuenta',
+                        style: TextStyle(
+                            fontSize: 32, fontWeight: FontWeight.bold),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Text(
-                'Perfil',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.brown.shade800,
-                    child: Text('AL'),
-                  ),
-                  Container(
-                      margin: const EdgeInsets.all(10),
-                      child: Text('Adrián López\nCórdoba, España')),
-                ],
-              ),
-              Divider(),
-              Text(
-                'Nivel Cazador',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              Text('Novato (10)'),
-              Text(
-                'Descripción',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              Text('Lorem ipsum...'),
-            ],
+                    Expanded(
+                      flex: 3,
+                      child: FlatButton(
+                        onPressed: () {
+                          /*...*/
+                        },
+                        color: Colors.red,
+                        textColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18.0)),
+                        child: Text("Cerrar sesión",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  'Perfil',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundColor: Colors.brown.shade800,
+                      child: Text('AL'),
+                    ),
+                    Container(
+                        margin: const EdgeInsets.all(10),
+                        child: Text('Adrián López\nCórdoba, España')),
+                  ],
+                ),
+                Divider(),
+                RichText(
+                  text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: 'Nivel Cazador\n',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Colors.black,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.none,
+                            )),
+                        TextSpan(
+                            text: 'Novato (10)\n',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                              decoration: TextDecoration.none,
+                            )),
+                        TextSpan(
+                            text: 'Descripción\n',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Colors.black,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.none,
+                            )),
+                        TextSpan(
+                            text:
+                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                              decoration: TextDecoration.none,
+                            )),
+                      ]),
+                ),
+              ],
+            ),
           ),
         ),
       ),
