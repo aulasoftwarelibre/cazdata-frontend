@@ -1,3 +1,4 @@
+import 'package:cazdata_frontend/ui/widget/index.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -124,68 +125,3 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({this.name, this.location, this.profilePic});
-
-  final String name;
-  final String location;
-  final String profilePic;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          CircleAvatar(
-            radius: 35,
-            backgroundColor: Colors.brown.shade800,
-            child: Text(profilePic),
-          ),
-          Container(
-              margin: const EdgeInsets.only(left: 10),
-              child: TextFieldWidget(header: name, content: location)),
-        ],
-      ),
-    );
-  }
-}
-
-class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget({this.header, this.content});
-
-  final String header;
-  final String content;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      child: RichText(
-        text: TextSpan(
-            style: DefaultTextStyle.of(context).style,
-            children: <TextSpan>[
-              TextSpan(
-                  text: header,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Colors.black,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.none,
-                  )),
-              TextSpan(text: '\n'),
-              TextSpan(
-                  text: content,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Colors.black,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.normal,
-                    decoration: TextDecoration.none,
-                  )),
-            ]),
-      ),
-    );
-  }
-}
