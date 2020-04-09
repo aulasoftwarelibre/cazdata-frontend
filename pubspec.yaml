@@ -24,6 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   http: 0.12.0+4
+  provider: ^4.0.4
 
 dev_dependencies:
   flutter_test:
@@ -44,7 +45,7 @@ flutter:
           - asset: assets/fonts/Montserrat-Bold.ttf
             weight: 800
   assets:
-    - assets/images/
+    - assets/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
