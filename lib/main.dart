@@ -2,6 +2,8 @@ import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'util/colors.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -9,7 +11,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CazData',
-      theme: ThemeData(primarySwatch: Colors.green, fontFamily: 'Montserrat'),
+      theme: ThemeData(
+          primaryColor: primaryColor,
+          accentColor: accentColor,
+          fontFamily: 'Montserrat'),
       home: ChangeNotifierProvider<BottomNavigationBarProvider>(
         child: BottomNavigationBarWidget(),
         create: (BuildContext context) => BottomNavigationBarProvider(),
