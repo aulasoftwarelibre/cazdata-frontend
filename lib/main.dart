@@ -84,63 +84,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   'Perfil',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 35,
-                      backgroundColor: Colors.brown.shade800,
-                      child: Text('AL'),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.all(10),
-                        child: Text('Adrián López\nCórdoba, España')),
-                  ],
-                ),
+                ProfileWidget(
+                    name: 'Adrián López',
+                    location: 'Córdoba, España',
+                    profilePic: 'AL'),
                 Divider(),
-                RichText(
-                  text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: 'Nivel Cazador\n',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Colors.black,
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.none,
-                            )),
-                        TextSpan(
-                            text: 'Novato (10)\n',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              decoration: TextDecoration.none,
-                            )),
-                        TextSpan(
-                            text: 'Descripción\n',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Colors.black,
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.none,
-                            )),
-                        TextSpan(
-                            text:
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              decoration: TextDecoration.none,
-                            )),
-                      ]),
-                ),
+                TextFieldWidget(header: 'Flying to', content: 'Flying to'),
+                TextFieldWidget(
+                    header: 'Nivel Cazador', content: 'Novato (10)'),
+                TextFieldWidget(
+                    header: 'Descripción',
+                    content:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'),
               ],
             ),
           ),
@@ -164,6 +119,72 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
+      ),
+    );
+  }
+}
+
+class ProfileWidget extends StatelessWidget {
+  const ProfileWidget({this.name, this.location, this.profilePic});
+
+  final String name;
+  final String location;
+  final String profilePic;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          CircleAvatar(
+            radius: 35,
+            backgroundColor: Colors.brown.shade800,
+            child: Text(profilePic),
+          ),
+          Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: TextFieldWidget(header: name, content: location)),
+        ],
+      ),
+    );
+  }
+}
+
+class TextFieldWidget extends StatelessWidget {
+  const TextFieldWidget({this.header, this.content});
+
+  final String header;
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: RichText(
+        text: TextSpan(
+            style: DefaultTextStyle.of(context).style,
+            children: <TextSpan>[
+              TextSpan(
+                  text: header,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: Colors.black,
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.none,
+                  )),
+              TextSpan(text: '\n'),
+              TextSpan(
+                  text: content,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: Colors.black,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.normal,
+                    decoration: TextDecoration.none,
+                  )),
+            ]),
       ),
     );
   }
