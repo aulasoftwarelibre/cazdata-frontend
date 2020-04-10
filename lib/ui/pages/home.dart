@@ -19,6 +19,8 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> {
   //GoogleMapController _controller;
+
+  //Map markers
   Set<Marker> _markers = Set<Marker>();
 
   // the user's initial location and current location
@@ -84,10 +86,9 @@ class HomeState extends State<Home> {
                             Row(
                               children: <Widget>[
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width -
-                                      40, // or use fixed size like 200
-                                  height:
-                                      MediaQuery.of(context).size.height - 352,
+                                  //Looks like google api and flutter arent friends so size is defined like this for now
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  height: MediaQuery.of(context).size.height - 352,
                                   child: GoogleMap(
                                     gestureRecognizers:
                                         <Factory<OneSequenceGestureRecognizer>>[
