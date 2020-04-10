@@ -57,7 +57,7 @@ class HomeState extends State<Home> {
                   style: TextStyle(
                       fontFamily: "Montserrat",
                       fontWeight: FontWeight.bold,
-                      fontSize: 38),
+                      fontSize: 31),
                 ),
               ],
             ),
@@ -69,7 +69,9 @@ class HomeState extends State<Home> {
                     child: Card(
                       color: Color.fromARGB(255, 241, 243, 246),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16)),
                       ),
                       child: Center(
                         child: Column(
@@ -88,7 +90,7 @@ class HomeState extends State<Home> {
                                 SizedBox(
                                   //Looks like google api and flutter arent friends so size is defined like this for now
                                   width: MediaQuery.of(context).size.width - 40,
-                                  height: MediaQuery.of(context).size.height - 352,
+                                  height: MediaQuery.of(context).size.height - 344,
                                   child: GoogleMap(
                                     gestureRecognizers:
                                         <Factory<OneSequenceGestureRecognizer>>[
@@ -102,9 +104,22 @@ class HomeState extends State<Home> {
                                     mapType: MapType.normal,
                                     initialCameraPosition:
                                         initialCameraPosition,
-                                    /*onMapCreated: (GoogleMapController controller) {
-                                      _controller = controller;
-                                    },*/
+                                    onMapCreated:
+                                        (GoogleMapController controller) {
+                                      if (currentLocation != null) {
+                                        controller.animateCamera(
+                                            CameraUpdate.newCameraPosition(
+                                                CameraPosition(
+                                          target: LatLng(
+                                            currentLocation.latitude,
+                                            currentLocation.longitude,
+                                          ),
+                                          zoom: CAMERA_ZOOM,
+                                          tilt: CAMERA_TILT,
+                                          bearing: CAMERA_BEARING,
+                                        )));
+                                      }
+                                    },
                                   ),
                                 ),
                               ],
