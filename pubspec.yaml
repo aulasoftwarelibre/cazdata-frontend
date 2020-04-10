@@ -17,6 +17,8 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  location: ^2.5.0
+  google_maps_flutter: any
   flutter:
     sdk: flutter
 
