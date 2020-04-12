@@ -1,4 +1,3 @@
-import 'package:cazdata_frontend/services/repository/journey.repository.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

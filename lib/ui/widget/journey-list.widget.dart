@@ -15,7 +15,7 @@ class JourneysList extends StatelessWidget {
     _bloc.getJournies();
 
 
-    return StreamBuilder<Response<JourniesList>>(
+    return StreamBuilder<Response<dynamic>>(
         stream: _bloc.journeyStreamJourneys,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -26,7 +26,7 @@ class JourneysList extends StatelessWidget {
 
               case Status.COMPLETED:
                 return Container(
-                    height: 300.0, // Change as per your requirement
+                    height: 400.0, // Change as per your requirement
                     width: 300.0,
                     child: ListView.builder(
                         itemCount: snapshot.data.data.journies.length,

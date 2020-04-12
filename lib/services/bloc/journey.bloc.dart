@@ -9,14 +9,14 @@ class JourneyBloc {
   JourneyRepository _journeyRepository;
   StreamController _journeyController;
 
-  StreamSink<Response<JourniesList>> get journeySinkJourneys =>
+  StreamSink<Response<dynamic>> get journeySinkJourneys =>
       _journeyController.sink;
-  Stream<Response<JourniesList>> get journeyStreamJourneys =>
+  Stream<Response<dynamic>> get journeyStreamJourneys =>
       _journeyController.stream;
 
   JourneyBloc() {
     _journeyRepository = new JourneyRepository();
-    _journeyController = BehaviorSubject<Response<JourniesList>>();
+    _journeyController = BehaviorSubject<Response<dynamic>>();
   }
 
   getJournies() async {
