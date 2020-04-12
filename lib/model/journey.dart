@@ -19,9 +19,9 @@ class Journey {
   final String title;
   final String startTime;
   final String endTime;
-  final String distance;
-  final String minutes;
-  final String calories;
+  final int distance;
+  final int minutes;
+  final int calories;
 
   Journey(
       {this.id, this.title, this.startTime, this.endTime,this.distance, this.minutes, this.calories});
