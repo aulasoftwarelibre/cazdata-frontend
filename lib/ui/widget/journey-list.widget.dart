@@ -1,7 +1,5 @@
-import 'package:cazdata_frontend/model/journey.dart';
 import 'package:cazdata_frontend/services/bloc/journey.bloc.dart';
 import 'package:cazdata_frontend/services/networking/index.dart';
-import 'package:cazdata_frontend/services/repository/journey.repository.dart';
 import 'package:cazdata_frontend/ui/widget/journey-tile.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -25,15 +23,13 @@ class JourneysList extends StatelessWidget {
                 break;
 
               case Status.COMPLETED:
-                return Container(
-                    height: 400.0, // Change as per your requirement
-                    width: 300.0,
+                return Expanded(
                     child: ListView.builder(
                         itemCount: snapshot.data.data.journies.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.all(8.0),                            
-                            child: JourneyTile(title: snapshot.data.data.journies[index].title, startTime: snapshot.data.data.journies[index].startTime),
+                            padding: const EdgeInsets.only(bottom: 4.0, top: 4.0),                            
+                            child: JourneyTile(journey: snapshot.data.data.journies[index]),
                           );
                         }));
                 break;
