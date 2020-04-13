@@ -1,4 +1,4 @@
 class Url {
-  static const String exchangeBaseUrl =
-      'api.url';
+  static const String apiBaseUrl =
+      'http://10.0.2.2:4000';
 }
