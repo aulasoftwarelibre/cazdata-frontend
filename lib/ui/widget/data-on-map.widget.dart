@@ -78,7 +78,7 @@ class InformationWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Text(
                   mainInformation,
-                  style: TextStyle(fontSize: 20, color: greenLight),
+                  style: TextStyle(fontSize: 20, color: primaryColor),
                 ),
               ),
               Padding(
