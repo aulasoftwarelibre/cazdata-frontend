@@ -93,7 +93,8 @@ class HomeState extends State<Home> {
                                   height:
                                       MediaQuery.of(context).size.height - 344,
                                   child: GoogleMap(
-                                    myLocationEnabled: false,
+                                    myLocationButtonEnabled: false,
+                                    myLocationEnabled: true,
                                     compassEnabled: false,
                                     rotateGesturesEnabled: false,
                                     scrollGesturesEnabled: false,
