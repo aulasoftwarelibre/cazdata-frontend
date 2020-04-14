@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-const greenLight = Color.fromRGBO(111,219,102, 1);
-const white = Colors.white;
-const black = Colors.black;
+// App's main colors
+const primaryColor = const Color(0xFF6FDB66);
+const accentColor = const Color(0xFF6FDB66);

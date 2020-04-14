@@ -126,7 +126,7 @@ class DetailsJourney extends StatelessWidget {
                           onPressed: () {
                             /*...*/
                           },
-                          color: greenLight,
+                          color: primaryColor,
                           textColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(18.0)),
