@@ -1,6 +1,6 @@
+import 'dart:async';
+
 import 'package:cazdata_frontend/ui/widget/index.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -18,7 +18,7 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  //GoogleMapController _controller;
+  Completer<GoogleMapController> _controller = Completer();
 
   //Map markers
   Set<Marker> _markers = Set<Marker>();
@@ -90,35 +90,22 @@ class HomeState extends State<Home> {
                                 SizedBox(
                                   //Looks like google api and flutter arent friends so size is defined like this for now
                                   width: MediaQuery.of(context).size.width - 40,
-                                  height: MediaQuery.of(context).size.height - 344,
+                                  height:
+                                      MediaQuery.of(context).size.height - 344,
                                   child: GoogleMap(
-                                    gestureRecognizers:
-                                        <Factory<OneSequenceGestureRecognizer>>[
-                                      Factory<OneSequenceGestureRecognizer>(
-                                          () => EagerGestureRecognizer())
-                                    ].toSet(),
-                                    myLocationEnabled: true,
-                                    compassEnabled: true,
+                                    myLocationEnabled: false,
+                                    compassEnabled: false,
+                                    rotateGesturesEnabled: false,
+                                    scrollGesturesEnabled: false,
                                     tiltGesturesEnabled: false,
+                                    zoomGesturesEnabled: false,
                                     markers: _markers,
                                     mapType: MapType.normal,
                                     initialCameraPosition:
                                         initialCameraPosition,
                                     onMapCreated:
                                         (GoogleMapController controller) {
-                                      if (currentLocation != null) {
-                                        controller.animateCamera(
-                                            CameraUpdate.newCameraPosition(
-                                                CameraPosition(
-                                          target: LatLng(
-                                            currentLocation.latitude,
-                                            currentLocation.longitude,
-                                          ),
-                                          zoom: CAMERA_ZOOM,
-                                          tilt: CAMERA_TILT,
-                                          bearing: CAMERA_BEARING,
-                                        )));
-                                      }
+                                      _controller.complete(controller);
                                     },
                                   ),
                                 ),
@@ -180,15 +167,34 @@ class HomeState extends State<Home> {
       // cLoc contains the lat and long of the
       // current user's position in real time,
       // so we're holding on to it
-      currentLocation = cLoc;
+      setState(() {
+        currentLocation = cLoc;
+      });
+
+      //Update camera position as the user moves
+      goToCurrentLocation();
     });
+
     // set the initial location
     setInitialLocation();
   }
 
-  void setInitialLocation() async {
+  Future<void> setInitialLocation() async {
     // set the initial location by pulling the user's
     // current location from the location's getLocation()
     currentLocation = await location.getLocation();
+  }
+
+  Future<void> goToCurrentLocation() async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(
+        currentLocation.latitude,
+        currentLocation.longitude,
+      ),
+      zoom: CAMERA_ZOOM,
+      tilt: CAMERA_TILT,
+      bearing: CAMERA_BEARING,
+    )));
   }
 }
