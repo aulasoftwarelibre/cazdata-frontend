@@ -8,11 +8,10 @@ class BottomNavigationBarWidget extends StatefulWidget {
       _BottomNavigationBarWidgetState();
 }
 
-class _BottomNavigationBarWidgetState
-    extends State<BottomNavigationBarWidget> {
+class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   var currentTab = [
     History(),
-    Home(),    
+    Home(),
     Profile(),
   ];
 
@@ -20,7 +19,10 @@ class _BottomNavigationBarWidgetState
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
     return Scaffold(
-      body: currentTab[provider.currentIndex],
+      body: IndexedStack(
+        index: provider.currentIndex,
+        children: currentTab,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: provider.currentIndex,
         onTap: (index) {
