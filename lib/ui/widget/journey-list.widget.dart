@@ -39,7 +39,7 @@ class JourneysList extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      "Error retrieving journies",
+                      "Error al recibir jornadas",
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),

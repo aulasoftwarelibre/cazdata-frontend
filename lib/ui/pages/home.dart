@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
+import 'configurator.dart';
 import '../../util/colors.dart';
 
 const double CAMERA_ZOOM = 16;
@@ -46,8 +47,8 @@ class HomeState extends State<Home> {
     }
 
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(top: 48, bottom: 32, left: 16, right: 16),
+      body: Container(
+        margin: EdgeInsets.only(top: 48, bottom: 32, left: 16, right: 16),
         child: Column(
           children: <Widget>[
             Row(
@@ -129,7 +130,11 @@ class HomeState extends State<Home> {
                     child: Expanded(
                       child: FlatButton(
                         onPressed: () {
-                          /*...*/
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) {
+                              return Configurator();
+                            },
+                          ));
                         },
                         color: primaryColor,
                         textColor: Colors.white,
