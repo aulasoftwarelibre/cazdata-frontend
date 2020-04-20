@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:cazdata_frontend/ui/widget/oauth-login-button.widget.dart';
@@ -30,9 +29,11 @@ class LoginPage extends StatelessWidget {
                           theme: ThemeData(
                               primaryColor: primaryColor,
                               fontFamily: 'Montserrat'),
-                          home: ChangeNotifierProvider<BottomNavigationBarProvider>(
+                          home: ChangeNotifierProvider<
+                              BottomNavigationBarProvider>(
                             child: BottomNavigationBarWidget(),
-                            create: (BuildContext context) => BottomNavigationBarProvider(),
+                            create: (BuildContext context) =>
+                                BottomNavigationBarProvider(),
                           ),
                         );
                       },
@@ -52,8 +53,19 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,            
             children: <Widget>[
+              SizedBox(height: 20.0),
+              Text("Cazdata",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 74, color: accentColor)
+              ),
+              Image(image: AssetImage("assets/hunter.jpg"), height: 350.0,),
+              Text(
+                "La aplicación CazData está diseñada para\ntener un historial de tu progreso y logros\ncomo cazador. Mira tu historial de jornadas\ny compártelo con la comunidad.",
+                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 17, color: Colors.grey),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 30.0),
               OAuthLoginButton(
                 onPressed: vm.login,
                 text: "Inicia Sesión con Google",
