@@ -1,4 +1,4 @@
-package com.example.cazdata_frontend
+package es.uco.aulasoftwarelibre.cazdata
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

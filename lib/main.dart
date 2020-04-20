@@ -1,8 +1,7 @@
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
+import 'package:cazdata_frontend/ui/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 import 'util/colors.dart';
@@ -22,10 +21,7 @@ class MyApp extends StatelessWidget {
             primaryColor: primaryColor,
             accentColor: accentColor,
             fontFamily: 'Montserrat'),
-        home: ChangeNotifierProvider<BottomNavigationBarProvider>(
-          child: BottomNavigationBarWidget(),
-          create: (BuildContext context) => BottomNavigationBarProvider(),
-        ),
+        home: LoginPage(),
       ),
     );
   }
