@@ -1,10 +1,29 @@
+import 'package:cazdata_frontend/redux/index.dart';
+import 'package:cazdata_frontend/ui/pages/login.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class Profile extends StatelessWidget {
-
-@override
+  @override
   Widget build(BuildContext context) {
+    return new StoreConnector<AppState, _ViewModel>(
+      converter: (store) => _ViewModel(
+          user: store.state.firebaseState.firebaseUser,
+          logout: () {
+            store.dispatch(LogoutAction());
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) {
+              return LoginPage();
+            }), ModalRoute.withName('/'));
+          }),
+      builder: (BuildContext context, _ViewModel vm) =>
+          _profileView(context, vm),
+    );
+  }
+
+  Widget _profileView(BuildContext context, _ViewModel vm) {
     return Scaffold(
       appBar: AppBar(
         title: Text('CazData'),
@@ -39,8 +58,8 @@ class Profile extends StatelessWidget {
                     Expanded(
                       flex: 3,
                       child: FlatButton(
-                        onPressed: () {
-                          /*...*/
+                        onPressed: (){
+                          vm.logout();
                         },
                         color: Colors.red,
                         textColor: Colors.white,
@@ -52,18 +71,26 @@ class Profile extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                  'Perfil',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
+                  child: Text(
+                    'Perfil',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
                 ),
                 ProfileWidget(
-                    name: 'Adrián López',
-                    location: 'Córdoba, España',
-                    profilePic: 'AL'),
-                Divider(),
-                TextFieldWidget(header: 'Flying to', content: 'Flying to'),
-                TextFieldWidget(
-                    header: 'Nivel Cazador', content: 'Novato (10)'),
+                    name: vm.user.displayName,
+                    location: vm.user.email,
+                    profilePic: vm.user.photoUrl),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(color: Colors.black),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
+                  child: TextFieldWidget(
+                      header: 'Nivel Cazador', content: 'Novato (10)'),
+                ),
                 TextFieldWidget(
                     header: 'Descripción',
                     content:
@@ -75,4 +102,14 @@ class Profile extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ViewModel {
+  final FirebaseUser user;
+  final Function() logout;
+
+  _ViewModel({
+    @required this.user,
+    @required this.logout,
+  });
 }

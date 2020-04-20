@@ -12,12 +12,12 @@ class ProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           CircleAvatar(
             radius: 35,
-            backgroundColor: Colors.brown.shade800,
-            child: Text(profilePic),
+            backgroundImage: NetworkImage(profilePic),
+            backgroundColor: Colors.transparent,
           ),
           Container(
               margin: const EdgeInsets.only(left: 10),
