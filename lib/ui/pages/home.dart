@@ -26,9 +26,9 @@ class HomeState extends State<Home> {
 
   // the user's initial location and current location
   // as it moves
-  LocationData currentLocation;
+  LocationData _currentLocation;
   // wrapper around the location API
-  Location location;
+  Location _location;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +38,9 @@ class HomeState extends State<Home> {
         bearing: CAMERA_BEARING,
         target: SOURCE_LOCATION);
 
-    if (currentLocation != null) {
+    if (_currentLocation != null) {
       initialCameraPosition = CameraPosition(
-          target: LatLng(currentLocation.latitude, currentLocation.longitude),
+          target: LatLng(_currentLocation.latitude, _currentLocation.longitude),
           zoom: CAMERA_ZOOM,
           tilt: CAMERA_TILT,
           bearing: CAMERA_BEARING);
@@ -56,7 +56,6 @@ class HomeState extends State<Home> {
                 Text(
                   'Mapa de Inicio',
                   style: TextStyle(
-                      fontFamily: "Montserrat",
                       fontWeight: FontWeight.bold,
                       fontSize: 31),
                 ),
@@ -144,7 +143,6 @@ class HomeState extends State<Home> {
                         child: Text(
                           "Iniciar jornada",
                           style: TextStyle(
-                              fontFamily: "Montserrat",
                               fontWeight: FontWeight.bold,
                               fontSize: 16),
                         ),
@@ -165,16 +163,16 @@ class HomeState extends State<Home> {
     super.initState();
 
     // create an instance of Location
-    location = new Location();
+    _location = new Location();
 
     // subscribe to changes in the user's location
     // by "listening" to the location's onLocationChanged event
-    location.onLocationChanged().listen((LocationData cLoc) {
-      // cLoc contains the lat and long of the
+    _location.onLocationChanged().listen((LocationData cLoc) {
+      // cLoc contains the lat anrd long of the
       // current user's position in real time,
       // so we're holding on to it
       setState(() {
-        currentLocation = cLoc;
+        _currentLocation = cLoc;
       });
 
       //Update camera position as the user moves
@@ -188,15 +186,15 @@ class HomeState extends State<Home> {
   Future<void> setInitialLocation() async {
     // set the initial location by pulling the user's
     // current location from the location's getLocation()
-    currentLocation = await location.getLocation();
+    _currentLocation = await _location.getLocation();
   }
 
   Future<void> goToCurrentLocation() async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(
-        currentLocation.latitude,
-        currentLocation.longitude,
+        _currentLocation.latitude,
+        _currentLocation.longitude,
       ),
       zoom: CAMERA_ZOOM,
       tilt: CAMERA_TILT,
