@@ -1,6 +1,9 @@
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:cazdata_frontend/model/journey.dart';
+
+import '../../model/journey.dart';
 
 class Configurator extends StatefulWidget {
   @override
@@ -10,12 +13,49 @@ class Configurator extends StatefulWidget {
 }
 
 class ConfiguratorState extends State<Configurator> {
+  final _formKey = GlobalKey<FormState>();
+
+  Journey _journey = Journey();
+
+  final FocusNode _modalityFocus = FocusNode();
   int _huntType = 0;
 
   void _handleHuntTypeChange(int value) {
     setState(() {
       _huntType = value;
     });
+  }
+
+  String _validateTitle(String title) {
+    if (title.isEmpty) {
+      return 'Introduzca un título para la jornada';
+    }
+    return null;
+  }
+
+  String _validateModality(String modality) {
+    if (modality.isEmpty) {
+      return 'Introduzca una modalidad para la jornada';
+    }
+    return null;
+  }
+
+  void submit() {
+    // First validate form.
+    if (this._formKey.currentState.validate()) {
+      _formKey.currentState.save(); // Save our form now.
+
+      //Save the hunt type
+      if(_huntType == 0)
+        _journey.type = "Menor";
+      else
+        _journey.type = "Mayor";
+
+      print('Printing the form data.');
+      print('Title: ${_journey.title}');
+      print('Modality: ${_journey.modality}');
+      print('Type: ${_journey.type}');
+    }
   }
 
   @override
@@ -29,44 +69,20 @@ class ConfiguratorState extends State<Configurator> {
         }
       },
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Padding(
-          padding: EdgeInsets.only(left: 24, right: 24, bottom: 18),
-          child: Row(
+        body: Form(
+          key: _formKey,
+          child: ListView(
+            physics: ClampingScrollPhysics(),
             children: <Widget>[
-              Expanded(
-                child: ButtonTheme(
-                  height: 50,
-                  child: FlatButton(
-                    onPressed: () {},
-                    color: primaryColor,
-                    textColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(18.0),
-                    ),
-                    child: Text(
-                      "Siguiente",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: ListView(
-                physics: ClampingScrollPhysics(),
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 48),
-                    child: Row(
+              Container(
+                margin: new EdgeInsets.only(top: 48, left: 16, right: 16),
+                child: Column(
+                  children: [
+                    Row(
                       children: <Widget>[
                         IconButton(
                           icon: Icon(Icons.arrow_back),
+                          padding: EdgeInsets.zero,
                           iconSize: 50,
                           onPressed: () {
                             Navigator.pop(context);
@@ -74,10 +90,10 @@ class ConfiguratorState extends State<Configurator> {
                         ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 8, left: 16),
-                    child: Row(
+                    Separator.spacer(
+                      height: 24,
+                    ),
+                    Row(
                       children: <Widget>[
                         Text(
                           'Pre-Configurador',
@@ -88,10 +104,10 @@ class ConfiguratorState extends State<Configurator> {
                         ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 24, left: 16, right: 16),
-                    child: TextFormField(
+                    Separator.spacer(
+                      height: 24,
+                    ),
+                    TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Título',
                         border: OutlineInputBorder(
@@ -99,29 +115,35 @@ class ConfiguratorState extends State<Configurator> {
                         ),
                       ),
                       textInputAction: TextInputAction.next,
-                      onChanged: (text) {
-                        /* Save the information */
+                      //When the user finish with this field pass to the next one
+                      onFieldSubmitted: (term) {
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        currentFocus.unfocus();
+
+                        FocusScope.of(context).requestFocus(_modalityFocus);
                       },
+                      validator: _validateTitle,
+                      onSaved: (title) => _journey.title = title,
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 24, left: 16, right: 16),
-                    child: TextFormField(
+                    Separator.spacer(
+                      height: 24,
+                    ),
+                    TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Modalidad',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      textInputAction: TextInputAction.next,
-                      onChanged: (text) {
-                        /* Save the information */
-                      },
+                      focusNode: _modalityFocus,
+                      textInputAction: TextInputAction.done,
+                      validator: _validateModality,
+                      onSaved: (modality) => _journey.modality = modality,
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 40, left: 16),
-                    child: Row(
+                    Separator.spacer(
+                      height: 40,
+                    ),
+                    Row(
                       children: <Widget>[
                         Text(
                           'Tipo de Caza',
@@ -132,10 +154,10 @@ class ConfiguratorState extends State<Configurator> {
                         ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 8, left: 8),
-                    child: Row(
+                    Separator.spacer(
+                      height: 8,
+                    ),
+                    Row(
                       children: <Widget>[
                         Radio(
                           value: 0,
@@ -147,14 +169,15 @@ class ConfiguratorState extends State<Configurator> {
                           'Menor',
                           style: TextStyle(fontSize: 20),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 16),
-                          child: Radio(
-                            value: 1,
-                            groupValue: _huntType,
-                            activeColor: Color.fromARGB(255, 100, 100, 100),
-                            onChanged: _handleHuntTypeChange,
-                          ),
+                        Separator.spacer(
+                          width: 16,
+                          height: 0,
+                        ),
+                        Radio(
+                          value: 1,
+                          groupValue: _huntType,
+                          activeColor: Color.fromARGB(255, 100, 100, 100),
+                          onChanged: _handleHuntTypeChange,
                         ),
                         Text(
                           'Mayor',
@@ -162,12 +185,36 @@ class ConfiguratorState extends State<Configurator> {
                         ),
                       ],
                     ),
-                  ),
-                  Separator.spacer(height: 112,),
-                ],
-              ),
-            ),
-          ],
+                    Separator.spacer(
+                      height: 40,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: ButtonTheme(
+                            height: 50,
+                            child: FlatButton(
+                              onPressed: submit,
+                              color: primaryColor,
+                              textColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(18.0),
+                              ),
+                              child: Text(
+                                "Siguiente",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
