@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -32,6 +35,14 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    return new StoreConnector<AppState, _ViewModel>(
+      converter: (store) => _ViewModel(user: store.state.firebaseState.firebaseUser),
+      builder: (BuildContext context, _ViewModel vm) =>
+          _homeView(context, vm),
+    );
+  }
+
+  Widget _homeView(BuildContext context, _ViewModel vm) {
     CameraPosition initialCameraPosition = CameraPosition(
         zoom: CAMERA_ZOOM,
         tilt: CAMERA_TILT,
@@ -79,9 +90,9 @@ class HomeState extends State<Home> {
                             Row(
                               children: <Widget>[
                                 ProfileOnMapWidget(
-                                  name: 'Adrián López',
+                                  name: vm.user.displayName,
                                   location: 'Nivel 1',
-                                  profilePic: 'AL',
+                                  profilePic: vm.user.photoUrl,
                                 ),
                               ],
                             ),
@@ -91,7 +102,7 @@ class HomeState extends State<Home> {
                                   //Looks like google api and flutter arent friends so size is defined like this for now
                                   width: MediaQuery.of(context).size.width - 40,
                                   height:
-                                      MediaQuery.of(context).size.height - 344,
+                                      MediaQuery.of(context).size.height - 354,
                                   child: GoogleMap(
                                     myLocationButtonEnabled: false,
                                     myLocationEnabled: true,
@@ -201,4 +212,12 @@ class HomeState extends State<Home> {
       bearing: CAMERA_BEARING,
     )));
   }
+}
+
+class _ViewModel {
+  final FirebaseUser user;
+
+  _ViewModel({
+    @required this.user
+  });
 }
