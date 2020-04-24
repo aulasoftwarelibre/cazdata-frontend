@@ -46,10 +46,12 @@ class ConfiguratorState extends State<Configurator> {
       _formKey.currentState.save(); // Save our form now.
 
       //Save the hunt type
-      if(_huntType == 0)
-        _journey.type = "Menor";
-      else
-        _journey.type = "Mayor";
+      setState(() {
+        if (_huntType == 0)
+          _journey.type = "Menor";
+        else
+          _journey.type = "Mayor";
+      });
 
       print('Printing the form data.');
       print('Title: ${_journey.title}');
@@ -123,7 +125,11 @@ class ConfiguratorState extends State<Configurator> {
                         FocusScope.of(context).requestFocus(_modalityFocus);
                       },
                       validator: _validateTitle,
-                      onSaved: (title) => _journey.title = title,
+                      onSaved: (title) {
+                        setState(() {
+                          _journey.title = title;
+                        });
+                      },
                     ),
                     Separator.spacer(
                       height: 24,
@@ -138,7 +144,11 @@ class ConfiguratorState extends State<Configurator> {
                       focusNode: _modalityFocus,
                       textInputAction: TextInputAction.done,
                       validator: _validateModality,
-                      onSaved: (modality) => _journey.modality = modality,
+                      onSaved: (modality) {
+                        setState(() {
+                          _journey.modality = modality;
+                        });
+                      },
                     ),
                     Separator.spacer(
                       height: 40,

@@ -26,7 +26,7 @@ class Journey {
   int calories;
 
   Journey(
-      {this.id, this.title, this.startTime, this.endTime,this.distance, this.minutes, this.calories});
+      {this.id, this.title, this.modality, this.type, this.startTime, this.endTime,this.distance, this.minutes, this.calories});
 
   Map toJson() {
     return {
