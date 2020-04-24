@@ -103,7 +103,7 @@ class HomeState extends State<Home> {
                                           //Looks like google api and flutter arent friends so size is defined like this for now
                                           width: MediaQuery.of(context).size.width - 48,
                                           height:
-                                              MediaQuery.of(context).size.height - 355,
+                                              MediaQuery.of(context).size.height - 339,
                                           child: GoogleMap(
                                             myLocationButtonEnabled: false,
                                             myLocationEnabled: true,
