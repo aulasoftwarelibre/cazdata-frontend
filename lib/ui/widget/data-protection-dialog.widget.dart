@@ -1,3 +1,4 @@
+import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
 
 class DataProtectionWidget extends StatelessWidget {
