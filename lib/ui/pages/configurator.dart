@@ -14,14 +14,46 @@ class Configurator extends StatefulWidget {
 
 class ConfiguratorState extends State<Configurator> {
   final _formKey = GlobalKey<FormState>();
+  final _dropdownButtonFormFieldKey = GlobalKey<FormFieldState>();
 
   Journey _journey = Journey();
 
-  final FocusNode _modalityFocus = FocusNode();
   int _huntType = 0;
+  String _modality;
+
+  List<DropdownMenuItem<dynamic>> _getHuntModalities(int huntType) {
+    if (huntType == 0) {
+      return <String>[
+        "En mano",
+        "Ojeo",
+        "Perdiz con reclamo",
+        "Caza acuáticas",
+        "Cetrería"
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(
+            value,
+          ),
+        );
+      }).toList();
+    } else {
+      return <String>["Montería", "Rececho", "Espera", "Batida", "Cetrería"]
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(
+            value,
+          ),
+        );
+      }).toList();
+    }
+  }
 
   void _handleHuntTypeChange(int value) {
     setState(() {
+      _modality = null;
+      _dropdownButtonFormFieldKey.currentState.didChange(_modality);
       _huntType = value;
     });
   }
@@ -33,9 +65,9 @@ class ConfiguratorState extends State<Configurator> {
     return null;
   }
 
-  String _validateModality(String modality) {
-    if (modality.isEmpty) {
-      return 'Introduzca una modalidad para la jornada';
+  String _validateModality(dynamic modality) {
+    if (modality == null) {
+      return 'Seleccione una modalidad para la jornada';
     }
     return null;
   }
@@ -116,14 +148,7 @@ class ConfiguratorState extends State<Configurator> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      textInputAction: TextInputAction.next,
-                      //When the user finish with this field pass to the next one
-                      onFieldSubmitted: (term) {
-                        FocusScopeNode currentFocus = FocusScope.of(context);
-                        currentFocus.unfocus();
-
-                        FocusScope.of(context).requestFocus(_modalityFocus);
-                      },
+                      textInputAction: TextInputAction.done,
                       validator: _validateTitle,
                       onSaved: (title) {
                         setState(() {
@@ -134,16 +159,23 @@ class ConfiguratorState extends State<Configurator> {
                     Separator.spacer(
                       height: 24,
                     ),
-                    TextFormField(
+                    DropdownButtonFormField(
+                      key: _dropdownButtonFormFieldKey,
+                      value: _modality,
+                      icon: Icon(Icons.arrow_drop_down),
                       decoration: InputDecoration(
                         labelText: 'Modalidad',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      focusNode: _modalityFocus,
-                      textInputAction: TextInputAction.done,
+                      items: _getHuntModalities(_huntType),
                       validator: _validateModality,
+                      onChanged: (modality) {
+                        setState(() {
+                          _modality = modality;
+                        });
+                      },
                       onSaved: (modality) {
                         setState(() {
                           _journey.modality = modality;
