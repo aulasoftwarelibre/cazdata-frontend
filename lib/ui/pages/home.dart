@@ -111,6 +111,7 @@ class HomeState extends State<Home> {
                                     scrollGesturesEnabled: false,
                                     tiltGesturesEnabled: false,
                                     zoomGesturesEnabled: false,
+                                    zoomControlsEnabled: false,
                                     markers: _markers,
                                     mapType: MapType.normal,
                                     initialCameraPosition:
