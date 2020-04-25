@@ -1,5 +1,7 @@
+import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DataProtectionWidget extends StatelessWidget {
   const DataProtectionWidget();
@@ -28,7 +30,9 @@ class DataProtectionWidget extends StatelessWidget {
                   side: BorderSide(color: primaryColor)),
               child:
                   new Text("No acepto", style: TextStyle(color: primaryColor)),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
             ),
             new FlatButton(
               shape: RoundedRectangleBorder(
@@ -36,7 +40,27 @@ class DataProtectionWidget extends StatelessWidget {
                   side: BorderSide(color: primaryColor)),
               color: primaryColor,
               child: new Text("Acepto", style: TextStyle(color: Colors.white)),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context, true);
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return MaterialApp(
+                          title: 'Group',
+                          theme: ThemeData(
+                              primaryColor: primaryColor,
+                              fontFamily: 'Montserrat'),
+                          home: ChangeNotifierProvider<
+                              BottomNavigationBarProvider>(
+                            child: BottomNavigationBarWidget(),
+                            create: (BuildContext context) =>
+                                BottomNavigationBarProvider(),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+              },
             ),
           ],
         ),
