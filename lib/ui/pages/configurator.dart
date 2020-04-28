@@ -1,3 +1,4 @@
+import 'package:cazdata_frontend/ui/pages/speciesSearcher.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
@@ -84,11 +85,14 @@ class ConfiguratorState extends State<Configurator> {
         else
           _journey.type = "Mayor";
       });
-
-      print('Printing the form data.');
-      print('Title: ${_journey.title}');
-      print('Modality: ${_journey.modality}');
-      print('Type: ${_journey.type}');
+      
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) {
+          return SpeciesSearcher(
+            journey: _journey,
+          );
+        },
+      ));
     }
   }
 
@@ -109,7 +113,7 @@ class ConfiguratorState extends State<Configurator> {
             physics: ClampingScrollPhysics(),
             children: <Widget>[
               Container(
-                margin: new EdgeInsets.only(top: 48, left: 16, right: 16),
+                margin: EdgeInsets.only(top: 48, left: 16, right: 16),
                 child: Column(
                   children: [
                     Row(
