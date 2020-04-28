@@ -23,8 +23,6 @@ class SpeciesSearcherState extends State<SpeciesSearcher> {
 
   @override
   Widget build(BuildContext context) {
-    String subtitle = "Caza ${_journey.type.toLowerCase()}";
-
     print('Printing the form data.');
     print('Title: ${_journey.title}');
     print('Modality: ${_journey.modality}');
@@ -69,7 +67,7 @@ class SpeciesSearcherState extends State<SpeciesSearcher> {
               Row(
                 children: <Widget>[
                   Text(
-                    subtitle,
+                    "Caza ${_journey.type.toLowerCase()}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
