@@ -3,15 +3,12 @@ import 'package:cazdata_frontend/services/networking/index.dart';
 import 'package:cazdata_frontend/ui/widget/journey-tile.widget.dart';
 import 'package:flutter/material.dart';
 
-
 class JourneysList extends StatelessWidget {
-
   JourneysList();
 
   Widget build(BuildContext context) {
     final JourneyBloc _bloc = JourneyBloc();
     _bloc.getJournies();
-
 
     return StreamBuilder<Response<dynamic>>(
         stream: _bloc.journeyStreamJourneys,
@@ -25,11 +22,15 @@ class JourneysList extends StatelessWidget {
               case Status.COMPLETED:
                 return Expanded(
                     child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data.data.journies.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 4.0, top: 4.0),                            
-                            child: JourneyTile(journey: snapshot.data.data.journies[index]),
+                            padding:
+                                const EdgeInsets.only(bottom: 4.0, top: 4.0),
+                            child: JourneyTile(
+                                journey: snapshot.data.data.journies[index]),
                           );
                         }));
                 break;
