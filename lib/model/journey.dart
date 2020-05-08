@@ -42,8 +42,8 @@ class Journey {
     return new Journey(
       id: json['id'],
       title: json['title'],
-      startTime: json['starts_at'],
-      endTime: json['ends_at'],
+      startTime: json['startsAt'],
+      endTime: json['endsAt'],
       distance: json['distance'],
       calories: json['calories'],
     );

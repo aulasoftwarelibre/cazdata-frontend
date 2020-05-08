@@ -22,6 +22,8 @@ class JourneysList extends StatelessWidget {
               case Status.COMPLETED:
                 return Expanded(
                     child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data.data.journies.length,
                         itemBuilder: (context, index) {
                           return Padding(
