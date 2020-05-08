@@ -1,4 +1,3 @@
-import 'package:cazdata_frontend/ui/pages/speciesSearcher.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
@@ -85,14 +84,11 @@ class ConfiguratorState extends State<Configurator> {
         else
           _journey.type = "Mayor";
       });
-      
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) {
-          return SpeciesSearcher(
-            journey: _journey,
-          );
-        },
-      ));
+
+      print('Printing the form data.');
+      print('Title: ${_journey.title}');
+      print('Modality: ${_journey.modality}');
+      print('Type: ${_journey.type}');
     }
   }
 
