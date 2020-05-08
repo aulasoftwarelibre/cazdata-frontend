@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
+import 'package:cazdata_frontend/ui/widget/data-protection-dialog.widget.dart';
 import 'package:cazdata_frontend/ui/widget/oauth-login-button.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,7 +22,14 @@ class LoginPage extends StatelessWidget {
             store.dispatch(result);
 
             Future.wait([result.completer.future]).then((user) => {
-                  Navigator.of(context).push(
+              if(store.state.userIsNew){
+                showDialog(
+                    context: context,
+                    child: DataProtectionWidget(),
+                    )
+              }
+              else{
+                Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
                         return MaterialApp(
@@ -39,6 +47,7 @@ class LoginPage extends StatelessWidget {
                       },
                     ),
                   )
+              }                  
                 });
           });
     }, builder: (BuildContext context, _ViewModel vm) {
