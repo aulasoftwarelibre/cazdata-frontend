@@ -1,26 +1,32 @@
+import 'package:cazdata_frontend/model/animal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AppState {
   final FirebaseState firebaseState;
   final bool userIsNew;
+  final AnimalsList animalsList;
 
   const AppState({
     @required this.firebaseState,
     @required this.userIsNew,
+    @required this.animalsList,
   });
 
-  AppState copyWith({FirebaseState firebaseState}) {
+  AppState copyWith(
+      {FirebaseState firebaseState, bool userIsNew, AnimalsList animalsList}) {
     return new AppState(
         firebaseState: firebaseState ?? this.firebaseState,
-        userIsNew: userIsNew ?? this.userIsNew);
+        userIsNew: userIsNew ?? this.userIsNew,
+        animalsList: animalsList ?? this.animalsList);
   }
 
   factory AppState.initial() {
     return AppState(
       firebaseState: FirebaseState.initial(),
-      userIsNew: false
-      );
+      userIsNew: false,
+      animalsList: null,
+    );
   }
 }
 

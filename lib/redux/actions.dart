@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cazdata_frontend/model/animal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginWithGoogleAction {
@@ -24,4 +25,14 @@ class UserIsNew {
   final bool userIsNew;
 
   UserIsNew(this.userIsNew);
+}
+
+class LoadAnimalsAction {
+  LoadAnimalsAction();
+}
+
+class AnimalsLoadedAction {
+  final AnimalsList animalsList;
+
+  AnimalsLoadedAction(this.animalsList);
 }

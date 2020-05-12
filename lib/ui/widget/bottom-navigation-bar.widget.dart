@@ -23,8 +23,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
-      /*onInit: (store) {
-        if (store.state.userIsNew == true) {
+      onInit: (store) {
+        /*if (store.state.userIsNew == true) {
           HunterRepository hunterRepository = new HunterRepository();
 
           Hunter hunter = new Hunter();
@@ -39,8 +39,11 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
               hunter, store.state.firebaseState.idTokenUser);
 
           store.dispatch(UserIsNew(false));
-        }
-      },*/
+        }*/
+
+        //Load animals from backend
+        store.dispatch(LoadAnimalsAction());
+      },
       builder: (BuildContext context, _ViewModel viewModel) {
         return _appView(context, viewModel);
       },
