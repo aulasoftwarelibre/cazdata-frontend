@@ -1,4 +1,3 @@
-
 import 'package:cazdata_frontend/model/animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/services/repository/animal.repository.dart';
@@ -16,9 +15,8 @@ middleware(Store<AppState> store, action, NextDispatcher next) {
     _handleLoginWithGoogle(store, action, next);
   } else if (action is LogoutAction) {
     _handleLogoutAction(store, action);
-  }
-  else if (action is LoadAnimalsAction) {
-    _handleLoadAnimalsAction(store, action);
+  } else if (action is StartLoadingAnimalsAction) {
+    _handleStartLoadingAnimalsAction(store, action);
   }
 
   next(action);
@@ -61,9 +59,19 @@ _handleLogoutAction(Store<AppState> store, LogoutAction action) async {
   await _googleSignIn.signOut();
 }
 
-_handleLoadAnimalsAction(Store<AppState> store, LoadAnimalsAction action) async {
+_handleStartLoadingAnimalsAction(
+    Store<AppState> store, StartLoadingAnimalsAction action) async {
   AnimalRepository animalRepository = new AnimalRepository();
   AnimalsList animalsList = await animalRepository.getAnimals();
 
-  store.dispatch(AnimalsLoadedAction(animalsList));
+  if (animalsList != null) {
+    store.dispatch(AnimalsLoadedAction(animalsList));
+  } else {
+    store.dispatch(AnimalsLoadFailedAction());
+
+    //On fail try to load animals every 2 seconds
+    Future.delayed(Duration(seconds: 2), () {
+      store.dispatch(StartLoadingAnimalsAction());
+    });
+  }
 }

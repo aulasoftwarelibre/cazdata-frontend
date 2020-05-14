@@ -1,3 +1,4 @@
+import 'package:cazdata_frontend/ui/widget/animal-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
@@ -109,7 +110,7 @@ class ConfiguratorState extends State<Configurator> {
             physics: ClampingScrollPhysics(),
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(top: 48, left: 16, right: 16),
+                margin: EdgeInsets.only(top: 48, left: 16, right: 16, bottom: 40),
                 child: Column(
                   children: [
                     Row(
@@ -225,6 +226,29 @@ class ConfiguratorState extends State<Configurator> {
                           'Mayor',
                           style: TextStyle(fontSize: 20),
                         ),
+                      ],
+                    ),
+                    Separator.spacer(
+                      height: 16,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Buscador de especies',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 150, 150, 150),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Separator.spacer(
+                      height: 8,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        AnimalsList(),
                       ],
                     ),
                     Separator.spacer(

@@ -27,12 +27,16 @@ class UserIsNew {
   UserIsNew(this.userIsNew);
 }
 
-class LoadAnimalsAction {
-  LoadAnimalsAction();
+class StartLoadingAnimalsAction {
+  StartLoadingAnimalsAction();
 }
 
 class AnimalsLoadedAction {
   final AnimalsList animalsList;
 
   AnimalsLoadedAction(this.animalsList);
+}
+
+class AnimalsLoadFailedAction {
+  AnimalsLoadFailedAction();
 }

@@ -40,9 +40,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
 
           store.dispatch(UserIsNew(false));
         }*/
-
-        //Load animals from backend
-        store.dispatch(LoadAnimalsAction());
       },
       builder: (BuildContext context, _ViewModel viewModel) {
         return _appView(context, viewModel);

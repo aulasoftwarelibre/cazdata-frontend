@@ -1,13 +1,14 @@
-
-import 'package:cazdata_frontend/model/animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 
 AppState mainReducer(AppState state, dynamic action) {
   FirebaseState firebaseState = _reduceFirebaseState(state, action);
   bool userIsNew = _reduceUserIsNew(state, action);
-  AnimalsList animalsList = _reduceAnimalsList(state, action);
+  AnimalsListState animalsListState = _reduceAnimalsListState(state, action);
 
-  return AppState(firebaseState: firebaseState, userIsNew: userIsNew, animalsList: animalsList);
+  return AppState(
+      firebaseState: firebaseState,
+      userIsNew: userIsNew,
+      animalsListState: animalsListState);
 }
 
 FirebaseState _reduceFirebaseState(AppState state, dynamic action) {
@@ -30,12 +31,17 @@ bool _reduceUserIsNew(AppState state, dynamic action) {
   return userIsNew;
 }
 
-AnimalsList _reduceAnimalsList(AppState state, dynamic action){
-  AnimalsList animalsList = state.animalsList;
+AnimalsListState _reduceAnimalsListState(AppState state, dynamic action) {
+  AnimalsListState newState = state.animalsListState;
 
-  if(action is AnimalsLoadedAction) {
-    animalsList = action.animalsList;
+  if (action is StartLoadingAnimalsAction) {
+    newState = newState.copyWith(isLoading: true, errorLoading: false);
+  } else if (action is AnimalsLoadedAction) {
+    newState = newState.copyWith(
+        animals: action.animalsList.animals, isLoading: false);
+  } else if (action is AnimalsLoadFailedAction) {
+    newState = newState.copyWith(isLoading: false, errorLoading: true);
   }
 
-  return animalsList;
+  return newState;
 }
