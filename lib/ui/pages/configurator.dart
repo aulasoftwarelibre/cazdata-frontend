@@ -14,6 +14,7 @@ class Configurator extends StatefulWidget {
 }
 
 class ConfiguratorState extends State<Configurator> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   final _dropdownButtonFormFieldKey = GlobalKey<FormFieldState>();
 
@@ -75,7 +76,7 @@ class ConfiguratorState extends State<Configurator> {
 
   void submit() {
     // First validate form.
-    if (this._formKey.currentState.validate()) {
+    if (_formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
 
       //Save the hunt type
@@ -90,6 +91,13 @@ class ConfiguratorState extends State<Configurator> {
       print('Title: ${_journey.title}');
       print('Modality: ${_journey.modality}');
       print('Type: ${_journey.type}');
+    } else {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text('Completa todos los campos'),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
     }
   }
 
@@ -104,13 +112,15 @@ class ConfiguratorState extends State<Configurator> {
         }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         body: Form(
           key: _formKey,
           child: ListView(
             physics: ClampingScrollPhysics(),
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(top: 48, left: 16, right: 16, bottom: 40),
+                margin:
+                    EdgeInsets.only(top: 48, left: 16, right: 16, bottom: 40),
                 child: Column(
                   children: [
                     Row(
@@ -248,7 +258,7 @@ class ConfiguratorState extends State<Configurator> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        AnimalsList(),
+                        AnimalsList(_huntType),
                       ],
                     ),
                     Separator.spacer(

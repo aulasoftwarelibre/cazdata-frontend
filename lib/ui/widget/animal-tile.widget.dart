@@ -1,24 +1,34 @@
 import 'package:cazdata_frontend/model/animal.dart';
 import 'package:flutter/material.dart';
 
-class AnimalTile extends StatelessWidget {
+class AnimalTile extends StatefulWidget {
+  final Animal _animal;
 
-  final Animal animal;
+  AnimalTile(this._animal);
 
-  const AnimalTile({
-    this.animal,
-    Key key,
-  }) : super(key: key);
+  @override
+  _AnimalTileState createState() => _AnimalTileState();
+}
+
+class _AnimalTileState extends State<AnimalTile> {
+  bool _checkboxValue = false;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-          child: ListTile(
-            title: Text(this.animal.name),
-            onTap: (){
-              //Do something
-            },
-          ),
+    return CheckboxListTile(
+      title: Text(this.widget._animal.name),
+      value: _checkboxValue,
+      onChanged: (val) {
+        if (_checkboxValue == false) {
+          setState(() {
+            _checkboxValue = true;
+          });
+        } else if (_checkboxValue == true) {
+          setState(() {
+            _checkboxValue = false;
+          });
+        }
+      },
     );
   }
 }

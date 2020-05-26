@@ -6,9 +6,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 class _ViewModel {
-  final AnimalsListState animalsListState;
+  final AnimalsListState _animalsListState;
 
-  _ViewModel(this.animalsListState);
+  _ViewModel(this._animalsListState);
 
   factory _ViewModel.create(Store<AppState> store) {
     AnimalsListState animalsListState = store.state.animalsListState;
@@ -18,7 +18,9 @@ class _ViewModel {
 }
 
 class AnimalsList extends StatelessWidget {
-  AnimalsList();
+  final int _huntType;
+
+  AnimalsList(this._huntType);
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +39,9 @@ class AnimalsList extends StatelessWidget {
   }
 
   Widget _widgetView(BuildContext context, _ViewModel viewModel) {
-    if (viewModel.animalsListState.isLoading) {
+    if (viewModel._animalsListState.isLoading) {
       return CircularProgressIndicator();
-    } else if (viewModel.animalsListState.errorLoading) {
+    } else if (viewModel._animalsListState.errorLoading) {
       return Expanded(
         child: Card(
           color: Colors.white,
@@ -52,18 +54,22 @@ class AnimalsList extends StatelessWidget {
           ),
         ),
       );
-    } else if (viewModel.animalsListState.animals != null) {
+    } else if (viewModel._animalsListState.animals != null) {
       return Expanded(
         child: ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: viewModel.animalsListState.animals.length,
+          itemCount: viewModel._animalsListState.animals.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 4.0, top: 4.0),
-              child:
-                  AnimalTile(animal: viewModel.animalsListState.animals[index]),
-            );
+            if ((this._huntType == 0 && viewModel._animalsListState.animals[index].type == "minor") ||
+                (this._huntType == 1 && viewModel._animalsListState.animals[index].type == "major")) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 4.0, top: 4.0),
+                child: AnimalTile(viewModel._animalsListState.animals[index]),
+              );
+            } else {
+              return Separator.none();
+            }
           },
         ),
       );
