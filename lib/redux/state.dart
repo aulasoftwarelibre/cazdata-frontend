@@ -1,4 +1,5 @@
 import 'package:cazdata_frontend/model/animal.dart';
+import 'package:cazdata_frontend/model/journey.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -6,19 +7,23 @@ class AppState {
   final FirebaseState firebaseState;
   final bool userIsNew;
   final AnimalsListState animalsListState;
+  final CurrentJourneyState currentJourneyState;
 
   const AppState({
     @required this.firebaseState,
     @required this.userIsNew,
     @required this.animalsListState,
+    @required this.currentJourneyState,
   });
 
   AppState copyWith(
-      {FirebaseState firebaseState, bool userIsNew, AnimalsListState animalsListState}) {
+      {FirebaseState firebaseState, bool userIsNew, AnimalsListState animalsListState, CurrentJourneyState currentJourneyState}) {
     return new AppState(
         firebaseState: firebaseState ?? this.firebaseState,
         userIsNew: userIsNew ?? this.userIsNew,
-        animalsListState: animalsListState ?? this.animalsListState);
+        animalsListState: animalsListState ?? this.animalsListState,
+        currentJourneyState: currentJourneyState ?? this.currentJourneyState
+        );
   }
 
   factory AppState.initial() {
@@ -26,6 +31,7 @@ class AppState {
       firebaseState: FirebaseState.initial(),
       userIsNew: false,
       animalsListState: AnimalsListState.initial(),
+      currentJourneyState: CurrentJourneyState.initial(),
     );
   }
 }
@@ -67,5 +73,25 @@ class AnimalsListState {
         animals: animals ?? this.animals,
         isLoading: isLoading ?? this.isLoading,
         errorLoading: errorLoading ?? this.errorLoading);
+  }
+}
+
+
+@immutable
+class CurrentJourneyState {
+  final Journey journey;
+  final List<Animal> animals;
+
+  const CurrentJourneyState(
+      {@required this.journey, @required this.animals});
+
+  factory CurrentJourneyState.initial() {
+    return new CurrentJourneyState(journey: null, animals: null);
+  }
+
+  CurrentJourneyState copyWith({Journey journey, List<Animal> animals}) {
+    return new CurrentJourneyState(
+        journey: journey,
+        animals: animals);
   }
 }

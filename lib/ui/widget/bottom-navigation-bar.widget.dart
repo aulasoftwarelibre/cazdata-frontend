@@ -1,6 +1,4 @@
-import 'package:cazdata_frontend/model/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/services/repository/hunter.repository.dart';
 import 'package:cazdata_frontend/ui/pages/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -82,7 +80,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
 }
 
 class BottomNavigationBarProvider with ChangeNotifier {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   get currentIndex => _currentIndex;
 

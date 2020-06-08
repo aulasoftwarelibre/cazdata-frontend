@@ -1,8 +1,11 @@
+import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/animal-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cazdata_frontend/model/journey.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 import '../../model/journey.dart';
 
@@ -74,7 +77,7 @@ class ConfiguratorState extends State<Configurator> {
     return null;
   }
 
-  void submit() {
+  void submit(_ViewModel vm) {
     // First validate form.
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
@@ -87,10 +90,9 @@ class ConfiguratorState extends State<Configurator> {
           _journey.type = "Mayor";
       });
 
-      print('Printing the form data.');
-      print('Title: ${_journey.title}');
-      print('Modality: ${_journey.modality}');
-      print('Type: ${_journey.type}');
+
+      vm.saveJourney(_journey);
+      
     } else {
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(
@@ -103,6 +105,20 @@ class ConfiguratorState extends State<Configurator> {
 
   @override
   Widget build(BuildContext context) {
+    return new StoreConnector<AppState, _ViewModel>(
+      converter: (store) {
+        return _ViewModel.fromStore(store);
+      },
+      builder: (BuildContext context, _ViewModel vm) {
+        return _formView(context, vm);
+      },
+      onInit: (store) {
+        store.dispatch(CleanCurrentJourney());
+      },
+    );
+  }
+
+  Widget _formView(BuildContext context, _ViewModel vm) {
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -270,7 +286,9 @@ class ConfiguratorState extends State<Configurator> {
                           child: ButtonTheme(
                             height: 50,
                             child: FlatButton(
-                              onPressed: submit,
+                              onPressed: (){
+                                submit(vm);
+                              },
                               color: primaryColor,
                               textColor: Colors.white,
                               shape: RoundedRectangleBorder(
@@ -293,6 +311,23 @@ class ConfiguratorState extends State<Configurator> {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+class _ViewModel {
+  final Function(Journey) saveJourney;
+
+  _ViewModel({
+    @required this.saveJourney,
+  });
+
+  static _ViewModel fromStore(Store<AppState> store) {
+    return _ViewModel(
+      saveJourney: (Journey journey) {
+        store.dispatch(SaveCurrentJourney(journey));
+      },
     );
   }
 }
