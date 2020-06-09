@@ -155,7 +155,7 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.25+3"
+    version: "0.5.26+4"
   google_sign_in:
     dependency: "direct main"
     description:

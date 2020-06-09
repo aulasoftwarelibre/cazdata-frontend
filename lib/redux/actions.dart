@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cazdata_frontend/model/animal.dart';
+import 'package:cazdata_frontend/model/journey.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginWithGoogleAction {
@@ -25,3 +27,41 @@ class UserIsNew {
 
   UserIsNew(this.userIsNew);
 }
+
+class StartLoadingAnimalsAction {
+  StartLoadingAnimalsAction();
+}
+
+class AnimalsLoadedAction {
+  final AnimalsList animalsList;
+
+  AnimalsLoadedAction(this.animalsList);
+}
+
+class AnimalsLoadFailedAction {
+  AnimalsLoadFailedAction();
+}
+
+class AddAnimalAction{
+  final Animal animal;
+
+  AddAnimalAction(this.animal);
+}
+
+class RemoveAnimalAction{
+  final Animal animal;
+
+  RemoveAnimalAction(this.animal);
+}
+
+class SaveCurrentJourney{
+  final Journey journey;
+
+  SaveCurrentJourney(this.journey);
+}
+
+class CleanCurrentJourney{
+
+  CleanCurrentJourney();
+}
+

@@ -15,16 +15,18 @@ class JourniesList{
 }
 
 class Journey {
-  final String id;
-  final String title;
-  final String startTime;
-  final String endTime;
-  final int distance;
-  final int minutes;
-  final int calories;
+  String id;
+  String title;
+  String modality;
+  String type;
+  String startTime;
+  String endTime;
+  int distance;
+  int minutes;
+  int calories;
 
   Journey(
-      {this.id, this.title, this.startTime, this.endTime,this.distance, this.minutes, this.calories});
+      {this.id, this.title, this.modality, this.type, this.startTime, this.endTime,this.distance, this.minutes, this.calories});
 
   Map toJson() {
     return {
