@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:cazdata_frontend/redux/index.dart';
+import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
-import 'configurator.dart';
 import '../../util/colors.dart';
 
 const double CAMERA_ZOOM = 16;
@@ -16,12 +17,12 @@ const double CAMERA_TILT = 0;
 const double CAMERA_BEARING = 0;
 const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
 
-class Home extends StatefulWidget {
+class JourneyPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => HomeState();
+  State<StatefulWidget> createState() => JourneyPageState();
 }
 
-class HomeState extends State<Home> {
+class JourneyPageState extends State<JourneyPage> {
   Completer<GoogleMapController> _controller = Completer();
 
   //Map markers
@@ -37,7 +38,7 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
       converter: (store) =>
-          _ViewModel(user: store.state.firebaseState.firebaseUser),
+          _ViewModel(user: store.state.firebaseState.firebaseUser, currentJourneyState: store.state.currentJourneyState),
       builder: (BuildContext context, _ViewModel vm) => _homeView(context, vm),
     );
   }
@@ -63,14 +64,6 @@ class HomeState extends State<Home> {
           margin: const EdgeInsets.all(20),
           child: Column(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Text(
-                    'Mapa de Inicio',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-                  ),
-                ],
-              ),
               Padding(
                 padding: EdgeInsets.only(top: 16),
                 child: Row(
@@ -100,8 +93,8 @@ class HomeState extends State<Home> {
                                   SizedBox(
                                     //Looks like google api and flutter arent friends so size is defined like this for now
                                     width:
-                                        MediaQuery.of(context).size.width/1.135,
-                                    height: MediaQuery.of(context).size.height/1.99,
+                                        MediaQuery.of(context).size.width/1.14,
+                                    height: MediaQuery.of(context).size.height/1.75,
                                     child: GoogleMap(
                                       myLocationButtonEnabled: false,
                                       myLocationEnabled: true,
@@ -140,19 +133,32 @@ class HomeState extends State<Home> {
                       child: Expanded(
                         child: FlatButton(
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) {
-                                return Configurator();
-                              },
-                            ));
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return MaterialApp(
+                                    title: 'Group',
+                                    theme: ThemeData(
+                                        primaryColor: primaryColor,
+                                        fontFamily: 'Montserrat'),
+                                    home: ChangeNotifierProvider<
+                                        BottomNavigationBarProvider>(
+                                      child: BottomNavigationBarWidget(),
+                                      create: (BuildContext context) =>
+                                          BottomNavigationBarProvider(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
                           },
-                          color: primaryColor,
+                          color: Colors.red,
                           textColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(18.0),
                           ),
                           child: Text(
-                            "Iniciar jornada",
+                            "Fin Jornada",
                             style: TextStyle(
                                 fontFamily: "Montserrat",
                                 fontWeight: FontWeight.bold,
@@ -218,6 +224,7 @@ class HomeState extends State<Home> {
 
 class _ViewModel {
   final FirebaseUser user;
+  final CurrentJourneyState currentJourneyState;
 
-  _ViewModel({@required this.user});
+  _ViewModel({@required this.user, @required this.currentJourneyState});
 }

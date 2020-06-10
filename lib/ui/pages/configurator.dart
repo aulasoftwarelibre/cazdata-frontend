@@ -1,4 +1,5 @@
 import 'package:cazdata_frontend/redux/index.dart';
+import 'package:cazdata_frontend/ui/pages/journey.dart';
 import 'package:cazdata_frontend/ui/widget/animal-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
@@ -92,7 +93,12 @@ class ConfiguratorState extends State<Configurator> {
 
 
       vm.saveJourney(_journey);
-      
+
+      Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) {
+                                return JourneyPage();
+                              },
+                            ));
     } else {
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(
