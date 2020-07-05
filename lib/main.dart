@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter/services.dart';
 
 import 'util/colors.dart';
 
@@ -17,6 +18,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+            statusBarColor: Colors.white,
+            /* set Status bar color in Android devices. */
+
+            statusBarIconBrightness: Brightness.dark,
+            /* set Status bar icons color in Android devices.*/
+
+            statusBarBrightness:
+                Brightness.dark) /* set Status bar icon color in iOS. */
+        );
     return StoreProvider(
       store: this.store,
       child: MaterialApp(

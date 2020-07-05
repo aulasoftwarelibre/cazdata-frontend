@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
-import 'package:cazdata_frontend/ui/widget/radial-menu.widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +45,20 @@ class JourneyPageState extends State<JourneyPage> {
   }
 
   Widget _homeView(BuildContext context, _ViewModel vm) {
+    List<SpeedDialChild> buttons = [];
+    for (int i = 0; i < vm.currentJourneyState.animals.length; i++) {
+      buttons.add(
+        SpeedDialChild(
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                  "https://avatars0.githubusercontent.com/u/30497404?s=460&u=9658120c23aa1ab672aa1f64debb4662383c0686&v=4"),
+              backgroundColor: Colors.transparent,
+            ),
+            label: vm.currentJourneyState.animals[i].name,
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () => print('FIRST CHILD')),
+      );
+    }
     CameraPosition initialCameraPosition = CameraPosition(
         zoom: CAMERA_ZOOM,
         tilt: CAMERA_TILT,
@@ -118,17 +132,36 @@ class JourneyPageState extends State<JourneyPage> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 100.0,
-                  ),
-                  child: RadialMenu(),
-                ),
               ],
             ),
           ),
         ),
       ]),
+      floatingActionButton: SpeedDial(
+        // both default to 16
+        marginRight: 18,
+        marginBottom: 20,
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        // this is ignored if animatedIcon is non null
+        // child: Icon(Icons.add),
+        visible: true,
+        // If true user is forced to close dial manually
+        // by tapping main button and overlay is not rendered.
+        closeManually: false,
+        curve: Curves.bounceIn,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        onOpen: () => print('OPENING DIAL'),
+        onClose: () => print('DIAL CLOSED'),
+        tooltip: 'Speed Dial',
+        heroTag: 'speed-dial-hero-tag',
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 8.0,
+        shape: CircleBorder(),
+        children: buttons,
+      ),
     );
   }
 
