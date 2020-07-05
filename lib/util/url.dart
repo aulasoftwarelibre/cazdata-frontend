@@ -1,4 +1,5 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class Url {
-  static const String apiBaseUrl =
-      'http://10.0.2.2:4000';
+  static String apiBaseUrl = DotEnv().env['HOST'];
 }
