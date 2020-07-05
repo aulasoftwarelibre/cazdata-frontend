@@ -5,19 +5,12 @@ class AnimalsList {
 
   AnimalsList({this.animals});
 
-  factory AnimalsList.fromJson(List<dynamic> parsedJson) {
-    List<Animal> animals = new List<Animal>();
-    animals = parsedJson.map((i) => Animal.fromJson(i)).toList();
-
-    return new AnimalsList(animals: animals);
-  }
-
   factory AnimalsList.fromFirestoreDocuments(
       List<DocumentSnapshot> documentsList) {
     List<Animal> animals = new List<Animal>();
 
     animals = documentsList
-        .map((document) => Animal.fromJson(document.data))
+        .map((document) => Animal.fromJson(document.documentID, document.data))
         .toList();
     return new AnimalsList(animals: animals);
   }
@@ -42,9 +35,9 @@ class Animal {
     };
   }
 
-  factory Animal.fromJson(Map<String, dynamic> json) {
+  factory Animal.fromJson(String id, Map<String, dynamic> json) {
     return new Animal(
-        id: json['id'],
+        id: id,
         name: json['name'],
         isEnabled: json['isEnabled'],
         type: json['type'],
