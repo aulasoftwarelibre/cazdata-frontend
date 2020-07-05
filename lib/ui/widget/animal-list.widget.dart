@@ -59,7 +59,12 @@ class AnimalsList extends StatelessWidget {
     } else if (viewModel._animalsListState.animals != null) {
       List<Animal> animals = [];
       for (int i = 0; i < viewModel._animalsListState.animals.length; i++) {
-        animals.add(viewModel._animalsListState.animals[i]);
+        if ((this._huntType == 0 &&
+                viewModel._animalsListState.animals[i].type == "minor") ||
+            (this._huntType == 1 &&
+                viewModel._animalsListState.animals[i].type == "major")) {
+          animals.add(viewModel._animalsListState.animals[i]);
+        }
       }
 
       return Expanded(
@@ -78,22 +83,6 @@ class AnimalsList extends StatelessWidget {
           padding: 5,
           enableShape: true,
         ),
-        /*child: ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: viewModel._animalsListState.animals.length,
-          itemBuilder: (context, index) {
-            if ((this._huntType == 0 && viewModel._animalsListState.animals[index].type == "minor") ||
-                (this._huntType == 1 && viewModel._animalsListState.animals[index].type == "major")) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 4.0, top: 4.0),
-                child: AnimalTile(viewModel._animalsListState.animals[index]),
-              );
-            } else {
-              return Separator.none();
-            }
-          },
-        ),*/
       );
     } else {
       return Separator.none();
