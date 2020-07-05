@@ -99,9 +99,10 @@ class HomeState extends State<Home> {
                                 children: <Widget>[
                                   SizedBox(
                                     //Looks like google api and flutter arent friends so size is defined like this for now
-                                    width:
-                                        MediaQuery.of(context).size.width/1.135,
-                                    height: MediaQuery.of(context).size.height/1.99,
+                                    width: MediaQuery.of(context).size.width /
+                                        1.14,
+                                    height: MediaQuery.of(context).size.height /
+                                        1.99,
                                     child: GoogleMap(
                                       myLocationButtonEnabled: false,
                                       myLocationEnabled: true,
