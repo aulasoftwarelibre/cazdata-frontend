@@ -15,7 +15,7 @@ class TextFieldWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           AutoSizeText(
-            header,
+            "jflkadjfañlksdjfñalffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafffffffffffkdsjfañkfljañldk",
             style: TextStyle(
               fontFamily: 'Montserrat',
               color: Colors.black,
@@ -23,7 +23,9 @@ class TextFieldWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
               decoration: TextDecoration.none,
             ),
+            minFontSize: 10,
             maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           AutoSizeText(
             content,

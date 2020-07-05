@@ -17,14 +17,16 @@ class ProfileOnMapWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(10),
             child: CircleAvatar(
-            radius: 35,
-            backgroundImage: NetworkImage(profilePic),
-            backgroundColor: Colors.transparent,
+              radius: 35,
+              backgroundImage: NetworkImage(profilePic),
+              backgroundColor: Colors.transparent,
+            ),
           ),
+          Flexible(
+            child: Container(
+                margin: const EdgeInsets.only(left: 10),
+                child: TextFieldWidget(header: name, content: location)),
           ),
-          Container(
-              margin: const EdgeInsets.only(left: 10),
-              child: TextFieldWidget(header: name, content: location)),
         ],
       ),
     );

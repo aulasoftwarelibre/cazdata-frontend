@@ -86,14 +86,10 @@ class HomeState extends State<Home> {
                         child: Center(
                           child: Column(
                             children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  ProfileOnMapWidget(
-                                    name: vm.user.displayName,
-                                    location: 'Nivel 1',
-                                    profilePic: vm.user.photoUrl,
-                                  ),
-                                ],
+                              ProfileOnMapWidget(
+                                name: vm.user.displayName,
+                                location: 'Nivel 1',
+                                profilePic: vm.user.photoUrl,
                               ),
                               Row(
                                 children: <Widget>[

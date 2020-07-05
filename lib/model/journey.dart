@@ -1,16 +1,13 @@
-class JourniesList{
+class JourniesList {
   final List<Journey> journies;
 
   JourniesList({this.journies});
 
   factory JourniesList.fromJson(List<dynamic> parsedJson) {
-
     List<Journey> journies = new List<Journey>();
-    journies = parsedJson.map((i)=>Journey.fromJson(i)).toList();
+    journies = parsedJson.map((i) => Journey.fromJson(i)).toList();
 
-    return new JourniesList(
-      journies: journies
-    );
+    return new JourniesList(journies: journies);
   }
 }
 
@@ -26,7 +23,15 @@ class Journey {
   int calories;
 
   Journey(
-      {this.id, this.title, this.modality, this.type, this.startTime, this.endTime,this.distance, this.minutes, this.calories});
+      {this.id,
+      this.title,
+      this.modality,
+      this.type,
+      this.startTime,
+      this.endTime,
+      this.distance,
+      this.minutes,
+      this.calories});
 
   Map toJson() {
     return {
@@ -38,7 +43,6 @@ class Journey {
       'calories': calories
     };
   }
-
 
   factory Journey.fromJson(Map<String, dynamic> json) {
     return new Journey(

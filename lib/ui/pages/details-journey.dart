@@ -4,7 +4,6 @@ import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
 
 class DetailsJourney extends StatelessWidget {
-  
   final Journey journey;
 
   const DetailsJourney({
@@ -14,7 +13,6 @@ class DetailsJourney extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     DateTime startTime = DateTime.parse(journey.startTime);
     DateTime endTime = DateTime.parse(journey.endTime);
     final int difference = endTime.difference(startTime).inMinutes;
@@ -24,7 +22,7 @@ class DetailsJourney extends StatelessWidget {
         title: Text('CazData'),
       ),
       body: SingleChildScrollView(
-          child: DefaultTextStyle(
+        child: DefaultTextStyle(
           style: TextStyle(
               inherit: true,
               fontSize: 14.0,
@@ -57,7 +55,8 @@ class DetailsJourney extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 10.0),
                     child: Text(
                       'Información',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                   ),
                   Row(
@@ -73,7 +72,7 @@ class DetailsJourney extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: Text(
-                          journey.startTime.substring(0,10),
+                          journey.startTime.substring(0, 10),
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
@@ -82,60 +81,60 @@ class DetailsJourney extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Card(
+                        child: Card(
                             color: Color.fromARGB(255, 241, 243, 246),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(16),
-                                topRight: Radius.circular(16),
-                              )                          
-                            ),
+                                borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            )),
                             child: Center(
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      DataOnMapWidget(
+                                child: Column(
+                              children: <Widget>[
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    DataOnMapWidget(
                                         distance: journey.distance.toString(),
                                         time: difference.toString(),
-                                        calories: journey.calories.toString()
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width - 78,
-                                        height: MediaQuery.of(context).size.height - 440,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              )    
-                            )
-                          ),
-                        ),
+                                        calories: journey.calories.toString())
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.14,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              1.99,
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ))),
                       )
                     ],
                   ),
                   Row(
                     children: <Widget>[
                       Expanded(
-                            child: FlatButton(
-                            onPressed: () {
-                              /*...*/
-                            },
-                            color: primaryColor,
-                            textColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(18.0)),
-                            child: Text("Compartir jornada",
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-                    ),
+                        child: FlatButton(
+                          onPressed: () {
+                            /*...*/
+                          },
+                          color: primaryColor,
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0)),
+                          child: Text("Compartir jornada",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 17)),
+                        ),
                       )
-                  ],)
+                    ],
+                  )
                 ],
               ),
             ),

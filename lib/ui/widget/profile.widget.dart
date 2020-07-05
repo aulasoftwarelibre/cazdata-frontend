@@ -19,9 +19,11 @@ class ProfileWidget extends StatelessWidget {
             backgroundImage: NetworkImage(profilePic),
             backgroundColor: Colors.transparent,
           ),
-          Container(
-              margin: const EdgeInsets.only(left: 10),
-              child: TextFieldWidget(header: name, content: location)),
+          Flexible(
+            child: Container(
+                margin: const EdgeInsets.only(left: 10),
+                child: TextFieldWidget(header: name, content: location)),
+          ),
         ],
       ),
     );
