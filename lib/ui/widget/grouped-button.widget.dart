@@ -199,24 +199,22 @@ class _CustomCheckBoxGroupState extends State<CustomCheckBoxGroup> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: widget.horizontal
-            ? GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: ((MediaQuery.of(context).size.width / 1.14) /
-                    (MediaQuery.of(context).size.width / 2.99)),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: buildButtonsColumn(),
-              )
-            : ListView(
-                scrollDirection: Axis.horizontal,
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: buildButtonsRow(),
-              ),
-      ),
+    return Center(
+      child: widget.horizontal
+          ? GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: ((MediaQuery.of(context).size.width / 1.14) /
+                  (MediaQuery.of(context).size.width / 2.99)),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              children: buildButtonsColumn(),
+            )
+          : ListView(
+              scrollDirection: Axis.horizontal,
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: buildButtonsRow(),
+            ),
     );
   }
 }
