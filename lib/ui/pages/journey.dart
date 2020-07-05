@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
-import 'package:cazdata_frontend/ui/widget/index.dart';
 import 'package:cazdata_frontend/ui/widget/radial-menu.widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

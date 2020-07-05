@@ -91,14 +91,13 @@ class ConfiguratorState extends State<Configurator> {
           _journey.type = "Mayor";
       });
 
-
       vm.saveJourney(_journey);
 
       Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) {
-                                return JourneyPage();
-                              },
-                            ));
+        builder: (context) {
+          return JourneyPage();
+        },
+      ));
     } else {
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(
@@ -292,7 +291,7 @@ class ConfiguratorState extends State<Configurator> {
                           child: ButtonTheme(
                             height: 50,
                             child: FlatButton(
-                              onPressed: (){
+                              onPressed: () {
                                 submit(vm);
                               },
                               color: primaryColor,
@@ -320,7 +319,6 @@ class ConfiguratorState extends State<Configurator> {
     );
   }
 }
-
 
 class _ViewModel {
   final Function(Journey) saveJourney;

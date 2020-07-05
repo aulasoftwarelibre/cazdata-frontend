@@ -1,6 +1,8 @@
+import 'package:cazdata_frontend/model/animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/widget/animal-tile.widget.dart';
+import 'package:cazdata_frontend/ui/widget/grouped-button.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
+import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -55,8 +57,28 @@ class AnimalsList extends StatelessWidget {
         ),
       );
     } else if (viewModel._animalsListState.animals != null) {
+      List<Animal> animals = [];
+      for (int i = 0; i < viewModel._animalsListState.animals.length; i++) {
+        animals.add(viewModel._animalsListState.animals[i]);
+      }
+
       return Expanded(
-        child: ListView.builder(
+        child: CustomCheckBoxGroup(
+          buttonColor: Theme.of(context).canvasColor,
+          buttonLables: animals,
+          buttonValuesList: animals,
+          checkBoxButtonValues: (values) {
+            print(values);
+          },
+          defaultSelected: "Sunday",
+          horizontal: true,
+          width: 120,
+          // hight: 50,
+          selectedColor: primaryColor,
+          padding: 5,
+          enableShape: true,
+        ),
+        /*child: ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: viewModel._animalsListState.animals.length,
@@ -71,7 +93,7 @@ class AnimalsList extends StatelessWidget {
               return Separator.none();
             }
           },
-        ),
+        ),*/
       );
     } else {
       return Separator.none();

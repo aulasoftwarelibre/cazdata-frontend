@@ -36,6 +36,7 @@ dependencies:
   flutter_redux: ^0.6.0
   redux_thunk: ^0.3.0
   auto_size_text: ^2.1.0
+  custom_radio_grouped_button: any
 
 dev_dependencies:
   flutter_test:
