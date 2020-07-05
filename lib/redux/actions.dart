@@ -42,26 +42,18 @@ class AnimalsLoadFailedAction {
   AnimalsLoadFailedAction();
 }
 
-class AddAnimalAction{
-  final Animal animal;
+class UpdateAnimalsAction {
+  final List<Animal> animals;
 
-  AddAnimalAction(this.animal);
+  UpdateAnimalsAction(this.animals);
 }
 
-class RemoveAnimalAction{
-  final Animal animal;
-
-  RemoveAnimalAction(this.animal);
-}
-
-class SaveCurrentJourney{
+class SaveCurrentJourney {
   final Journey journey;
 
   SaveCurrentJourney(this.journey);
 }
 
-class CleanCurrentJourney{
-
+class CleanCurrentJourney {
   CleanCurrentJourney();
 }
-

@@ -40,9 +40,9 @@ class CustomCheckBoxGroup extends StatefulWidget {
   final bool enableShape;
   final double elevation;
 
-  final List<Animal> buttonLables;
+  final List<dynamic> buttonLables;
 
-  final Function(List<dynamic>) checkBoxButtonValues;
+  final Function(List<Animal>) checkBoxButtonValues;
 
   final Color selectedColor;
   final dynamic defaultSelected;
@@ -54,12 +54,12 @@ class CustomCheckBoxGroup extends StatefulWidget {
 }
 
 class _CustomCheckBoxGroupState extends State<CustomCheckBoxGroup> {
-  List<dynamic> selectedLables = [];
+  List<Animal> selectedLables = [];
 
   @override
   void initState() {
     super.initState();
-    selectedLables.add(widget.defaultSelected);
+    // selectedLables.add(widget.defaultSelected);
     // currentSelectedLabel = widget.buttonLables[0];
   }
 

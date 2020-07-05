@@ -9,13 +9,16 @@ import 'package:redux/redux.dart';
 
 class _ViewModel {
   final AnimalsListState _animalsListState;
+  final Function(List<Animal>) updateAnimals;
 
-  _ViewModel(this._animalsListState);
+  _ViewModel(this._animalsListState, this.updateAnimals);
 
   factory _ViewModel.create(Store<AppState> store) {
     AnimalsListState animalsListState = store.state.animalsListState;
 
-    return _ViewModel(animalsListState);
+    return _ViewModel(animalsListState, (List<Animal> animals) {
+      store.dispatch(UpdateAnimalsAction(animals));
+    });
   }
 }
 
@@ -73,9 +76,8 @@ class AnimalsList extends StatelessWidget {
           buttonLables: animals,
           buttonValuesList: animals,
           checkBoxButtonValues: (values) {
-            print(values);
+            viewModel.updateAnimals(values);
           },
-          defaultSelected: "Sunday",
           horizontal: true,
           width: 120,
           // hight: 50,

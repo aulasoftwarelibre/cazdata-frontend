@@ -5,14 +5,14 @@ AppState mainReducer(AppState state, dynamic action) {
   FirebaseState firebaseState = _reduceFirebaseState(state, action);
   bool userIsNew = _reduceUserIsNew(state, action);
   AnimalsListState animalsListState = _reduceAnimalsListState(state, action);
-  CurrentJourneyState currentJourneyState = _reduceCurrentJourneyStateState(state, action);
+  CurrentJourneyState currentJourneyState =
+      _reduceCurrentJourneyStateState(state, action);
 
   return AppState(
       firebaseState: firebaseState,
       userIsNew: userIsNew,
       animalsListState: animalsListState,
-      currentJourneyState: currentJourneyState
-      );
+      currentJourneyState: currentJourneyState);
 }
 
 FirebaseState _reduceFirebaseState(AppState state, dynamic action) {
@@ -50,27 +50,19 @@ AnimalsListState _reduceAnimalsListState(AppState state, dynamic action) {
   return newState;
 }
 
-CurrentJourneyState _reduceCurrentJourneyStateState(AppState state, dynamic action) {
+CurrentJourneyState _reduceCurrentJourneyStateState(
+    AppState state, dynamic action) {
   CurrentJourneyState newState = state.currentJourneyState;
 
-  if (action is AddAnimalAction) {
-    List<Animal> newAnimals = [];
-    if(newState.animals != null){
-      newAnimals = newState.animals;
-    }
+  if (action is UpdateAnimalsAction) {
+    List<Animal> newAnimals = action.animals;
 
-    newAnimals.add(action.animal);
-
-    newState = newState.copyWith(animals: newAnimals, journey: newState.journey);
-  } else if(action is RemoveAnimalAction){
-    List<Animal> newAnimals = newState.animals;
-    newAnimals
-        .removeWhere((animal) => animal.id == action.animal.id);
-    
-    newState = newState.copyWith(animals: newAnimals);
-  } else if(action is SaveCurrentJourney){
-    newState = newState.copyWith(animals: newState.animals, journey: action.journey);
-  } else if(action is CleanCurrentJourney){
+    newState =
+        newState.copyWith(animals: newAnimals, journey: newState.journey);
+  } else if (action is SaveCurrentJourney) {
+    newState =
+        newState.copyWith(animals: newState.animals, journey: action.journey);
+  } else if (action is CleanCurrentJourney) {
     newState = newState.copyWith(journey: null, animals: null);
   }
 
