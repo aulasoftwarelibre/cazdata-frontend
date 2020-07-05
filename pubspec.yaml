@@ -30,7 +30,7 @@ dependencies:
   firebase_database: ^3.0.7
   google_sign_in: ^4.1.1
   location: ^2.5.0
-  google_maps_flutter: ^0.5.26+4
+  google_maps_flutter: ^0.5.28+1
   rxdart: 0.23.1
   redux: ^4.0.0
   flutter_redux: ^0.6.0

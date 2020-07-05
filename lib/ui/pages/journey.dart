@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
+import 'package:cazdata_frontend/ui/widget/radial-menu.widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -37,8 +38,9 @@ class JourneyPageState extends State<JourneyPage> {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
-      converter: (store) =>
-          _ViewModel(user: store.state.firebaseState.firebaseUser, currentJourneyState: store.state.currentJourneyState),
+      converter: (store) => _ViewModel(
+          user: store.state.firebaseState.firebaseUser,
+          currentJourneyState: store.state.currentJourneyState),
       builder: (BuildContext context, _ViewModel vm) => _homeView(context, vm),
     );
   }
@@ -59,79 +61,33 @@ class JourneyPageState extends State<JourneyPage> {
     }
 
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Card(
-                        color: Color.fromARGB(255, 241, 243, 246),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16)),
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  ProfileOnMapWidget(
-                                    name: vm.user.displayName,
-                                    location: 'Nivel 1',
-                                    profilePic: vm.user.photoUrl,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  SizedBox(
-                                    //Looks like google api and flutter arent friends so size is defined like this for now
-                                    width:
-                                        MediaQuery.of(context).size.width/1.14,
-                                    height: MediaQuery.of(context).size.height/1.75,
-                                    child: GoogleMap(
-                                      myLocationButtonEnabled: false,
-                                      myLocationEnabled: true,
-                                      compassEnabled: false,
-                                      rotateGesturesEnabled: false,
-                                      scrollGesturesEnabled: false,
-                                      tiltGesturesEnabled: false,
-                                      zoomGesturesEnabled: false,
-                                      zoomControlsEnabled: false,
-                                      markers: _markers,
-                                      mapType: MapType.hybrid,
-                                      initialCameraPosition:
-                                          initialCameraPosition,
-                                      onMapCreated:
-                                          (GoogleMapController controller) {
-                                        _controller.complete(controller);
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16, left: 8, right: 8),
-                child: Row(
-                  children: <Widget>[
-                    ButtonTheme(
-                      height: 50,
-                      child: Expanded(
-                        child: FlatButton(
+      body: Stack(alignment: Alignment.center, children: <Widget>[
+        GoogleMap(
+          myLocationButtonEnabled: false,
+          myLocationEnabled: true,
+          compassEnabled: false,
+          rotateGesturesEnabled: false,
+          scrollGesturesEnabled: false,
+          tiltGesturesEnabled: false,
+          zoomGesturesEnabled: false,
+          zoomControlsEnabled: false,
+          markers: _markers,
+          mapType: MapType.hybrid,
+          initialCameraPosition: initialCameraPosition,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+        ),
+        SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                ButtonTheme(
+                  child: Row(
+                    children: <Widget>[
+                      FlatButton(
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -153,27 +109,27 @@ class JourneyPageState extends State<JourneyPage> {
                             );
                           },
                           color: Colors.red,
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(18.0),
-                          ),
-                          child: Text(
-                            "Fin Jornada",
-                            style: TextStyle(
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(15.0),
+                          child: Icon(
+                            Icons.flag,
+                            color: Colors.white,
+                            size: 40,
+                          )),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 100.0,
+                  ),
+                  child: RadialMenu(),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      ]),
     );
   }
 

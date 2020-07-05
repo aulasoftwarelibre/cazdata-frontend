@@ -22,32 +22,34 @@ class LoginPage extends StatelessWidget {
             store.dispatch(result);
 
             Future.wait([result.completer.future]).then((user) => {
-              if(store.state.userIsNew){
-                showDialog(
-                    context: context,
-                    child: DataProtectionWidget(),
-                    )
-              }
-              else{
-                Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return MaterialApp(
-                          title: 'Group',
-                          theme: ThemeData(
-                              primaryColor: primaryColor,
-                              fontFamily: 'Montserrat'),
-                          home: ChangeNotifierProvider<
-                              BottomNavigationBarProvider>(
-                            child: BottomNavigationBarWidget(),
-                            create: (BuildContext context) =>
-                                BottomNavigationBarProvider(),
-                          ),
-                        );
-                      },
-                    ),
-                  )
-              }                  
+                  if (store.state.userIsNew)
+                    {
+                      showDialog(
+                        context: context,
+                        child: DataProtectionWidget(),
+                      )
+                    }
+                  else
+                    {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MaterialApp(
+                              title: 'Group',
+                              theme: ThemeData(
+                                  primaryColor: primaryColor,
+                                  fontFamily: 'Montserrat'),
+                              home: ChangeNotifierProvider<
+                                  BottomNavigationBarProvider>(
+                                child: BottomNavigationBarWidget(),
+                                create: (BuildContext context) =>
+                                    BottomNavigationBarProvider(),
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    }
                 });
           });
     }, builder: (BuildContext context, _ViewModel vm) {
@@ -62,16 +64,24 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,            
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 20.0),
               Text("Cazdata",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 74, color: accentColor)
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 74,
+                      color: accentColor)),
+              Image(
+                image: AssetImage("assets/hunter.jpg"),
+                height: 350.0,
               ),
-              Image(image: AssetImage("assets/hunter.jpg"), height: 350.0,),
               Text(
                 "La aplicación CazData está diseñada para\ntener un historial de tu progreso y logros\ncomo cazador. Mira tu historial de jornadas\ny compártelo con la comunidad.",
-                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 17, color: Colors.grey),
+                style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 17,
+                    color: Colors.grey),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 30.0),
