@@ -22,10 +22,9 @@ class _ViewModel {
   }
 }
 
-class AnimalsList extends StatelessWidget {
-  final int _huntType;
+class SpeciesList extends StatelessWidget {
 
-  AnimalsList(this._huntType);
+  SpeciesList();
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +61,7 @@ class AnimalsList extends StatelessWidget {
     } else if (viewModel._animalsListState.animals != null) {
       List<Animal> animals = [];
       for (int i = 0; i < viewModel._animalsListState.animals.length; i++) {
-        if ((this._huntType == 0 &&
-                viewModel._animalsListState.animals[i].type == "minor") ||
-            (this._huntType == 1 &&
-                viewModel._animalsListState.animals[i].type == "major")) {
           animals.add(viewModel._animalsListState.animals[i]);
-        }
       }
 
       return Expanded(

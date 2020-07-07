@@ -1,6 +1,7 @@
+import 'package:cazdata_frontend/model/animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/pages/journey.dart';
-import 'package:cazdata_frontend/ui/widget/animal-list.widget.dart';
+import 'package:cazdata_frontend/ui/widget/species-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
@@ -23,45 +24,23 @@ class ConfiguratorState extends State<Configurator> {
   final _dropdownButtonFormFieldKey = GlobalKey<FormFieldState>();
 
   Journey _journey = Journey();
-
-  int _huntType = 0;
   String _modality;
 
-  List<DropdownMenuItem<dynamic>> _getHuntModalities(int huntType) {
-    if (huntType == 0) {
-      return <String>[
-        "En mano",
-        "Ojeo",
-        "Perdiz con reclamo",
-        "Caza acuáticas",
-        "Cetrería"
-      ].map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(
-            value,
-          ),
-        );
-      }).toList();
-    } else {
-      return <String>["Montería", "Rececho", "Espera", "Batida", "Cetrería"]
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(
-            value,
-          ),
-        );
-      }).toList();
-    }
-  }
-
-  void _handleHuntTypeChange(int value) {
-    setState(() {
-      _modality = null;
-      _dropdownButtonFormFieldKey.currentState.didChange(_modality);
-      _huntType = value;
-    });
+  List<DropdownMenuItem<dynamic>> _getHuntModalities() {
+    return <String>[
+      "En mano",
+      "Ojeo",
+      "Perdiz con reclamo",
+      "Caza acuáticas",
+      "Cetrería"
+    ].map<DropdownMenuItem<String>>((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(
+          value,
+        ),
+      );
+    }).toList();
   }
 
   String _validateTitle(String title) {
@@ -85,19 +64,25 @@ class ConfiguratorState extends State<Configurator> {
 
       //Save the hunt type
       setState(() {
-        if (_huntType == 0)
-          _journey.type = "Menor";
-        else
-          _journey.type = "Mayor";
+        _journey.type = "Menor";
       });
 
-      vm.saveJourney(_journey);
+      if (vm.journeyAnimals != null) {
+        vm.saveJourney(_journey);
 
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) {
-          return JourneyPage();
-        },
-      ));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) {
+            return JourneyPage();
+          },
+        ));
+      } else {
+        _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text('Selecciona al menos una especie'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
     } else {
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(
@@ -201,7 +186,7 @@ class ConfiguratorState extends State<Configurator> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      items: _getHuntModalities(_huntType),
+                      items: _getHuntModalities(),
                       validator: _validateModality,
                       onChanged: (modality) {
                         setState(() {
@@ -220,51 +205,6 @@ class ConfiguratorState extends State<Configurator> {
                     Row(
                       children: <Widget>[
                         Text(
-                          'Tipo de Caza',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 150, 150, 150),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Separator.spacer(
-                      height: 8,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 0,
-                          groupValue: _huntType,
-                          activeColor: Color.fromARGB(255, 100, 100, 100),
-                          onChanged: _handleHuntTypeChange,
-                        ),
-                        Text(
-                          'Menor',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Separator.spacer(
-                          width: 16,
-                          height: 0,
-                        ),
-                        Radio(
-                          value: 1,
-                          groupValue: _huntType,
-                          activeColor: Color.fromARGB(255, 100, 100, 100),
-                          onChanged: _handleHuntTypeChange,
-                        ),
-                        Text(
-                          'Mayor',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ],
-                    ),
-                    Separator.spacer(
-                      height: 16,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
                           'Buscador de especies',
                           style: TextStyle(
                             fontSize: 18,
@@ -279,7 +219,7 @@ class ConfiguratorState extends State<Configurator> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        AnimalsList(_huntType),
+                        SpeciesList(),
                       ],
                     ),
                     Separator.spacer(
@@ -322,16 +262,18 @@ class ConfiguratorState extends State<Configurator> {
 
 class _ViewModel {
   final Function(Journey) saveJourney;
+  final List<Animal> journeyAnimals;
 
   _ViewModel({
     @required this.saveJourney,
+    @required this.journeyAnimals,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      saveJourney: (Journey journey) {
-        store.dispatch(SaveCurrentJourney(journey));
-      },
-    );
+        saveJourney: (Journey journey) {
+          store.dispatch(SaveCurrentJourney(journey));
+        },
+        journeyAnimals: store.state.currentJourneyState.animals);
   }
 }

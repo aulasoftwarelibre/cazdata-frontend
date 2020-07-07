@@ -56,7 +56,7 @@ class JourneyPageState extends State<JourneyPage> {
             ),
             label: vm.currentJourneyState.animals[i].name,
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => print('FIRST CHILD')),
+            onTap: () => print(vm.currentJourneyState.animals[i].name)),
       );
     }
     CameraPosition initialCameraPosition = CameraPosition(
@@ -102,11 +102,12 @@ class JourneyPageState extends State<JourneyPage> {
                     children: <Widget>[
                       FlatButton(
                           onPressed: () {
+                            Navigator.pop(context);
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) {
                                   return MaterialApp(
-                                    title: 'Group',
+                                    title: 'Jornada',
                                     theme: ThemeData(
                                         primaryColor: primaryColor,
                                         fontFamily: 'Montserrat'),
@@ -127,7 +128,7 @@ class JourneyPageState extends State<JourneyPage> {
                           child: Icon(
                             Icons.flag,
                             color: Colors.white,
-                            size: 40,
+                            size: 22,
                           )),
                     ],
                   ),
