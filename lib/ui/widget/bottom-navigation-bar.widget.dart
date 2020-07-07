@@ -51,6 +51,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   Widget _appView(BuildContext context, _ViewModel viewModel) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       body: IndexedStack(
         index: provider.currentIndex,
         children: currentTab,
