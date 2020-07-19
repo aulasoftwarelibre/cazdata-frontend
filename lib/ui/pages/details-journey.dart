@@ -111,17 +111,10 @@ class DetailsJourney extends StatelessWidget {
                                           calories: journey.calories.toString())
                                     ],
                                   ),
-                                  Row(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                1.14,
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                1.99,
-                                      )
-                                    ],
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    height:
+                                        MediaQuery.of(context).size.height / 2,
                                   ),
                                 ],
                               ))),

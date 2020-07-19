@@ -59,109 +59,108 @@ class HomeState extends State<Home> {
 
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Text(
-                    'Mapa de Inicio',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Row(
+        child: SingleChildScrollView(
+          physics: PageScrollPhysics(),
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            child: Column(
+              children: <Widget>[
+                Row(
                   children: <Widget>[
-                    Expanded(
-                      child: Card(
-                        color: Color.fromARGB(255, 241, 243, 246),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16)),
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              ProfileOnMapWidget(
-                                name: vm.user.displayName,
-                                location: 'Nivel 1',
-                                profilePic: vm.user.photoUrl,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  SizedBox(
-                                    //Looks like google api and flutter arent friends so size is defined like this for now
-                                    width: MediaQuery.of(context).size.width /
-                                        1.14,
-                                    height: MediaQuery.of(context).size.height /
-                                        1.99,
-                                    child: GoogleMap(
-                                      myLocationButtonEnabled: false,
-                                      myLocationEnabled: true,
-                                      compassEnabled: false,
-                                      rotateGesturesEnabled: false,
-                                      scrollGesturesEnabled: false,
-                                      tiltGesturesEnabled: false,
-                                      zoomGesturesEnabled: false,
-                                      zoomControlsEnabled: false,
-                                      markers: _markers,
-                                      mapType: MapType.hybrid,
-                                      initialCameraPosition:
-                                          initialCameraPosition,
-                                      onMapCreated:
-                                          (GoogleMapController controller) {
-                                        _controller.complete(controller);
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    Text(
+                      'Mapa de Inicio',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16, left: 8, right: 8),
-                child: Row(
-                  children: <Widget>[
-                    ButtonTheme(
-                      height: 50,
-                      child: Expanded(
-                        child: FlatButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) {
-                                return Configurator();
-                              },
-                            ));
-                          },
-                          color: primaryColor,
-                          textColor: Colors.white,
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Card(
+                          color: Color.fromARGB(255, 241, 243, 246),
                           shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(18.0),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(16),
+                                topRight: Radius.circular(16)),
                           ),
-                          child: Text(
-                            "Iniciar jornada",
-                            style: TextStyle(
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                          child: Center(
+                            child: Column(
+                              children: <Widget>[
+                                ProfileOnMapWidget(
+                                  name: vm.user.displayName,
+                                  location: 'Nivel 1',
+                                  profilePic: vm.user.photoUrl,
+                                ),
+                                SizedBox(
+                                  //Looks like google api and flutter arent friends so size is defined like this for now
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height / 2,
+                                  child: GoogleMap(
+                                    myLocationButtonEnabled: false,
+                                    myLocationEnabled: true,
+                                    compassEnabled: false,
+                                    rotateGesturesEnabled: false,
+                                    scrollGesturesEnabled: false,
+                                    tiltGesturesEnabled: false,
+                                    zoomGesturesEnabled: false,
+                                    zoomControlsEnabled: false,
+                                    markers: _markers,
+                                    mapType: MapType.hybrid,
+                                    initialCameraPosition:
+                                        initialCameraPosition,
+                                    onMapCreated:
+                                        (GoogleMapController controller) {
+                                      _controller.complete(controller);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.only(top: 16, left: 8, right: 8),
+                  child: Row(
+                    children: <Widget>[
+                      ButtonTheme(
+                        height: 50,
+                        child: Expanded(
+                          child: FlatButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) {
+                                  return Configurator();
+                                },
+                              ));
+                            },
+                            color: primaryColor,
+                            textColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                            ),
+                            child: Text(
+                              "Iniciar jornada",
+                              style: TextStyle(
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
