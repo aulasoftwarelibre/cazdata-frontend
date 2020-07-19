@@ -16,7 +16,7 @@ class JourneyRepository {
   }
 
   Future<bool> postJourney(Journey journey, String tokenId) async {
-    final String url = Url.apiBaseUrl + "/journeys/" + journey.id;
+    final String url = Url.apiBaseUrl + "/journeys";
 
     var requestBody = jsonEncode(journey);
     final response = await _provider.post(url, requestBody, tokenId);
