@@ -64,32 +64,55 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              SizedBox(height: 20.0),
-              Text("Cazdata",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 74,
-                      color: accentColor)),
-              Image(
-                image: AssetImage("assets/hunter.jpg"),
-                height: 350.0,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Cazdata",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 74,
+                          color: accentColor)),
+                ],
               ),
-              Text(
-                "La aplicación CazData está diseñada para\ntener un historial de tu progreso y logros\ncomo cazador. Mira tu historial de jornadas\ny compártelo con la comunidad.",
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 17,
-                    color: Colors.grey),
-                textAlign: TextAlign.center,
+              Padding(
+                padding: const EdgeInsets.only(left:8.0, right: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Image(
+                        image: AssetImage("assets/hunter.jpg"),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 30.0),
-              OAuthLoginButton(
-                onPressed: vm.login,
-                text: "Inicia Sesión con Google",
-                assetName: "assets/google_logo.png",
-                backgroundColor: Colors.black,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                textDirection: TextDirection.ltr,
+                children: [
+                  Text(
+                    "La aplicación CazData está diseñada para\ntener un historial de tu progreso y logros\ncomo cazador. Mira tu historial de jornadas\ny compártelo con la comunidad.",
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                        color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  OAuthLoginButton(
+                    onPressed: vm.login,
+                    text: "Inicia Sesión con Google",
+                    assetName: "assets/google_logo.png",
+                    backgroundColor: Colors.black,
+                  ),
+                ],
               ),
             ],
           ),
