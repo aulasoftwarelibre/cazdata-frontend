@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong/latlong.dart' as LatitudeLongitude;
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +34,11 @@ class JourneyPageState extends State<JourneyPage> {
   LocationData _currentLocation;
   // wrapper around the location API
   Location _location;
+
+  // this will hold the generated polylines
+  Set<Polyline> _polylines = {};
+  // this will hold each polyline coordinate as Lat and Lng pairs
+  List<LatLng> polylineCoordinates = [];
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +92,11 @@ class JourneyPageState extends State<JourneyPage> {
           zoomControlsEnabled: false,
           markers: _markers,
           mapType: MapType.hybrid,
+          polylines: _polylines,
           initialCameraPosition: initialCameraPosition,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
+            setPolylines();
           },
         ),
         SafeArea(
@@ -166,6 +174,17 @@ class JourneyPageState extends State<JourneyPage> {
     );
   }
 
+  setPolylines() async {
+    setState(() {
+      Polyline polyline = Polyline(
+          polylineId: PolylineId("poly"),
+          color: Color.fromARGB(255, 40, 122, 198),
+          width: 7,
+          points: polylineCoordinates);
+      _polylines.add(polyline);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -180,10 +199,14 @@ class JourneyPageState extends State<JourneyPage> {
       // current user's position in real time,
       // so we're holding on to it
       setState(() {
+        //Update camera position as the user moves
         _currentLocation = cLoc;
+
+        LatLng current = LatLng(cLoc.latitude, cLoc.longitude);
+
+        polylineCoordinates.add(current);
       });
 
-      //Update camera position as the user moves
       goToCurrentLocation();
     });
 
