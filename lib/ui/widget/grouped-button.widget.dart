@@ -108,8 +108,8 @@ class _CustomCheckBoxGroupState extends State<CustomCheckBoxGroup> {
               child: Row(
                 children: <Widget>[
                   CircleAvatar(
-                    radius: 15,
-                    backgroundImage: AssetImage("assets/google_logo.png"),
+                    radius: 20,
+                    backgroundImage: NetworkImage(widget.buttonLables[index].contentUrl),
                     backgroundColor: Colors.transparent,
                   ),
                   Expanded(
