@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class AnimalsList {
   final List<Animal> animals;
 
@@ -7,6 +9,16 @@ class AnimalsList {
     List<Animal> animals = new List<Animal>();
     animals = parsedJson.map((i) => Animal.fromJson(i)).toList();
 
+    return new AnimalsList(animals: animals);
+  }
+
+  factory AnimalsList.fromFirestoreDocuments(
+      List<DocumentSnapshot> documentsList) {
+    List<Animal> animals = new List<Animal>();
+
+    animals = documentsList
+        .map((document) => Animal.fromJson(document.data))
+        .toList();
     return new AnimalsList(animals: animals);
   }
 }
@@ -36,6 +48,6 @@ class Animal {
         name: json['name'],
         isEnabled: json['isEnabled'],
         type: json['type'],
-        contentUrl: json['contentUrl']);
+        contentUrl: json['image']['src']);
   }
 }
