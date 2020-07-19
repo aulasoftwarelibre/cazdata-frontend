@@ -2,6 +2,7 @@ import 'package:cazdata_frontend/model/animal.dart';
 import 'package:cazdata_frontend/model/journey.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AppState {
   final FirebaseState firebaseState;
@@ -17,13 +18,15 @@ class AppState {
   });
 
   AppState copyWith(
-      {FirebaseState firebaseState, bool userIsNew, AnimalsListState animalsListState, CurrentJourneyState currentJourneyState}) {
+      {FirebaseState firebaseState,
+      bool userIsNew,
+      AnimalsListState animalsListState,
+      CurrentJourneyState currentJourneyState}) {
     return new AppState(
         firebaseState: firebaseState ?? this.firebaseState,
         userIsNew: userIsNew ?? this.userIsNew,
         animalsListState: animalsListState ?? this.animalsListState,
-        currentJourneyState: currentJourneyState ?? this.currentJourneyState
-        );
+        currentJourneyState: currentJourneyState ?? this.currentJourneyState);
   }
 
   factory AppState.initial() {
@@ -62,13 +65,17 @@ class AnimalsListState {
   final bool errorLoading;
 
   const AnimalsListState(
-      {@required this.animals, @required this.isLoading, @required this.errorLoading});
+      {@required this.animals,
+      @required this.isLoading,
+      @required this.errorLoading});
 
   factory AnimalsListState.initial() {
-    return new AnimalsListState(animals: null, isLoading: false, errorLoading: false);
+    return new AnimalsListState(
+        animals: null, isLoading: false, errorLoading: false);
   }
 
-  AnimalsListState copyWith({List<Animal> animals, bool isLoading, bool errorLoading}) {
+  AnimalsListState copyWith(
+      {List<Animal> animals, bool isLoading, bool errorLoading}) {
     return new AnimalsListState(
         animals: animals ?? this.animals,
         isLoading: isLoading ?? this.isLoading,
@@ -76,22 +83,29 @@ class AnimalsListState {
   }
 }
 
-
 @immutable
 class CurrentJourneyState {
   final Journey journey;
   final List<Animal> animals;
+  final List<LatLng> polylineCoordinates;
 
   const CurrentJourneyState(
-      {@required this.journey, @required this.animals});
+      {@required this.journey,
+      @required this.animals,
+      @required this.polylineCoordinates});
 
   factory CurrentJourneyState.initial() {
-    return new CurrentJourneyState(journey: null, animals: null);
+    return new CurrentJourneyState(
+        journey: null, animals: null, polylineCoordinates: []);
   }
 
-  CurrentJourneyState copyWith({Journey journey, List<Animal> animals}) {
+  CurrentJourneyState copyWith(
+      {Journey journey,
+      List<Animal> animals,
+      List<LatLng> polylineCoordinates}) {
     return new CurrentJourneyState(
         journey: journey,
-        animals: animals);
+        animals: animals,
+        polylineCoordinates: polylineCoordinates);
   }
 }

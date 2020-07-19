@@ -39,6 +39,8 @@ dependencies:
   custom_radio_grouped_button: any
   flutter_dotenv: ^2.1.0
   flutter_speed_dial: ^1.2.5
+  flutter_polyline_points: ^0.2.2
+  latlong: ^0.6.1
 
 dev_dependencies:
   flutter_test:

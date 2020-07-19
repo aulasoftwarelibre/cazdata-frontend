@@ -1,9 +1,14 @@
 import 'package:cazdata_frontend/model/animal.dart';
+import 'package:cazdata_frontend/model/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/services/repository/animal.repository.dart';
+import 'package:cazdata_frontend/services/repository/journey.repository.dart';
+import 'package:cazdata_frontend/util/keys.dart';
+import 'package:cazdata_frontend/util/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -74,4 +79,20 @@ _handleStartLoadingAnimalsAction(
       store.dispatch(StartLoadingAnimalsAction());
     });
   }
+}
+
+ThunkAction postCurrentJourney(Journey journey, String tokenId) {
+  JourneyRepository _journeyRepository = new JourneyRepository();
+
+  return (Store store) async {
+    new Future(() async {
+      store.dispatch(new StartSendingJourneyAction());
+      _journeyRepository.postJourney(journey, tokenId).then((journey) async {
+        store.dispatch(new SendingJourneySuccessAction());
+        Keys.navKey.currentState.pushNamed(Routes.homePage);
+      }, onError: (error) {
+        store.dispatch(new SendingJourneyFailedAction());
+      });
+    });
+  };
 }

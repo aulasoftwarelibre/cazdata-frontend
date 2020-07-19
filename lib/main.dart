@@ -1,5 +1,8 @@
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/pages/login.dart';
+import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
+import 'package:cazdata_frontend/util/keys.dart';
+import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -31,6 +34,13 @@ class MyApp extends StatelessWidget {
     return StoreProvider(
       store: this.store,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey: Keys.navKey,
+        routes: {
+          Routes.homePage: (context) {
+            return BottomNavigationBarWidget();
+          }
+        },
         title: 'CazData',
         theme: ThemeData(
             primaryColor: primaryColor,

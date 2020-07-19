@@ -1,14 +1,15 @@
 import 'dart:async';
 
+import 'package:cazdata_frontend/model/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
+import 'package:redux/redux.dart';
 
 import '../../util/colors.dart';
 
@@ -34,12 +35,15 @@ class JourneyPageState extends State<JourneyPage> {
   // wrapper around the location API
   Location _location;
 
+  // this will hold the generated polylines
+  Set<Polyline> _polylines = {};
+  // this will hold each polyline coordinate as Lat and Lng pairs
+  List<LatLng> polylineCoordinates = [];
+
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
-      converter: (store) => _ViewModel(
-          user: store.state.firebaseState.firebaseUser,
-          currentJourneyState: store.state.currentJourneyState),
+      converter: (store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel vm) => _homeView(context, vm),
     );
   }
@@ -86,9 +90,11 @@ class JourneyPageState extends State<JourneyPage> {
           zoomControlsEnabled: false,
           markers: _markers,
           mapType: MapType.hybrid,
+          polylines: _polylines,
           initialCameraPosition: initialCameraPosition,
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
+            setPolylines();
           },
         ),
         SafeArea(
@@ -102,6 +108,7 @@ class JourneyPageState extends State<JourneyPage> {
                     children: <Widget>[
                       FlatButton(
                           onPressed: () {
+                            vm.saveJourney(vm.currentJourneyState.journey);
                             Navigator.pop(context);
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -166,6 +173,17 @@ class JourneyPageState extends State<JourneyPage> {
     );
   }
 
+  setPolylines() async {
+    setState(() {
+      Polyline polyline = Polyline(
+          polylineId: PolylineId("poly"),
+          color: Color.fromARGB(255, 40, 122, 198),
+          width: 7,
+          points: polylineCoordinates);
+      _polylines.add(polyline);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -180,10 +198,14 @@ class JourneyPageState extends State<JourneyPage> {
       // current user's position in real time,
       // so we're holding on to it
       setState(() {
+        //Update camera position as the user moves
         _currentLocation = cLoc;
+
+        LatLng current = LatLng(cLoc.latitude, cLoc.longitude);
+
+        polylineCoordinates.add(current);
       });
 
-      //Update camera position as the user moves
       goToCurrentLocation();
     });
 
@@ -212,8 +234,17 @@ class JourneyPageState extends State<JourneyPage> {
 }
 
 class _ViewModel {
-  final FirebaseUser user;
   final CurrentJourneyState currentJourneyState;
+  final Function(Journey) saveJourney;
 
-  _ViewModel({@required this.user, @required this.currentJourneyState});
+  _ViewModel({@required this.currentJourneyState, @required this.saveJourney});
+
+  static _ViewModel fromStore(Store<AppState> store) {
+    return _ViewModel(
+      currentJourneyState: store.state.currentJourneyState,
+      saveJourney: (Journey journey) {
+        store.dispatch(postCurrentJourney(journey, store.state.firebaseState.idTokenUser));
+      },
+    );
+  }
 }
