@@ -53,10 +53,12 @@ class JourneyPageState extends State<JourneyPage> {
     for (int i = 0; i < vm.currentJourneyState.animals.length; i++) {
       buttons.add(
         SpeedDialChild(
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  "https://avatars0.githubusercontent.com/u/30497404?s=460&u=9658120c23aa1ab672aa1f64debb4662383c0686&v=4"),
-              backgroundColor: Colors.transparent,
+            child: FittedBox(
+              child: CircleAvatar(
+                backgroundImage:
+                    NetworkImage(vm.currentJourneyState.animals[i].contentUrl),
+                backgroundColor: Colors.transparent,
+              ),
             ),
             label: vm.currentJourneyState.animals[i].name,
             labelStyle: TextStyle(fontSize: 18.0),
@@ -99,7 +101,7 @@ class JourneyPageState extends State<JourneyPage> {
         ),
         SafeArea(
           child: Padding(
-            padding: EdgeInsets.only(bottom: 16),
+            padding: EdgeInsets.only(top: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
