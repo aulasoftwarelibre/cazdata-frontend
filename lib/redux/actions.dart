@@ -57,3 +57,15 @@ class SaveCurrentJourney {
 class CleanCurrentJourney {
   CleanCurrentJourney();
 }
+
+class StartSendingJourneyAction {
+  StartSendingJourneyAction();
+}
+
+class SendingJourneySuccessAction {
+  SendingJourneySuccessAction();
+}
+
+class SendingJourneyFailedAction {
+  SendingJourneyFailedAction();
+}

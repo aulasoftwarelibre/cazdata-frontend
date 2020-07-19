@@ -14,6 +14,7 @@ class JourniesList {
 class Journey {
   String id;
   String title;
+  String hunterId;
   String modality;
   String type;
   String startTime;
@@ -25,6 +26,7 @@ class Journey {
   Journey(
       {this.id,
       this.title,
+      this.hunterId,
       this.modality,
       this.type,
       this.startTime,
@@ -36,6 +38,7 @@ class Journey {
   Map toJson() {
     return {
       'id': this.id,
+      'hunterId': this.hunterId,
       'title': this.title,
       'starts_at': this.startTime,
       'ends_at': this.endTime,
@@ -48,6 +51,7 @@ class Journey {
     return new Journey(
       id: json['id'],
       title: json['title'],
+      hunterId: json['hunterId'],
       startTime: json['startsAt'],
       endTime: json['endsAt'],
       distance: json['distance'],

@@ -1,6 +1,6 @@
-
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
 Store<AppState> createStore() {
   return Store(
@@ -10,6 +10,5 @@ Store<AppState> createStore() {
   );
 }
 
-List<Middleware<AppState>> createMiddleware() => <Middleware<AppState>>[
-      middleware
-    ];
+List<Middleware<AppState>> createMiddleware() =>
+    <Middleware<AppState>>[thunkMiddleware, middleware];
