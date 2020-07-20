@@ -29,7 +29,7 @@ FirebaseState _reduceFirebaseState(AppState state, dynamic action) {
 bool _reduceUserIsNew(AppState state, dynamic action) {
   bool userIsNew = state.userIsNew;
 
-  if (action is UserIsNew) {
+  if (action is UserIsNewAction) {
     userIsNew = action.userIsNew;
   }
 
@@ -59,7 +59,7 @@ CurrentJourneyState _reduceCurrentJourneyStateState(
     List<Animal> newAnimals = action.animals;
 
     newState = newState.copyWith(selectedAnimals: newAnimals);
-  } else if (action is SaveCurrentJourney) {
+  } else if (action is SaveCurrentJourneyAction) {
     newState = newState.copyWith(journey: action.journey);
   } else if (action is AddHuntedAnimalAction) {
     List<HuntedAnimal> newHuntedAnimals =
@@ -67,7 +67,7 @@ CurrentJourneyState _reduceCurrentJourneyStateState(
 
     newHuntedAnimals.add((action.huntedAnimal));
     newState = newState.copyWith(huntedAnimals: newHuntedAnimals);
-  } else if (action is CleanCurrentJourney) {
+  } else if (action is CleanCurrentJourneyAction) {
     newState = newState.copyWith(
         journey: null,
         selectedAnimals: null,

@@ -23,10 +23,10 @@ class UserLoadedAction {
   UserLoadedAction(this.firebaseUser, this.idTokenUser);
 }
 
-class UserIsNew {
+class UserIsNewAction {
   final bool userIsNew;
 
-  UserIsNew(this.userIsNew);
+  UserIsNewAction(this.userIsNew);
 }
 
 class StartLoadingAnimalsAction {
@@ -49,10 +49,10 @@ class UpdateAnimalsAction {
   UpdateAnimalsAction(this.animals);
 }
 
-class SaveCurrentJourney {
+class SaveCurrentJourneyAction {
   final Journey journey;
 
-  SaveCurrentJourney(this.journey);
+  SaveCurrentJourneyAction(this.journey);
 }
 
 class AddHuntedAnimalAction {
@@ -61,8 +61,8 @@ class AddHuntedAnimalAction {
   AddHuntedAnimalAction(this.huntedAnimal);
 }
 
-class CleanCurrentJourney {
-  CleanCurrentJourney();
+class CleanCurrentJourneyAction {
+  CleanCurrentJourneyAction();
 }
 
 class StartSendingJourneyAction {

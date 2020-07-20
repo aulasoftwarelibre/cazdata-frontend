@@ -17,7 +17,7 @@ middleware(Store<AppState> store, action, NextDispatcher next) {
   print(action.runtimeType);
 
   if (action is LoginWithGoogleAction) {
-    _handleLoginWithGoogle(store, action, next);
+    _handleLoginWithGoogleAction(store, action, next);
   } else if (action is LogoutAction) {
     _handleLogoutAction(store, action);
   } else if (action is StartLoadingAnimalsAction) {
@@ -27,8 +27,8 @@ middleware(Store<AppState> store, action, NextDispatcher next) {
   next(action);
 }
 
-_handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action,
-    NextDispatcher next) async {
+_handleLoginWithGoogleAction(Store<AppState> store,
+    LoginWithGoogleAction action, NextDispatcher next) async {
   GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
   GoogleSignInAuthentication googleSignInAuthentication =
       await googleSignInAccount.authentication;
@@ -41,8 +41,8 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action,
   final AuthResult authResult = await _auth.signInWithCredential(credential);
 
   if (authResult.additionalUserInfo.isNewUser) {
-    store.dispatch(UserIsNew(true));
-    next(UserIsNew);
+    store.dispatch(UserIsNewAction(true));
+    next(UserIsNewAction);
   }
 
   final FirebaseUser user = authResult.user;
@@ -81,7 +81,7 @@ _handleStartLoadingAnimalsAction(
   }
 }
 
-ThunkAction postCurrentJourney(Journey journey, String tokenId) {
+ThunkAction postCurrentJourneyAction(Journey journey, String tokenId) {
   JourneyRepository _journeyRepository = new JourneyRepository();
 
   return (Store store) async {
