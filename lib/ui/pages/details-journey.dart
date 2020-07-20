@@ -121,24 +121,6 @@ class DetailsJourney extends StatelessWidget {
                         )
                       ],
                     ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: FlatButton(
-                            onPressed: () {
-                              /*...*/
-                            },
-                            color: primaryColor,
-                            textColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(18.0)),
-                            child: Text("Compartir jornada",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 17)),
-                          ),
-                        )
-                      ],
-                    )
                   ],
                 ),
               ),
