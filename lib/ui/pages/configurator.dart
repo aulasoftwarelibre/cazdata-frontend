@@ -274,6 +274,6 @@ class _ViewModel {
         saveJourney: (Journey journey) {
           store.dispatch(SaveCurrentJourney(journey));
         },
-        journeyAnimals: store.state.currentJourneyState.animals);
+        journeyAnimals: store.state.currentJourneyState.selectedAnimals);
   }
 }

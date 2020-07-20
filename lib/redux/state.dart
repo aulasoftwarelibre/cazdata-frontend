@@ -1,4 +1,5 @@
 import 'package:cazdata_frontend/model/animal.dart';
+import 'package:cazdata_frontend/model/hunted-animal.dart';
 import 'package:cazdata_frontend/model/journey.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,15 @@ class AppState {
     @required this.currentJourneyState,
   });
 
+  factory AppState.initial() {
+    return AppState(
+      firebaseState: FirebaseState.initial(),
+      userIsNew: false,
+      animalsListState: AnimalsListState.initial(),
+      currentJourneyState: CurrentJourneyState.initial(),
+    );
+  }
+
   AppState copyWith(
       {FirebaseState firebaseState,
       bool userIsNew,
@@ -27,15 +37,6 @@ class AppState {
         userIsNew: userIsNew ?? this.userIsNew,
         animalsListState: animalsListState ?? this.animalsListState,
         currentJourneyState: currentJourneyState ?? this.currentJourneyState);
-  }
-
-  factory AppState.initial() {
-    return AppState(
-      firebaseState: FirebaseState.initial(),
-      userIsNew: false,
-      animalsListState: AnimalsListState.initial(),
-      currentJourneyState: CurrentJourneyState.initial(),
-    );
   }
 }
 
@@ -86,26 +87,33 @@ class AnimalsListState {
 @immutable
 class CurrentJourneyState {
   final Journey journey;
-  final List<Animal> animals;
+  final List<Animal> selectedAnimals;
+  final List<HuntedAnimal> huntedAnimals;
   final List<LatLng> polylineCoordinates;
 
   const CurrentJourneyState(
       {@required this.journey,
-      @required this.animals,
+      @required this.selectedAnimals,
+      @required this.huntedAnimals,
       @required this.polylineCoordinates});
 
   factory CurrentJourneyState.initial() {
     return new CurrentJourneyState(
-        journey: null, animals: null, polylineCoordinates: []);
+        journey: null,
+        selectedAnimals: [],
+        huntedAnimals: [],
+        polylineCoordinates: []);
   }
 
   CurrentJourneyState copyWith(
       {Journey journey,
-      List<Animal> animals,
+      List<Animal> selectedAnimals,
+      List<HuntedAnimal> huntedAnimals,
       List<LatLng> polylineCoordinates}) {
     return new CurrentJourneyState(
-        journey: journey,
-        animals: animals,
-        polylineCoordinates: polylineCoordinates);
+        journey: journey ?? this.journey,
+        selectedAnimals: selectedAnimals ?? this.selectedAnimals,
+        huntedAnimals: huntedAnimals ?? this.huntedAnimals,
+        polylineCoordinates: polylineCoordinates ?? this.polylineCoordinates);
   }
 }
