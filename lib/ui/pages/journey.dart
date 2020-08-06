@@ -125,26 +125,61 @@ class JourneyPageState extends State<JourneyPage> {
                     children: <Widget>[
                       FlatButton(
                           onPressed: () {
-                            vm.saveJourney(vm.currentJourneyState.journey);
-                            Navigator.pop(context);
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return MaterialApp(
-                                    title: 'Jornada',
-                                    theme: ThemeData(
-                                        primaryColor: primaryColor,
-                                        fontFamily: 'Montserrat'),
-                                    home: ChangeNotifierProvider<
-                                        BottomNavigationBarProvider>(
-                                      child: BottomNavigationBarWidget(),
-                                      create: (BuildContext context) =>
-                                          BottomNavigationBarProvider(),
-                                    ),
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: new Text("¿Finalizar jornada?"),
+                                    actions: <Widget>[
+                                      new FlatButton(
+                                        child: new Text(
+                                          "CANCELAR",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      new FlatButton(
+                                        child: new Text(
+                                          "FINALIZAR",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: accentColor
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          vm.saveJourney(
+                                              vm.currentJourneyState.journey);
+                                          Navigator.pop(context);
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return MaterialApp(
+                                                  title: 'Jornada',
+                                                  theme: ThemeData(
+                                                      primaryColor:
+                                                          primaryColor,
+                                                      fontFamily: 'Montserrat'),
+                                                  home: ChangeNotifierProvider<
+                                                      BottomNavigationBarProvider>(
+                                                    child:
+                                                        BottomNavigationBarWidget(),
+                                                    create: (BuildContext
+                                                            context) =>
+                                                        BottomNavigationBarProvider(),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    ],
                                   );
-                                },
-                              ),
-                            );
+                                });
                           },
                           color: Colors.red,
                           shape: CircleBorder(),
