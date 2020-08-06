@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cazdata_frontend/model/animal.dart';
+import 'package:cazdata_frontend/model/hunted-animal.dart';
 import 'package:cazdata_frontend/model/journey.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -22,10 +23,10 @@ class UserLoadedAction {
   UserLoadedAction(this.firebaseUser, this.idTokenUser);
 }
 
-class UserIsNew {
+class UserIsNewAction {
   final bool userIsNew;
 
-  UserIsNew(this.userIsNew);
+  UserIsNewAction(this.userIsNew);
 }
 
 class StartLoadingAnimalsAction {
@@ -48,14 +49,20 @@ class UpdateAnimalsAction {
   UpdateAnimalsAction(this.animals);
 }
 
-class SaveCurrentJourney {
+class SaveCurrentJourneyAction {
   final Journey journey;
 
-  SaveCurrentJourney(this.journey);
+  SaveCurrentJourneyAction(this.journey);
 }
 
-class CleanCurrentJourney {
-  CleanCurrentJourney();
+class AddHuntedAnimalAction {
+  final HuntedAnimal huntedAnimal;
+
+  AddHuntedAnimalAction(this.huntedAnimal);
+}
+
+class CleanCurrentJourneyAction {
+  CleanCurrentJourneyAction();
 }
 
 class StartSendingJourneyAction {

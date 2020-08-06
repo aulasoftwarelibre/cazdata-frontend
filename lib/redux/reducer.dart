@@ -1,4 +1,5 @@
 import 'package:cazdata_frontend/model/animal.dart';
+import 'package:cazdata_frontend/model/hunted-animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 
 AppState mainReducer(AppState state, dynamic action) {
@@ -28,7 +29,7 @@ FirebaseState _reduceFirebaseState(AppState state, dynamic action) {
 bool _reduceUserIsNew(AppState state, dynamic action) {
   bool userIsNew = state.userIsNew;
 
-  if (action is UserIsNew) {
+  if (action is UserIsNewAction) {
     userIsNew = action.userIsNew;
   }
 
@@ -57,13 +58,21 @@ CurrentJourneyState _reduceCurrentJourneyStateState(
   if (action is UpdateAnimalsAction) {
     List<Animal> newAnimals = action.animals;
 
-    newState =
-        newState.copyWith(animals: newAnimals, journey: newState.journey);
-  } else if (action is SaveCurrentJourney) {
-    newState =
-        newState.copyWith(animals: newState.animals, journey: action.journey);
-  } else if (action is CleanCurrentJourney) {
-    newState = newState.copyWith(journey: null, animals: null);
+    newState = newState.copyWith(selectedAnimals: newAnimals);
+  } else if (action is SaveCurrentJourneyAction) {
+    newState = newState.copyWith(journey: action.journey);
+  } else if (action is AddHuntedAnimalAction) {
+    List<HuntedAnimal> newHuntedAnimals =
+        state.currentJourneyState.huntedAnimals;
+
+    newHuntedAnimals.add((action.huntedAnimal));
+    newState = newState.copyWith(huntedAnimals: newHuntedAnimals);
+  } else if (action is CleanCurrentJourneyAction) {
+    newState = newState.copyWith(
+        journey: null,
+        selectedAnimals: null,
+        huntedAnimals: null,
+        polylineCoordinates: null);
   }
 
   return newState;

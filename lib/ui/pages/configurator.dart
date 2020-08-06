@@ -103,7 +103,7 @@ class ConfiguratorState extends State<Configurator> {
         return _formView(context, vm);
       },
       onInit: (store) {
-        store.dispatch(CleanCurrentJourney());
+        store.dispatch(CleanCurrentJourneyAction());
       },
     );
   }
@@ -272,8 +272,8 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
         saveJourney: (Journey journey) {
-          store.dispatch(SaveCurrentJourney(journey));
+          store.dispatch(SaveCurrentJourneyAction(journey));
         },
-        journeyAnimals: store.state.currentJourneyState.animals);
+        journeyAnimals: store.state.currentJourneyState.selectedAnimals);
   }
 }

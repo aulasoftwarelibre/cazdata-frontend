@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cazdata_frontend/model/hunted-animal.dart';
 import 'package:cazdata_frontend/model/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
@@ -25,7 +26,7 @@ class JourneyPage extends StatefulWidget {
 
 class JourneyPageState extends State<JourneyPage> {
   Completer<GoogleMapController> _controller = Completer();
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   //Map markers
   Set<Marker> _markers = Set<Marker>();
 
@@ -50,20 +51,33 @@ class JourneyPageState extends State<JourneyPage> {
 
   Widget _homeView(BuildContext context, _ViewModel vm) {
     List<SpeedDialChild> buttons = [];
-    for (int i = 0; i < vm.currentJourneyState.animals.length; i++) {
-      buttons.add(
-        SpeedDialChild(
-            child: FittedBox(
-              child: CircleAvatar(
-                backgroundImage:
-                    NetworkImage(vm.currentJourneyState.animals[i].contentUrl),
-                backgroundColor: Colors.transparent,
-              ),
+    for (int i = 0; i < vm.currentJourneyState.selectedAnimals.length; i++) {
+      buttons.add(SpeedDialChild(
+          child: FittedBox(
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                  vm.currentJourneyState.selectedAnimals[i].contentUrl),
+              backgroundColor: Colors.transparent,
             ),
-            label: vm.currentJourneyState.animals[i].name,
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => print(vm.currentJourneyState.animals[i].name)),
-      );
+          ),
+          label: vm.currentJourneyState.selectedAnimals[i].name,
+          labelStyle: TextStyle(fontSize: 18.0),
+          onTap: () {
+            LatLng current =
+                LatLng(_currentLocation.latitude, _currentLocation.longitude);
+            HuntedAnimal huntedAnimal = HuntedAnimal(
+                animal: vm.currentJourneyState.selectedAnimals[i],
+                position: current);
+            vm.addHuntedAnimal(huntedAnimal);
+
+            final snackBar = SnackBar(
+              content: Text('Se ha cazado: ' +
+                  vm.currentJourneyState.selectedAnimals[i].name),
+              backgroundColor: accentColor,
+            );
+
+            _scaffoldKey.currentState.showSnackBar(snackBar);
+          }));
     }
     CameraPosition initialCameraPosition = CameraPosition(
         zoom: CAMERA_ZOOM,
@@ -80,6 +94,7 @@ class JourneyPageState extends State<JourneyPage> {
     }
 
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(alignment: Alignment.center, children: <Widget>[
         GoogleMap(
           myLocationButtonEnabled: false,
@@ -238,14 +253,22 @@ class JourneyPageState extends State<JourneyPage> {
 class _ViewModel {
   final CurrentJourneyState currentJourneyState;
   final Function(Journey) saveJourney;
+  final Function(HuntedAnimal) addHuntedAnimal;
 
-  _ViewModel({@required this.currentJourneyState, @required this.saveJourney});
+  _ViewModel(
+      {@required this.currentJourneyState,
+      @required this.saveJourney,
+      @required this.addHuntedAnimal});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       currentJourneyState: store.state.currentJourneyState,
       saveJourney: (Journey journey) {
-        store.dispatch(postCurrentJourney(journey, store.state.firebaseState.idTokenUser));
+        store.dispatch(
+            postCurrentJourneyAction(journey, store.state.firebaseState.idTokenUser));
+      },
+      addHuntedAnimal: (HuntedAnimal huntedAnimal) {
+        store.dispatch(AddHuntedAnimalAction(huntedAnimal));
       },
     );
   }
