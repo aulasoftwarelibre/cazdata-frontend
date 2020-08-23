@@ -19,10 +19,10 @@ class JourneyBloc {
     _journeyController = BehaviorSubject<Response<dynamic>>();
   }
 
-  getJournies() async {
+  getJourneys() async {
     _journeyController.add(Response.loading('Get journeys.'));
     try {
-      JourniesList journeyResponse = await _journeyRepository.getJournies();
+      JourneysList journeyResponse = await _journeyRepository.getJourneys();
 
       _journeyController.add(Response.completed(journeyResponse));
     } catch (e) {

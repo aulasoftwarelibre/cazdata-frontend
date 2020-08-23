@@ -1,13 +1,19 @@
-class JourniesList {
-  final List<Journey> journies;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  JourniesList({this.journies});
+class JourneysList {
+  final List<Journey> journeys;
 
-  factory JourniesList.fromJson(List<dynamic> parsedJson) {
-    List<Journey> journies = new List<Journey>();
-    journies = parsedJson.map((i) => Journey.fromJson(i)).toList();
+  JourneysList({this.journeys});
 
-    return new JourniesList(journies: journies);
+  factory JourneysList.fromFirestoreDocuments(
+      List<DocumentSnapshot> documentsList) {
+    List<Journey> journeys = new List<Journey>();
+
+    journeys = documentsList
+        .map((document) => Journey.fromJson(document.documentID, document.data))
+        .toList();
+
+    return new JourneysList(journeys: journeys);
   }
 }
 
@@ -17,8 +23,8 @@ class Journey {
   String hunterId;
   String modality;
   String type;
-  String startTime;
-  String endTime;
+  DateTime startsAt;
+  DateTime endsAt;
   int distance;
   int minutes;
   int calories;
@@ -29,8 +35,8 @@ class Journey {
       this.hunterId,
       this.modality,
       this.type,
-      this.startTime,
-      this.endTime,
+      this.startsAt,
+      this.endsAt,
       this.distance,
       this.minutes,
       this.calories});
@@ -40,20 +46,20 @@ class Journey {
       'id': this.id,
       'hunterId': this.hunterId,
       'title': this.title,
-      'starts_at': this.startTime,
-      'ends_at': this.endTime,
+      'startsAt': this.startsAt,
+      'endsAt': this.endsAt,
       'distance': this.distance,
       'calories': calories
     };
   }
 
-  factory Journey.fromJson(Map<String, dynamic> json) {
+  factory Journey.fromJson(String id, Map<String, dynamic> json) {
     return new Journey(
-      id: json['id'],
+      id: id,
       title: json['title'],
       hunterId: json['hunterId'],
-      startTime: json['startsAt'],
-      endTime: json['endsAt'],
+      startsAt: json['startsAt'].toDate(),
+      endsAt: json['endsAt'].toDate(),
       distance: json['distance'],
       calories: json['calories'],
     );

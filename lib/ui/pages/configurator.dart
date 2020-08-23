@@ -23,7 +23,14 @@ class ConfiguratorState extends State<Configurator> {
   final _formKey = GlobalKey<FormState>();
   final _dropdownButtonFormFieldKey = GlobalKey<FormFieldState>();
 
-  Journey _journey = Journey();
+  Journey _journey = Journey(
+    startsAt: DateTime.now(),
+    endsAt: DateTime.now(),
+    calories: 0,
+    distance: 0,
+    hunterId: "1",
+    minutes: 0,
+  );
   String _modality;
 
   List<DropdownMenuItem<dynamic>> _getHuntModalities() {
