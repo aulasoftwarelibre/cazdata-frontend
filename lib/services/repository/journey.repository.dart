@@ -1,8 +1,4 @@
-import 'dart:convert';
-
 import 'package:cazdata_frontend/model/journey.dart';
-import 'package:cazdata_frontend/services/networking/index.dart';
-import 'package:cazdata_frontend/util/url.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class JourneyRepository {
