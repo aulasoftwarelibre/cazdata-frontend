@@ -3,24 +3,38 @@ import 'dart:convert';
 import 'package:cazdata_frontend/model/journey.dart';
 import 'package:cazdata_frontend/services/networking/index.dart';
 import 'package:cazdata_frontend/util/url.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class JourneyRepository {
   ApiProvider _provider = ApiProvider();
 
-  Future<JourniesList> getJournies() async {
-    final response = await _provider.get(Url.apiBaseUrl + "/journeys");
+  Future<JourneysList> getJourneys() async {
+    JourneysList journeysList;
 
-    JourniesList journiesList = JourniesList.fromJson(response);
+    try {
+      final documentsQuery =
+          await Firestore.instance.collection('journeys').getDocuments();
+      final journeyDocuments = documentsQuery.documents;
+      journeysList = JourneysList.fromFirestoreDocuments(journeyDocuments);
+    } catch (exception) {}
 
-    return journiesList;
+    return journeysList;
   }
 
   Future<bool> postJourney(Journey journey, String tokenId) async {
-    final String url = Url.apiBaseUrl + "/journeys";
+    try {
+      Firestore.instance.collection('journeys').document().setData({
+        'hunterId': journey.hunterId,
+        'title': journey.title,
+        'startsAt': Timestamp.fromDate(journey.startsAt),
+        'endsAt': Timestamp.fromDate(journey.endsAt),
+        'distance': journey.distance,
+        'calories': journey.calories
+      });
 
-    var requestBody = jsonEncode(journey);
-    final response = await _provider.post(url, requestBody, tokenId);
-
-    return response;
+      return true;
+    } catch (exception) {
+      return false;
+    }
   }
 }

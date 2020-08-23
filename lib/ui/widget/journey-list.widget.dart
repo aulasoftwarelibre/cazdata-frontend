@@ -8,7 +8,7 @@ class JourneysList extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final JourneyBloc _bloc = JourneyBloc();
-    _bloc.getJournies();
+    _bloc.getJourneys();
 
     return StreamBuilder<Response<dynamic>>(
         stream: _bloc.journeyStreamJourneys,
@@ -24,13 +24,13 @@ class JourneysList extends StatelessWidget {
                     child: ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data.data.journies.length,
+                        itemCount: snapshot.data.data.journeys.length,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding:
                                 const EdgeInsets.only(bottom: 4.0, top: 4.0),
                             child: JourneyTile(
-                                journey: snapshot.data.data.journies[index]),
+                                journey: snapshot.data.data.journeys[index]),
                           );
                         }));
                 break;
@@ -41,7 +41,8 @@ class JourneysList extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       "Error al recibir jornadas",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                 );

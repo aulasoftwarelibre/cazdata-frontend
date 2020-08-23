@@ -146,14 +146,12 @@ class JourneyPageState extends State<JourneyPage> {
                                         child: new Text(
                                           "FINALIZAR",
                                           style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: accentColor
-                                          ),
+                                              fontWeight: FontWeight.bold,
+                                              color: accentColor),
                                         ),
                                         onPressed: () {
                                           vm.saveJourney(
                                               vm.currentJourneyState.journey);
-                                          Navigator.pop(context);
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) {
@@ -299,8 +297,8 @@ class _ViewModel {
     return _ViewModel(
       currentJourneyState: store.state.currentJourneyState,
       saveJourney: (Journey journey) {
-        store.dispatch(
-            postCurrentJourneyAction(journey, store.state.firebaseState.idTokenUser));
+        store.dispatch(postCurrentJourneyAction(
+            journey, store.state.firebaseState.idTokenUser));
       },
       addHuntedAnimal: (HuntedAnimal huntedAnimal) {
         store.dispatch(AddHuntedAnimalAction(huntedAnimal));

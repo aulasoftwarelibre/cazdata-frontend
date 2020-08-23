@@ -13,8 +13,8 @@ class DetailsJourney extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime startTime = DateTime.parse(journey.startTime);
-    DateTime endTime = DateTime.parse(journey.endTime);
+    DateTime startTime = journey.startsAt;
+    DateTime endTime = journey.endsAt;
     final int difference = endTime.difference(startTime).inMinutes;
 
     return Scaffold(
@@ -75,7 +75,9 @@ class DetailsJourney extends StatelessWidget {
                               child: AutoSizeText(
                                 journey.title +
                                     " | " +
-                                    journey.startTime.substring(0, 10),
+                                    journey.startsAt
+                                        .toString()
+                                        .substring(0, 10),
                                 style: TextStyle(fontSize: 20),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,

@@ -15,7 +15,7 @@ class JourneyTile extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text(this.journey.title),
-        subtitle: Text(this.journey.startTime.substring(0, 10)),
+        subtitle: Text(this.journey.startsAt.toString().substring(0, 10)),
         trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
