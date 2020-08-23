@@ -8,8 +8,8 @@ class JourneyRepository {
     try {
       final documentsQuery = await Firestore.instance
           .collection('journeys')
-          .getDocuments()
-          .catchError(() => journeysList = JourneysList());
+          .where("hunterId", isEqualTo: userId)
+          .getDocuments();
       final journeyDocuments = documentsQuery.documents;
       journeysList = JourneysList.fromFirestoreDocuments(journeyDocuments);
     } catch (exception) {
