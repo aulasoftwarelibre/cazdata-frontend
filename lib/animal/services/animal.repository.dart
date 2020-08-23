@@ -1,4 +1,4 @@
-import 'package:cazdata_frontend/model/animal.dart';
+import 'package:cazdata_frontend/animal/model/animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AnimalRepository {

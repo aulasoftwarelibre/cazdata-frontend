@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:cazdata_frontend/journey/redux/actions.dart';
+import 'package:cazdata_frontend/journey/redux/middleware.dart';
 import 'package:cazdata_frontend/journey/redux/state.dart';
-import 'package:cazdata_frontend/model/hunted-animal.dart';
+import 'package:cazdata_frontend/animal/model/hunted-animal.dart';
 import 'package:cazdata_frontend/journey/model/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';

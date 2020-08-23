@@ -1,3 +1,5 @@
+import 'package:cazdata_frontend/animal/model/animal.dart';
+import 'package:cazdata_frontend/animal/model/hunted-animal.dart';
 import 'package:cazdata_frontend/journey/model/journey.dart';
 
 abstract class JourneyAction {}
@@ -36,4 +38,16 @@ class LoadJourneysSuccessAction extends JourneyAction {
 
 class LoadJourneysFailureAction extends JourneyAction {
   LoadJourneysFailureAction();
+}
+
+class UpdateAnimalsAction {
+  final List<Animal> animals;
+
+  UpdateAnimalsAction(this.animals);
+}
+
+class AddHuntedAnimalAction {
+  final HuntedAnimal huntedAnimal;
+
+  AddHuntedAnimalAction(this.huntedAnimal);
 }

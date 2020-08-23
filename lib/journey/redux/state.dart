@@ -1,5 +1,5 @@
-import 'package:cazdata_frontend/model/animal.dart';
-import 'package:cazdata_frontend/model/hunted-animal.dart';
+import 'package:cazdata_frontend/animal/model/animal.dart';
+import 'package:cazdata_frontend/animal/model/hunted-animal.dart';
 import 'package:cazdata_frontend/journey/model/journey.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

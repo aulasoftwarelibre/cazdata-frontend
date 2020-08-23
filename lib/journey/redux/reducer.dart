@@ -1,7 +1,7 @@
+import 'package:cazdata_frontend/animal/model/animal.dart';
 import 'package:cazdata_frontend/journey/redux/actions.dart';
 import 'package:cazdata_frontend/journey/redux/state.dart';
-import 'package:cazdata_frontend/model/animal.dart';
-import 'package:cazdata_frontend/model/hunted-animal.dart';
+import 'package:cazdata_frontend/animal/model/hunted-animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 
 HunterJourneysState reduceHunterJourneysState(AppState state, dynamic action) {

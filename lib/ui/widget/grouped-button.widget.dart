@@ -1,5 +1,4 @@
-//library custom_radio_grouped_button;
-import 'package:cazdata_frontend/model/animal.dart';
+import 'package:cazdata_frontend/animal/model/animal.dart';
 import 'package:flutter/material.dart';
 
 class CustomCheckBoxGroup extends StatefulWidget {

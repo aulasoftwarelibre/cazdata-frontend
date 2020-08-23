@@ -1,5 +1,5 @@
+import 'package:cazdata_frontend/animal/model/animal.dart';
 import 'package:cazdata_frontend/journey/redux/actions.dart';
-import 'package:cazdata_frontend/model/animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/pages/journey.dart';
 import 'package:cazdata_frontend/ui/widget/species-list.widget.dart';

@@ -1,16 +1,11 @@
+import 'package:cazdata_frontend/animal/redux/actions.dart';
+import 'package:cazdata_frontend/animal/redux/middleware.dart';
 import 'package:cazdata_frontend/journey/redux/actions.dart';
 import 'package:cazdata_frontend/journey/redux/middleware.dart';
-import 'package:cazdata_frontend/model/animal.dart';
-import 'package:cazdata_frontend/journey/model/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/services/repository/animal.repository.dart';
-import 'package:cazdata_frontend/journey/services/journey.repository.dart';
-import 'package:cazdata_frontend/util/keys.dart';
-import 'package:cazdata_frontend/util/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -22,8 +17,8 @@ middleware(Store<AppState> store, action, NextDispatcher next) {
     _handleLoginWithGoogleAction(store, action, next);
   } else if (action is LogoutAction) {
     _handleLogoutAction(store, action);
-  } else if (action is StartLoadingAnimalsAction) {
-    _handleStartLoadingAnimalsAction(store, action);
+  } else if (action is AnimalAction) {
+    animalMiddleware(store, action, next);
   } else if (action is JourneyAction) {
     journeyMiddleware(store, action, next);
   }
@@ -66,37 +61,4 @@ _handleLoginWithGoogleAction(Store<AppState> store,
 
 _handleLogoutAction(Store<AppState> store, LogoutAction action) async {
   await _googleSignIn.signOut();
-}
-
-_handleStartLoadingAnimalsAction(
-    Store<AppState> store, StartLoadingAnimalsAction action) async {
-  AnimalRepository animalRepository = new AnimalRepository();
-  AnimalsList animalsList = await animalRepository.getAnimals();
-
-  if (animalsList != null) {
-    store.dispatch(AnimalsLoadedAction(animalsList));
-  } else {
-    store.dispatch(AnimalsLoadFailedAction());
-
-    //On fail try to load animals every 2 seconds
-    Future.delayed(Duration(seconds: 2), () {
-      store.dispatch(StartLoadingAnimalsAction());
-    });
-  }
-}
-
-ThunkAction postCurrentJourneyAction(Journey journey, String userId) {
-  JourneyRepository _journeyRepository = new JourneyRepository();
-
-  return (Store store) async {
-    new Future(() async {
-      store.dispatch(new StartSendingJourneyAction());
-      _journeyRepository.postJourney(journey, userId).then((journey) async {
-        store.dispatch(new SendingJourneySuccessAction());
-        Keys.navKey.currentState.pushNamed(Routes.homePage);
-      }, onError: (error) {
-        store.dispatch(new SendingJourneyFailedAction());
-      });
-    });
-  };
 }
