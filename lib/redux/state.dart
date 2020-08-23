@@ -1,22 +1,21 @@
+import 'package:cazdata_frontend/journey/redux/state.dart';
 import 'package:cazdata_frontend/model/animal.dart';
-import 'package:cazdata_frontend/model/hunted-animal.dart';
-import 'package:cazdata_frontend/model/journey.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AppState {
   final FirebaseState firebaseState;
   final bool userIsNew;
   final AnimalsListState animalsListState;
   final CurrentJourneyState currentJourneyState;
+  final HunterJourneysState hunterJourneysState;
 
-  const AppState({
-    @required this.firebaseState,
-    @required this.userIsNew,
-    @required this.animalsListState,
-    @required this.currentJourneyState,
-  });
+  const AppState(
+      {@required this.firebaseState,
+      @required this.userIsNew,
+      @required this.animalsListState,
+      @required this.currentJourneyState,
+      @required this.hunterJourneysState});
 
   factory AppState.initial() {
     return AppState(
@@ -24,6 +23,7 @@ class AppState {
       userIsNew: false,
       animalsListState: AnimalsListState.initial(),
       currentJourneyState: CurrentJourneyState.initial(),
+      hunterJourneysState: HunterJourneysState.initial(),
     );
   }
 
@@ -31,12 +31,14 @@ class AppState {
       {FirebaseState firebaseState,
       bool userIsNew,
       AnimalsListState animalsListState,
-      CurrentJourneyState currentJourneyState}) {
+      CurrentJourneyState currentJourneyState,
+      HunterJourneysState hunterJourneysState}) {
     return new AppState(
         firebaseState: firebaseState ?? this.firebaseState,
         userIsNew: userIsNew ?? this.userIsNew,
         animalsListState: animalsListState ?? this.animalsListState,
-        currentJourneyState: currentJourneyState ?? this.currentJourneyState);
+        currentJourneyState: currentJourneyState ?? this.currentJourneyState,
+        hunterJourneysState: hunterJourneysState ?? this.hunterJourneysState);
   }
 }
 
@@ -81,39 +83,5 @@ class AnimalsListState {
         animals: animals ?? this.animals,
         isLoading: isLoading ?? this.isLoading,
         errorLoading: errorLoading ?? this.errorLoading);
-  }
-}
-
-@immutable
-class CurrentJourneyState {
-  final Journey journey;
-  final List<Animal> selectedAnimals;
-  final List<HuntedAnimal> huntedAnimals;
-  final List<LatLng> polylineCoordinates;
-
-  const CurrentJourneyState(
-      {@required this.journey,
-      @required this.selectedAnimals,
-      @required this.huntedAnimals,
-      @required this.polylineCoordinates});
-
-  factory CurrentJourneyState.initial() {
-    return new CurrentJourneyState(
-        journey: null,
-        selectedAnimals: [],
-        huntedAnimals: [],
-        polylineCoordinates: []);
-  }
-
-  CurrentJourneyState copyWith(
-      {Journey journey,
-      List<Animal> selectedAnimals,
-      List<HuntedAnimal> huntedAnimals,
-      List<LatLng> polylineCoordinates}) {
-    return new CurrentJourneyState(
-        journey: journey ?? this.journey,
-        selectedAnimals: selectedAnimals ?? this.selectedAnimals,
-        huntedAnimals: huntedAnimals ?? this.huntedAnimals,
-        polylineCoordinates: polylineCoordinates ?? this.polylineCoordinates);
   }
 }

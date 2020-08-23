@@ -1,3 +1,4 @@
+import 'package:cazdata_frontend/journey/redux/actions.dart';
 import 'package:cazdata_frontend/model/animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/pages/journey.dart';
@@ -5,11 +6,11 @@ import 'package:cazdata_frontend/ui/widget/species-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:cazdata_frontend/model/journey.dart';
+import 'package:cazdata_frontend/journey/model/journey.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../model/journey.dart';
+import '../../journey/model/journey.dart';
 
 class Configurator extends StatefulWidget {
   @override

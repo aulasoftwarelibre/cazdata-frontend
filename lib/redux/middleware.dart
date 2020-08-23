@@ -1,8 +1,10 @@
+import 'package:cazdata_frontend/journey/redux/actions.dart';
+import 'package:cazdata_frontend/journey/redux/middleware.dart';
 import 'package:cazdata_frontend/model/animal.dart';
-import 'package:cazdata_frontend/model/journey.dart';
+import 'package:cazdata_frontend/journey/model/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/services/repository/animal.repository.dart';
-import 'package:cazdata_frontend/services/repository/journey.repository.dart';
+import 'package:cazdata_frontend/journey/services/journey.repository.dart';
 import 'package:cazdata_frontend/util/keys.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,6 +24,8 @@ middleware(Store<AppState> store, action, NextDispatcher next) {
     _handleLogoutAction(store, action);
   } else if (action is StartLoadingAnimalsAction) {
     _handleStartLoadingAnimalsAction(store, action);
+  } else if (action is JourneyAction) {
+    journeyMiddleware(store, action, next);
   }
 
   next(action);
@@ -81,13 +85,13 @@ _handleStartLoadingAnimalsAction(
   }
 }
 
-ThunkAction postCurrentJourneyAction(Journey journey, String tokenId) {
+ThunkAction postCurrentJourneyAction(Journey journey, String userId) {
   JourneyRepository _journeyRepository = new JourneyRepository();
 
   return (Store store) async {
     new Future(() async {
       store.dispatch(new StartSendingJourneyAction());
-      _journeyRepository.postJourney(journey, tokenId).then((journey) async {
+      _journeyRepository.postJourney(journey, userId).then((journey) async {
         store.dispatch(new SendingJourneySuccessAction());
         Keys.navKey.currentState.pushNamed(Routes.homePage);
       }, onError: (error) {

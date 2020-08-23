@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cazdata_frontend/model/journey.dart';
+import 'package:cazdata_frontend/journey/model/journey.dart';
 import 'package:cazdata_frontend/ui/widget/data-on-map.widget.dart';
 import 'package:flutter/material.dart';
 

@@ -1,4 +1,4 @@
-import 'package:cazdata_frontend/model/journey.dart';
+import 'package:cazdata_frontend/journey/model/journey.dart';
 import 'package:cazdata_frontend/ui/pages/details-journey.dart';
 import 'package:flutter/material.dart';
 

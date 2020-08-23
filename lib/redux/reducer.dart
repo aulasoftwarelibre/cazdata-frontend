@@ -1,5 +1,5 @@
-import 'package:cazdata_frontend/model/animal.dart';
-import 'package:cazdata_frontend/model/hunted-animal.dart';
+import 'package:cazdata_frontend/journey/redux/reducer.dart';
+import 'package:cazdata_frontend/journey/redux/state.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 
 AppState mainReducer(AppState state, dynamic action) {
@@ -7,13 +7,16 @@ AppState mainReducer(AppState state, dynamic action) {
   bool userIsNew = _reduceUserIsNew(state, action);
   AnimalsListState animalsListState = _reduceAnimalsListState(state, action);
   CurrentJourneyState currentJourneyState =
-      _reduceCurrentJourneyStateState(state, action);
+      reduceCurrentJourneyStateState(state, action);
+  HunterJourneysState hunterJourneysState =
+      reduceHunterJourneysState(state, action);
 
   return AppState(
       firebaseState: firebaseState,
       userIsNew: userIsNew,
       animalsListState: animalsListState,
-      currentJourneyState: currentJourneyState);
+      currentJourneyState: currentJourneyState,
+      hunterJourneysState: hunterJourneysState);
 }
 
 FirebaseState _reduceFirebaseState(AppState state, dynamic action) {
@@ -46,33 +49,6 @@ AnimalsListState _reduceAnimalsListState(AppState state, dynamic action) {
         animals: action.animalsList.animals, isLoading: false);
   } else if (action is AnimalsLoadFailedAction) {
     newState = newState.copyWith(isLoading: false, errorLoading: true);
-  }
-
-  return newState;
-}
-
-CurrentJourneyState _reduceCurrentJourneyStateState(
-    AppState state, dynamic action) {
-  CurrentJourneyState newState = state.currentJourneyState;
-
-  if (action is UpdateAnimalsAction) {
-    List<Animal> newAnimals = action.animals;
-
-    newState = newState.copyWith(selectedAnimals: newAnimals);
-  } else if (action is SaveCurrentJourneyAction) {
-    newState = newState.copyWith(journey: action.journey);
-  } else if (action is AddHuntedAnimalAction) {
-    List<HuntedAnimal> newHuntedAnimals =
-        state.currentJourneyState.huntedAnimals;
-
-    newHuntedAnimals.add((action.huntedAnimal));
-    newState = newState.copyWith(huntedAnimals: newHuntedAnimals);
-  } else if (action is CleanCurrentJourneyAction) {
-    newState = newState.copyWith(
-        journey: null,
-        selectedAnimals: null,
-        huntedAnimals: null,
-        polylineCoordinates: null);
   }
 
   return newState;

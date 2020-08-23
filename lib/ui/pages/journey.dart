@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:cazdata_frontend/journey/redux/state.dart';
 import 'package:cazdata_frontend/model/hunted-animal.dart';
-import 'package:cazdata_frontend/model/journey.dart';
+import 'package:cazdata_frontend/journey/model/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
+import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -152,6 +154,10 @@ class JourneyPageState extends State<JourneyPage> {
                                         onPressed: () {
                                           vm.saveJourney(
                                               vm.currentJourneyState.journey);
+                                          Navigator.popUntil(
+                                              context,
+                                              ModalRoute.withName(
+                                                  Routes.homePage));
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) {
@@ -298,7 +304,7 @@ class _ViewModel {
       currentJourneyState: store.state.currentJourneyState,
       saveJourney: (Journey journey) {
         store.dispatch(postCurrentJourneyAction(
-            journey, store.state.firebaseState.idTokenUser));
+            journey, store.state.firebaseState.firebaseUser.uid));
       },
       addHuntedAnimal: (HuntedAnimal huntedAnimal) {
         store.dispatch(AddHuntedAnimalAction(huntedAnimal));

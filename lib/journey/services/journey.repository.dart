@@ -1,26 +1,30 @@
-import 'package:cazdata_frontend/model/journey.dart';
+import 'package:cazdata_frontend/journey/model/journey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class JourneyRepository {
-  Future<JourneysList> getJourneys() async {
+  Future<JourneysList> getJourneys(String userId) async {
     JourneysList journeysList;
 
     try {
-      final documentsQuery =
-          await Firestore.instance.collection('journeys').getDocuments();
+      final documentsQuery = await Firestore.instance
+          .collection('journeys')
+          .getDocuments()
+          .catchError(() => journeysList = JourneysList());
       final journeyDocuments = documentsQuery.documents;
       journeysList = JourneysList.fromFirestoreDocuments(journeyDocuments);
-    } catch (exception) {}
+    } catch (exception) {
+      journeysList = JourneysList();
+    }
 
     return journeysList;
   }
 
-  Future<bool> postJourney(Journey journey, String tokenId) async {
-    await Firestore.instance
+  Future<bool> postJourney(Journey journey, String userId) async {
+    Firestore.instance
         .collection('journeys')
         .document()
         .setData({
-          'hunterId': journey.hunterId,
+          'hunterId': userId,
           'title': journey.title,
           'startsAt': Timestamp.fromDate(journey.startsAt),
           'endsAt': Timestamp.fromDate(journey.endsAt),
@@ -30,6 +34,6 @@ class JourneyRepository {
         .then((value) => null)
         .catchError(() => null);
 
-    return true;
+    return false;
   }
 }
