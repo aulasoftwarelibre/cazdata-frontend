@@ -11,7 +11,7 @@ AppState mainReducer(AppState state, dynamic action) {
   CurrentJourneyState currentJourneyState =
       reduceCurrentJourneyStateState(state, action);
   HunterJourneysState hunterJourneysState =
-      reduceHunterJourneysState(state, action);
+      reduceHunterJourneysState(state.hunterJourneysState, action);
 
   return AppState(
       firebaseState: firebaseState,
