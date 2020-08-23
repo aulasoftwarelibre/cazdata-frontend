@@ -6,8 +6,6 @@ import 'package:cazdata_frontend/util/url.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class JourneyRepository {
-  ApiProvider _provider = ApiProvider();
-
   Future<JourneysList> getJourneys() async {
     JourneysList journeysList;
 
@@ -22,19 +20,20 @@ class JourneyRepository {
   }
 
   Future<bool> postJourney(Journey journey, String tokenId) async {
-    try {
-      Firestore.instance.collection('journeys').document().setData({
-        'hunterId': journey.hunterId,
-        'title': journey.title,
-        'startsAt': Timestamp.fromDate(journey.startsAt),
-        'endsAt': Timestamp.fromDate(journey.endsAt),
-        'distance': journey.distance,
-        'calories': journey.calories
-      });
+    await Firestore.instance
+        .collection('journeys')
+        .document()
+        .setData({
+          'hunterId': journey.hunterId,
+          'title': journey.title,
+          'startsAt': Timestamp.fromDate(journey.startsAt),
+          'endsAt': Timestamp.fromDate(journey.endsAt),
+          'distance': journey.distance,
+          'calories': journey.calories
+        })
+        .then((value) => null)
+        .catchError(() => null);
 
-      return true;
-    } catch (exception) {
-      return false;
-    }
+    return true;
   }
 }
