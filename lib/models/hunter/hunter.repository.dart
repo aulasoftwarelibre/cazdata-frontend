@@ -2,7 +2,7 @@ import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HunterRepository {
-  Future<bool> postHunter(Hunter hunter, String idToken) async {
+  Future<bool> createHunter(Hunter hunter) async {
     Firestore.instance
         .collection('hunters')
         .document()

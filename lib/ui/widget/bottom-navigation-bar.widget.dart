@@ -7,8 +7,7 @@ import 'package:redux/redux.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
   @override
-  _BottomNavigationBarWidgetState createState() =>
-      _BottomNavigationBarWidgetState();
+  _BottomNavigationBarWidgetState createState() => _BottomNavigationBarWidgetState();
 }
 
 class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
@@ -21,24 +20,6 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
-      onInit: (store) {
-        /*if (store.state.userIsNew == true) {
-          HunterRepository hunterRepository = new HunterRepository();
-
-          Hunter hunter = new Hunter();
-          hunter.id = store.state.firebaseState.firebaseUser.uid;
-          hunter.displayName =
-              store.state.firebaseState.firebaseUser.displayName;
-          hunter.email = store.state.firebaseState.firebaseUser.email;
-          hunter.photoUrl = store.state.firebaseState.firebaseUser.photoUrl;
-          hunter.isEmailVerified = true;
-
-          hunterRepository.createHunter(
-              hunter, store.state.firebaseState.idTokenUser);
-
-          store.dispatch(UserIsNew(false));
-        }*/
-      },
       builder: (BuildContext context, _ViewModel viewModel) {
         return _appView(context, viewModel);
       },

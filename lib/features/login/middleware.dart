@@ -1,3 +1,5 @@
+import 'package:cazdata_frontend/features/hunter/middleware.dart';
+import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -24,13 +26,21 @@ _handleLoginWithGoogleAction(Store<AppState> store, LoginWithGoogleRequestAction
   );
 
   final AuthResult authResult = await _auth.signInWithCredential(credential);
+  final FirebaseUser user = authResult.user;
 
   if (authResult.additionalUserInfo.isNewUser) {
     store.dispatch(UserIsNewAction(true));
     next(UserIsNewAction);
-  }
 
-  final FirebaseUser user = authResult.user;
+    Hunter hunter = new Hunter(
+        id: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoUrl: user.photoUrl,
+        isEmailVerified: user.isEmailVerified);
+        
+    store.dispatch(createHunterAction(hunter));
+  }
 
   assert(!user.isAnonymous);
   assert(await user.getIdToken() != null);
