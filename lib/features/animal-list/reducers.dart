@@ -7,7 +7,7 @@ AnimalsListState _requestReducer(AnimalsListState state, LoadAnimalsRequestActio
 }
 
 AnimalsListState _successReducer(AnimalsListState state, LoadAnimalsSuccessAction action) {
-  return state.copyWith(isLoading: true, animals: action.animalsList.animals);
+  return state.copyWith(isLoading: false, animals: action.animalsList.animals);
 }
 
 AnimalsListState _failureReducer(AnimalsListState state, LoadAnimalsFailureAction action) {

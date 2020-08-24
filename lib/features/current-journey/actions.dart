@@ -14,16 +14,16 @@ class SaveCurrentJourneyAction extends CurrentJourneyAction {
   SaveCurrentJourneyAction(this.journey);
 }
 
-class StartSendingJourneyAction extends CurrentJourneyAction {
-  StartSendingJourneyAction();
+class SendJourneyRequestAction extends CurrentJourneyAction {
+  SendJourneyRequestAction();
 }
 
-class SendingJourneySuccessAction extends CurrentJourneyAction {
-  SendingJourneySuccessAction();
+class SendJourneySuccessAction extends CurrentJourneyAction {
+  SendJourneySuccessAction();
 }
 
-class SendingJourneyFailedAction extends CurrentJourneyAction {
-  SendingJourneyFailedAction();
+class SendJourneyFailureAction extends CurrentJourneyAction {
+  SendJourneyFailureAction();
 }
 
 class UpdateAnimalsAction extends CurrentJourneyAction {

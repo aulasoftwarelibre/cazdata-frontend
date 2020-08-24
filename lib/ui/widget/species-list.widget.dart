@@ -1,5 +1,5 @@
+import 'package:cazdata_frontend/features/animal-list/middleware.dart';
 import 'package:cazdata_frontend/models/animal/animal.dart';
-import 'package:cazdata_frontend/features/animal-list/actions.dart';
 import 'package:cazdata_frontend/features/animal-list/state.dart';
 import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/redux/index.dart';
@@ -32,7 +32,7 @@ class SpeciesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
       onInit: (store) {
-        if (store.state.animalsListState.animals == null) store.dispatch(LoadAnimalsRequestAction());
+        if (store.state.animalsListState.animals == null) store.dispatch(handleLoadAnimalsAction());
       },
       builder: (BuildContext context, _ViewModel viewModel) {
         return _widgetView(context, viewModel);

@@ -11,12 +11,12 @@ ThunkAction postCurrentJourneyAction(Journey journey, String userId) {
 
   return (Store store) async {
     new Future(() async {
-      store.dispatch(new StartSendingJourneyAction());
+      store.dispatch(new SendJourneyRequestAction());
       _journeyRepository.postJourney(journey, userId).then((journey) async {
-        store.dispatch(new SendingJourneySuccessAction());
+        store.dispatch(new SendJourneySuccessAction());
         Keys.navKey.currentState.pushNamed(Routes.homePage);
       }, onError: (error) {
-        store.dispatch(new SendingJourneyFailedAction());
+        store.dispatch(new SendJourneyFailureAction());
       });
     });
   };

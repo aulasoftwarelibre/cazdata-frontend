@@ -1,4 +1,5 @@
 import 'package:cazdata_frontend/features/journey-list/actions.dart';
+import 'package:cazdata_frontend/features/journey-list/middleware.dart';
 import 'package:cazdata_frontend/features/journey-list/state.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/journey-tile.widget.dart';
@@ -24,7 +25,7 @@ class JourneysList extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(onInit: (store) {
       if (store.state.hunterJourneysState.journeysList.journeys == null) {
-        store.dispatch(LoadJourneysRequestAction());
+        store.dispatch(handleLoadJourneysAction());
       }
     }, builder: (BuildContext context, _ViewModel viewModel) {
       return _widgetView(context, viewModel);

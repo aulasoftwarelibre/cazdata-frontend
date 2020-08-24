@@ -1,27 +1,23 @@
-import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/features/journey-list/actions.dart';
 import 'package:cazdata_frontend/models/journey/journey.repository.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
-journeyMiddleware(Store<AppState> store, JourneyListAction action, NextDispatcher next) {
-  if (action is LoadJourneysRequestAction) {
-    _handleStartLoadingJourneysAction(store, action);
-  }
-}
+ThunkAction<AppState> handleLoadJourneysAction() {
+  JourneyRepository _journeyRepository = new JourneyRepository();
 
-_handleStartLoadingJourneysAction(Store<AppState> store, LoadJourneysRequestAction action) async {
-  JourneyRepository journeyRepository = new JourneyRepository();
-  String userId = store.state.firebaseState.firebaseUser.uid;
-  JourneysList journeysList = await journeyRepository.getJourneys(userId);
-
-  if (journeysList != null) {
-    store.dispatch(LoadJourneysSuccessAction(journeysList));
-  } else {
-    store.dispatch(LoadJourneysFailureAction());
-
-    Future.delayed(Duration(seconds: 2), () {
+  return (Store<AppState> store) async {
+    new Future(() async {
       store.dispatch(LoadJourneysRequestAction());
+      _journeyRepository.getJourneys(store.state.loginState.firebaseUser.uid).then((journeysList) async {
+        store.dispatch(new LoadJourneysSuccessAction(journeysList));
+      }, onError: (error) {
+        store.dispatch(new LoadJourneysFailureAction());
+        Future.delayed(Duration(seconds: 2), () {
+          handleLoadJourneysAction();
+        });
+      });
     });
-  }
+  };
 }
