@@ -26,13 +26,13 @@ class SendingJourneyFailedAction extends CurrentJourneyAction {
   SendingJourneyFailedAction();
 }
 
-class UpdateAnimalsAction {
+class UpdateAnimalsAction extends CurrentJourneyAction {
   final List<Animal> animals;
 
   UpdateAnimalsAction(this.animals);
 }
 
-class AddHuntedAnimalAction {
+class AddHuntedAnimalAction extends CurrentJourneyAction {
   final HuntedAnimal huntedAnimal;
 
   AddHuntedAnimalAction(this.huntedAnimal);
