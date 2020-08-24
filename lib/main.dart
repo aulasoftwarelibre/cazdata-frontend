@@ -1,5 +1,4 @@
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/pages/login.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:cazdata_frontend/util/keys.dart';
 import 'package:cazdata_frontend/util/routes.dart';
@@ -22,31 +21,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-            statusBarColor: Colors.white,
-            /* set Status bar color in Android devices. */
-
-            statusBarIconBrightness: Brightness.dark,
-            /* set Status bar icons color in Android devices.*/
-
-            statusBarBrightness:
-                Brightness.dark) /* set Status bar icon color in iOS. */
-        );
+        statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark, statusBarBrightness: Brightness.dark));
     return StoreProvider(
       store: this.store,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         navigatorKey: Keys.navKey,
+        onGenerateRoute: Router.generateRoute,
+        initialRoute: loginRoute,
         routes: {
-          Routes.homePage: (context) {
+          homeRoute: (context) {
             return BottomNavigationBarWidget();
           }
         },
-        title: 'CazData',
-        theme: ThemeData(
-            primaryColor: primaryColor,
-            accentColor: accentColor,
-            fontFamily: 'Montserrat'),
-        home: LoginPage(),
+        theme: ThemeData(primaryColor: primaryColor, accentColor: accentColor, fontFamily: 'Montserrat'),
       ),
     );
   }

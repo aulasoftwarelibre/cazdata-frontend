@@ -1,5 +1,5 @@
-import 'package:cazdata_frontend/features/hunter/actions.dart';
-import 'package:cazdata_frontend/features/hunter/middleware.dart';
+import 'package:cazdata_frontend/features/login/actions.dart';
+import 'package:cazdata_frontend/features/login/middleware.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:redux/redux.dart';
 

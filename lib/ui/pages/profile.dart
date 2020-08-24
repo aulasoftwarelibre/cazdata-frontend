@@ -1,4 +1,4 @@
-import 'package:cazdata_frontend/features/hunter/actions.dart';
+import 'package:cazdata_frontend/features/login/middleware.dart';
 import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/pages/login.dart';
@@ -13,14 +13,12 @@ class Profile extends StatelessWidget {
       converter: (store) => _ViewModel(
           hunter: store.state.hunterState.hunter,
           logout: () {
-            store.dispatch(LogoutRequestAction());
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) {
+            store.dispatch(handleLogoutAction());
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {
               return LoginPage();
             }), ModalRoute.withName('/'));
           }),
-      builder: (BuildContext context, _ViewModel vm) =>
-          _profileView(context, vm),
+      builder: (BuildContext context, _ViewModel vm) => _profileView(context, vm),
     );
   }
 
@@ -52,8 +50,7 @@ class Profile extends StatelessWidget {
                           flex: 3,
                           child: Text(
                             'Cuenta',
-                            style: TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -62,22 +59,18 @@ class Profile extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10.0, bottom: 12.0),
                       child: Text(
                         'Perfil',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 24),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                       ),
                     ),
                     ProfileWidget(
-                        name: vm.hunter.displayName,
-                        location: vm.hunter.email,
-                        profilePic: vm.hunter.photoUrl),
+                        name: vm.hunter.displayName, location: vm.hunter.email, profilePic: vm.hunter.photoUrl),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Divider(color: Colors.black),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
-                      child: TextFieldWidget(
-                          header: 'Nivel Cazador', content: 'Novato (10)'),
+                      child: TextFieldWidget(header: 'Nivel Cazador', content: 'Novato (10)'),
                     ),
                     SizedBox(height: 15.0),
                     Row(
@@ -90,10 +83,8 @@ class Profile extends StatelessWidget {
                             },
                             color: Colors.red,
                             textColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(18.0)),
-                            child: Text("Cerrar sesión",
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(18.0)),
+                            child: Text("Cerrar sesión", style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
                         ),
                       ],

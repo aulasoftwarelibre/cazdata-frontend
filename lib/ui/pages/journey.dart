@@ -146,7 +146,7 @@ class JourneyPageState extends State<JourneyPage> {
                                         ),
                                         onPressed: () {
                                           vm.saveJourney(vm.currentJourneyState.journey);
-                                          Navigator.popUntil(context, ModalRoute.withName(Routes.homePage));
+                                          Navigator.popUntil(context, ModalRoute.withName(homeRoute));
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) {

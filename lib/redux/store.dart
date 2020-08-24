@@ -10,5 +10,4 @@ Store<AppState> createStore() {
   );
 }
 
-List<Middleware<AppState>> createMiddleware() =>
-    <Middleware<AppState>>[thunkMiddleware, middleware];
+List<Middleware<AppState>> createMiddleware() => <Middleware<AppState>>[thunkMiddleware, middleware];
