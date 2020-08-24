@@ -1,22 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class JourneysList {
-  final List<Journey> journeys;
-
-  JourneysList({this.journeys});
-
-  factory JourneysList.fromFirestoreDocuments(
-      List<DocumentSnapshot> documentsList) {
-    List<Journey> journeys = new List<Journey>();
-
-    journeys = documentsList
-        .map((document) => Journey.fromJson(document.documentID, document.data))
-        .toList();
-
-    return new JourneysList(journeys: journeys);
-  }
-}
-
 class Journey {
   String id;
   String title;
@@ -63,5 +46,19 @@ class Journey {
       distance: json['distance'],
       calories: json['calories'],
     );
+  }
+}
+
+class JourneysList {
+  final List<Journey> journeys;
+
+  JourneysList({this.journeys});
+
+  factory JourneysList.fromFirestoreDocuments(List<DocumentSnapshot> documentsList) {
+    List<Journey> journeys = new List<Journey>();
+
+    journeys = documentsList.map((document) => Journey.fromJson(document.documentID, document.data)).toList();
+
+    return new JourneysList(journeys: journeys);
   }
 }

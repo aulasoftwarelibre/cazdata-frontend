@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -36,18 +36,14 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
-      converter: (store) =>
-          _ViewModel(user: store.state.firebaseState.firebaseUser),
+      converter: (store) => _ViewModel(hunter: store.state.hunterState.hunter),
       builder: (BuildContext context, _ViewModel vm) => _homeView(context, vm),
     );
   }
 
   Widget _homeView(BuildContext context, _ViewModel vm) {
-    CameraPosition initialCameraPosition = CameraPosition(
-        zoom: CAMERA_ZOOM,
-        tilt: CAMERA_TILT,
-        bearing: CAMERA_BEARING,
-        target: SOURCE_LOCATION);
+    CameraPosition initialCameraPosition =
+        CameraPosition(zoom: CAMERA_ZOOM, tilt: CAMERA_TILT, bearing: CAMERA_BEARING, target: SOURCE_LOCATION);
 
     if (_currentLocation != null) {
       initialCameraPosition = CameraPosition(
@@ -69,8 +65,7 @@ class HomeState extends State<Home> {
                   children: <Widget>[
                     Text(
                       'Mapa de Inicio',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                     ),
                   ],
                 ),
@@ -82,23 +77,21 @@ class HomeState extends State<Home> {
                         child: Card(
                           color: Color.fromARGB(255, 241, 243, 246),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(16),
-                                topRight: Radius.circular(16)),
+                            borderRadius:
+                                BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
                           ),
                           child: Center(
                             child: Column(
                               children: <Widget>[
                                 ProfileOnMapWidget(
-                                  name: vm.user.displayName,
+                                  name: vm.hunter.displayName,
                                   location: 'Nivel 1',
-                                  profilePic: vm.user.photoUrl,
+                                  profilePic: vm.hunter.photoUrl,
                                 ),
                                 SizedBox(
                                   //Looks like google api and flutter arent friends so size is defined like this for now
                                   width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height / 2,
+                                  height: MediaQuery.of(context).size.height / 2,
                                   child: GoogleMap(
                                     myLocationButtonEnabled: false,
                                     myLocationEnabled: true,
@@ -110,10 +103,8 @@ class HomeState extends State<Home> {
                                     zoomControlsEnabled: false,
                                     markers: _markers,
                                     mapType: MapType.hybrid,
-                                    initialCameraPosition:
-                                        initialCameraPosition,
-                                    onMapCreated:
-                                        (GoogleMapController controller) {
+                                    initialCameraPosition: initialCameraPosition,
+                                    onMapCreated: (GoogleMapController controller) {
                                       _controller.complete(controller);
                                     },
                                   ),
@@ -148,10 +139,7 @@ class HomeState extends State<Home> {
                             ),
                             child: Text(
                               "Iniciar jornada",
-                              style: TextStyle(
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
+                              style: TextStyle(fontFamily: "Montserrat", fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                         ),
@@ -213,7 +201,7 @@ class HomeState extends State<Home> {
 }
 
 class _ViewModel {
-  final FirebaseUser user;
+  final Hunter hunter;
 
-  _ViewModel({@required this.user});
+  _ViewModel({@required this.hunter});
 }

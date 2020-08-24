@@ -1,4 +1,7 @@
-import 'package:cazdata_frontend/model/animal.dart';
+import 'package:cazdata_frontend/features/animal-list/middleware.dart';
+import 'package:cazdata_frontend/models/animal/animal.dart';
+import 'package:cazdata_frontend/features/animal-list/state.dart';
+import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/grouped-button.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
@@ -23,15 +26,13 @@ class _ViewModel {
 }
 
 class SpeciesList extends StatelessWidget {
-
   SpeciesList();
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
       onInit: (store) {
-        if (store.state.animalsListState.animals == null)
-          store.dispatch(StartLoadingAnimalsAction());
+        if (store.state.animalsListState.animals == null) store.dispatch(handleLoadAnimalsAction());
       },
       builder: (BuildContext context, _ViewModel viewModel) {
         return _widgetView(context, viewModel);
@@ -61,7 +62,7 @@ class SpeciesList extends StatelessWidget {
     } else if (viewModel._animalsListState.animals != null) {
       List<Animal> animals = [];
       for (int i = 0; i < viewModel._animalsListState.animals.length; i++) {
-          animals.add(viewModel._animalsListState.animals[i]);
+        animals.add(viewModel._animalsListState.animals[i]);
       }
 
       return Expanded(

@@ -1,7 +1,8 @@
+import 'package:cazdata_frontend/features/hunter/actions.dart';
+import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/pages/login.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -10,9 +11,9 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
       converter: (store) => _ViewModel(
-          user: store.state.firebaseState.firebaseUser,
+          hunter: store.state.hunterState.hunter,
           logout: () {
-            store.dispatch(LogoutAction());
+            store.dispatch(LogoutRequestAction());
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) {
               return LoginPage();
@@ -66,9 +67,9 @@ class Profile extends StatelessWidget {
                       ),
                     ),
                     ProfileWidget(
-                        name: vm.user.displayName,
-                        location: vm.user.email,
-                        profilePic: vm.user.photoUrl),
+                        name: vm.hunter.displayName,
+                        location: vm.hunter.email,
+                        profilePic: vm.hunter.photoUrl),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Divider(color: Colors.black),
@@ -109,11 +110,11 @@ class Profile extends StatelessWidget {
 }
 
 class _ViewModel {
-  final FirebaseUser user;
+  final Hunter hunter;
   final Function() logout;
 
   _ViewModel({
-    @required this.user,
+    @required this.hunter,
     @required this.logout,
   });
 }

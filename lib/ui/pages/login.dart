@@ -1,11 +1,12 @@
 import 'dart:async';
 
+import 'package:cazdata_frontend/features/hunter/actions.dart';
+import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:cazdata_frontend/ui/widget/data-protection-dialog.widget.dart';
 import 'package:cazdata_frontend/ui/widget/oauth-login-button.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:provider/provider.dart';
@@ -15,14 +16,14 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-          user: store.state.firebaseState.firebaseUser,
+          hunter: store.state.hunterState.hunter,
           login: () {
-            final result = LoginWithGoogleAction();
+            final result = LoginWithGoogleRequestAction();
 
             store.dispatch(result);
 
             Future.wait([result.completer.future]).then((user) => {
-                  if (store.state.userIsNew)
+                  if (store.state.hunterState.isNew)
                     {
                       showDialog(
                         context: context,
@@ -36,14 +37,10 @@ class LoginPage extends StatelessWidget {
                           builder: (context) {
                             return MaterialApp(
                               title: 'Group',
-                              theme: ThemeData(
-                                  primaryColor: primaryColor,
-                                  fontFamily: 'Montserrat'),
-                              home: ChangeNotifierProvider<
-                                  BottomNavigationBarProvider>(
+                              theme: ThemeData(primaryColor: primaryColor, fontFamily: 'Montserrat'),
+                              home: ChangeNotifierProvider<BottomNavigationBarProvider>(
                                 child: BottomNavigationBarWidget(),
-                                create: (BuildContext context) =>
-                                    BottomNavigationBarProvider(),
+                                create: (BuildContext context) => BottomNavigationBarProvider(),
                               ),
                             );
                           },
@@ -69,15 +66,11 @@ class LoginPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Cazdata",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 74,
-                          color: accentColor)),
+                  Text("Cazdata", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 74, color: accentColor)),
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(left:8.0, right: 8.0),
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -95,10 +88,7 @@ class LoginPage extends StatelessWidget {
                 children: [
                   Text(
                     "La aplicación CazData está diseñada para\ntener un historial de tu progreso y logros\ncomo cazador. Mira tu historial de jornadas\ny compártelo con la comunidad.",
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 15,
-                        color: Colors.grey),
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -123,11 +113,11 @@ class LoginPage extends StatelessWidget {
 }
 
 class _ViewModel {
-  final FirebaseUser user;
+  final Hunter hunter;
   final Function() login;
 
   _ViewModel({
-    @required this.user,
+    @required this.hunter,
     @required this.login,
   });
 }
