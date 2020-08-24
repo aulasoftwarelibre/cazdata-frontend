@@ -1,16 +1,16 @@
-import 'package:cazdata_frontend/animal/model/animal.dart';
-import 'package:cazdata_frontend/journey/redux/actions.dart';
+import 'package:cazdata_frontend/models/animal/animal.dart';
+import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/pages/journey.dart';
 import 'package:cazdata_frontend/ui/widget/species-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:cazdata_frontend/journey/model/journey.dart';
+import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../journey/model/journey.dart';
+import '../../models/journey/journey.dart';
 
 class Configurator extends StatefulWidget {
   @override
@@ -35,13 +35,8 @@ class ConfiguratorState extends State<Configurator> {
   String _modality;
 
   List<DropdownMenuItem<dynamic>> _getHuntModalities() {
-    return <String>[
-      "En mano",
-      "Ojeo",
-      "Perdiz con reclamo",
-      "Caza acuáticas",
-      "Cetrería"
-    ].map<DropdownMenuItem<String>>((String value) {
+    return <String>["En mano", "Ojeo", "Perdiz con reclamo", "Caza acuáticas", "Cetrería"]
+        .map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem<String>(
         value: value,
         child: Text(
@@ -133,8 +128,7 @@ class ConfiguratorState extends State<Configurator> {
             physics: ClampingScrollPhysics(),
             children: <Widget>[
               Container(
-                margin:
-                    EdgeInsets.only(top: 48, left: 16, right: 16, bottom: 40),
+                margin: EdgeInsets.only(top: 48, left: 16, right: 16, bottom: 40),
                 child: Column(
                   children: [
                     Row(
@@ -249,8 +243,7 @@ class ConfiguratorState extends State<Configurator> {
                               ),
                               child: Text(
                                 "Siguiente",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16),
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                               ),
                             ),
                           ),

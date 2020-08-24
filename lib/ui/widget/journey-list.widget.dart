@@ -1,5 +1,5 @@
-import 'package:cazdata_frontend/journey/redux/actions.dart';
-import 'package:cazdata_frontend/journey/redux/state.dart';
+import 'package:cazdata_frontend/features/journey-list/actions.dart';
+import 'package:cazdata_frontend/features/journey-list/state.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/journey-tile.widget.dart';
 import 'package:flutter/material.dart';
@@ -55,16 +55,13 @@ class JourneysList extends StatelessWidget {
         child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: viewModel._hunterJourneysState.journeysList.journeys !=
-                    null
+            itemCount: viewModel._hunterJourneysState.journeysList.journeys != null
                 ? viewModel._hunterJourneysState.journeysList.journeys.length
                 : 0,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 4.0, top: 4.0),
-                child: JourneyTile(
-                    journey: viewModel
-                        ._hunterJourneysState.journeysList.journeys[index]),
+                child: JourneyTile(journey: viewModel._hunterJourneysState.journeysList.journeys[index]),
               );
             }));
   }

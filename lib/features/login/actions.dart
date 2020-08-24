@@ -1,25 +1,26 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginWithGoogleAction {
+abstract class LoginAction {}
+
+class LoginWithGoogleAction extends LoginAction {
   final Completer completer;
 
-  LoginWithGoogleAction({Completer completer})
-      : this.completer = completer ?? Completer();
+  LoginWithGoogleAction({Completer completer}) : this.completer = completer ?? Completer();
 }
 
-class LogoutAction {
+class LogoutAction extends LoginAction {
   LogoutAction();
 }
 
-class UserLoadedAction {
+class UserLoadedAction extends LoginAction {
   final FirebaseUser firebaseUser;
   final String idTokenUser;
 
   UserLoadedAction(this.firebaseUser, this.idTokenUser);
 }
 
-class UserIsNewAction {
+class UserIsNewAction extends LoginAction {
   final bool userIsNew;
 
   UserIsNewAction(this.userIsNew);

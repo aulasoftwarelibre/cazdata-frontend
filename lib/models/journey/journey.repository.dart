@@ -1,4 +1,4 @@
-import 'package:cazdata_frontend/journey/model/journey.dart';
+import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class JourneyRepository {

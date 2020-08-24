@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cazdata_frontend/journey/model/journey.dart';
+import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/ui/widget/data-on-map.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -51,8 +51,7 @@ class DetailsJourney extends StatelessWidget {
                           flex: 3,
                           child: Text(
                             'Detalle Jornada',
-                            style: TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -61,8 +60,7 @@ class DetailsJourney extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Text(
                         'Información',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 24),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                       ),
                     ),
                     Row(
@@ -73,11 +71,7 @@ class DetailsJourney extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 10.0),
                             child: Center(
                               child: AutoSizeText(
-                                journey.title +
-                                    " | " +
-                                    journey.startsAt
-                                        .toString()
-                                        .substring(0, 10),
+                                journey.title + " | " + journey.startsAt.toString().substring(0, 10),
                                 style: TextStyle(fontSize: 20),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -102,8 +96,7 @@ class DetailsJourney extends StatelessWidget {
                                   child: Column(
                                 children: <Widget>[
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       DataOnMapWidget(
@@ -114,8 +107,7 @@ class DetailsJourney extends StatelessWidget {
                                   ),
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width,
-                                    height:
-                                        MediaQuery.of(context).size.height / 2,
+                                    height: MediaQuery.of(context).size.height / 2,
                                   ),
                                 ],
                               ))),

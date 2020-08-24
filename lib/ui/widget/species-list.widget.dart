@@ -1,7 +1,7 @@
-import 'package:cazdata_frontend/animal/model/animal.dart';
-import 'package:cazdata_frontend/animal/redux/actions.dart';
-import 'package:cazdata_frontend/animal/redux/state.dart';
-import 'package:cazdata_frontend/journey/redux/actions.dart';
+import 'package:cazdata_frontend/models/animal/animal.dart';
+import 'package:cazdata_frontend/features/animal-list/actions.dart';
+import 'package:cazdata_frontend/features/animal-list/state.dart';
+import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/grouped-button.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
@@ -26,15 +26,13 @@ class _ViewModel {
 }
 
 class SpeciesList extends StatelessWidget {
-
   SpeciesList();
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
       onInit: (store) {
-        if (store.state.animalsListState.animals == null)
-          store.dispatch(LoadAnimalsRequestAction());
+        if (store.state.animalsListState.animals == null) store.dispatch(LoadAnimalsRequestAction());
       },
       builder: (BuildContext context, _ViewModel viewModel) {
         return _widgetView(context, viewModel);
@@ -64,7 +62,7 @@ class SpeciesList extends StatelessWidget {
     } else if (viewModel._animalsListState.animals != null) {
       List<Animal> animals = [];
       for (int i = 0; i < viewModel._animalsListState.animals.length; i++) {
-          animals.add(viewModel._animalsListState.animals[i]);
+        animals.add(viewModel._animalsListState.animals[i]);
       }
 
       return Expanded(

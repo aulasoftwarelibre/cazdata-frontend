@@ -1,4 +1,4 @@
-import 'package:cazdata_frontend/animal/model/animal.dart';
+import 'package:cazdata_frontend/models/animal/animal.dart';
 
 abstract class AnimalAction {}
 

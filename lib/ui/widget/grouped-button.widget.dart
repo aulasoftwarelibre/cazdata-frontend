@@ -1,4 +1,4 @@
-import 'package:cazdata_frontend/animal/model/animal.dart';
+import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:flutter/material.dart';
 
 class CustomCheckBoxGroup extends StatefulWidget {
@@ -68,9 +68,7 @@ class _CustomCheckBoxGroupState extends State<CustomCheckBoxGroup> {
       var button = Padding(
         padding: EdgeInsets.all(widget.padding),
         child: Card(
-          color: selectedLables.contains(widget.buttonValuesList[index])
-              ? widget.selectedColor
-              : widget.buttonColor,
+          color: selectedLables.contains(widget.buttonValuesList[index]) ? widget.selectedColor : widget.buttonColor,
           elevation: widget.elevation,
           shape: widget.enableShape
               ? widget.customShape == null
@@ -85,14 +83,12 @@ class _CustomCheckBoxGroupState extends State<CustomCheckBoxGroup> {
               shape: widget.enableShape
                   ? widget.customShape == null
                       ? OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor, width: 1),
+                          borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1),
                           borderRadius: BorderRadius.all(Radius.circular(50)),
                         )
                       : widget.customShape
                   : OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Theme.of(context).primaryColor, width: 1),
+                      borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1),
                       borderRadius: BorderRadius.zero,
                     ),
               onPressed: () {
@@ -116,8 +112,7 @@ class _CustomCheckBoxGroupState extends State<CustomCheckBoxGroup> {
                       widget.buttonLables[index].name,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: selectedLables
-                                .contains(widget.buttonValuesList[index])
+                        color: selectedLables.contains(widget.buttonValuesList[index])
                             ? Colors.white
                             : Theme.of(context).textTheme.bodyText1.color,
                         fontSize: widget.fontSize,
@@ -139,9 +134,7 @@ class _CustomCheckBoxGroupState extends State<CustomCheckBoxGroup> {
     List<Widget> buttons = [];
     for (int index = 0; index < widget.buttonLables.length; index++) {
       var button = Card(
-        color: selectedLables.contains(widget.buttonValuesList[index])
-            ? widget.selectedColor
-            : widget.buttonColor,
+        color: selectedLables.contains(widget.buttonValuesList[index]) ? widget.selectedColor : widget.buttonColor,
         elevation: widget.elevation,
         shape: widget.enableShape
             ? widget.customShape == null
@@ -159,14 +152,12 @@ class _CustomCheckBoxGroupState extends State<CustomCheckBoxGroup> {
             shape: widget.enableShape
                 ? widget.customShape == null
                     ? OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor, width: 1),
+                        borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       )
                     : widget.customShape
                 : OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor, width: 1),
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1),
                     borderRadius: BorderRadius.zero,
                   ),
             onPressed: () {
@@ -202,8 +193,8 @@ class _CustomCheckBoxGroupState extends State<CustomCheckBoxGroup> {
       child: widget.horizontal
           ? GridView.count(
               crossAxisCount: 2,
-              childAspectRatio: ((MediaQuery.of(context).size.width / 1.14) /
-                  (MediaQuery.of(context).size.width / 2.99)),
+              childAspectRatio:
+                  ((MediaQuery.of(context).size.width / 1.14) / (MediaQuery.of(context).size.width / 2.99)),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

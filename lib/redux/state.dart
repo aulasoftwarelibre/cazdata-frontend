@@ -1,6 +1,7 @@
-import 'package:cazdata_frontend/animal/redux/state.dart';
-import 'package:cazdata_frontend/journey/redux/state.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cazdata_frontend/features/animal-list/state.dart';
+import 'package:cazdata_frontend/features/current-journey/state.dart';
+import 'package:cazdata_frontend/features/journey-list/state.dart';
+import 'package:cazdata_frontend/features/login/state.dart';
 import 'package:flutter/material.dart';
 
 class AppState {
@@ -39,24 +40,5 @@ class AppState {
         animalsListState: animalsListState ?? this.animalsListState,
         currentJourneyState: currentJourneyState ?? this.currentJourneyState,
         hunterJourneysState: hunterJourneysState ?? this.hunterJourneysState);
-  }
-}
-
-@immutable
-class FirebaseState {
-  final FirebaseUser firebaseUser;
-  final String idTokenUser;
-
-  const FirebaseState(
-      {@required this.firebaseUser, @required this.idTokenUser});
-
-  factory FirebaseState.initial() {
-    return new FirebaseState(firebaseUser: null, idTokenUser: null);
-  }
-
-  FirebaseState copyWith({FirebaseUser firebaseUser, String idTokenUser}) {
-    return new FirebaseState(
-        firebaseUser: firebaseUser ?? this.firebaseUser,
-        idTokenUser: idTokenUser ?? this.idTokenUser);
   }
 }

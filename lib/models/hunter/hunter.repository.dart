@@ -1,4 +1,4 @@
-import 'package:cazdata_frontend/hunter/model/hunter.dart';
+import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HunterRepository {

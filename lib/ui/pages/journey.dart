@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:cazdata_frontend/journey/redux/actions.dart';
-import 'package:cazdata_frontend/journey/redux/middleware.dart';
-import 'package:cazdata_frontend/journey/redux/state.dart';
-import 'package:cazdata_frontend/animal/model/hunted-animal.dart';
-import 'package:cazdata_frontend/journey/model/journey.dart';
+import 'package:cazdata_frontend/features/current-journey/actions.dart';
+import 'package:cazdata_frontend/features/current-journey/middleware.dart';
+import 'package:cazdata_frontend/features/current-journey/state.dart';
+import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
+import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:cazdata_frontend/util/routes.dart';
@@ -59,35 +59,28 @@ class JourneyPageState extends State<JourneyPage> {
       buttons.add(SpeedDialChild(
           child: FittedBox(
             child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  vm.currentJourneyState.selectedAnimals[i].contentUrl),
+              backgroundImage: NetworkImage(vm.currentJourneyState.selectedAnimals[i].contentUrl),
               backgroundColor: Colors.transparent,
             ),
           ),
           label: vm.currentJourneyState.selectedAnimals[i].name,
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () {
-            LatLng current =
-                LatLng(_currentLocation.latitude, _currentLocation.longitude);
-            HuntedAnimal huntedAnimal = HuntedAnimal(
-                animal: vm.currentJourneyState.selectedAnimals[i],
-                position: current);
+            LatLng current = LatLng(_currentLocation.latitude, _currentLocation.longitude);
+            HuntedAnimal huntedAnimal =
+                HuntedAnimal(animal: vm.currentJourneyState.selectedAnimals[i], position: current);
             vm.addHuntedAnimal(huntedAnimal);
 
             final snackBar = SnackBar(
-              content: Text('Se ha cazado: ' +
-                  vm.currentJourneyState.selectedAnimals[i].name),
+              content: Text('Se ha cazado: ' + vm.currentJourneyState.selectedAnimals[i].name),
               backgroundColor: accentColor,
             );
 
             _scaffoldKey.currentState.showSnackBar(snackBar);
           }));
     }
-    CameraPosition initialCameraPosition = CameraPosition(
-        zoom: CAMERA_ZOOM,
-        tilt: CAMERA_TILT,
-        bearing: CAMERA_BEARING,
-        target: SOURCE_LOCATION);
+    CameraPosition initialCameraPosition =
+        CameraPosition(zoom: CAMERA_ZOOM, tilt: CAMERA_TILT, bearing: CAMERA_BEARING, target: SOURCE_LOCATION);
 
     if (_currentLocation != null) {
       initialCameraPosition = CameraPosition(
@@ -149,33 +142,21 @@ class JourneyPageState extends State<JourneyPage> {
                                       new FlatButton(
                                         child: new Text(
                                           "FINALIZAR",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: accentColor),
+                                          style: TextStyle(fontWeight: FontWeight.bold, color: accentColor),
                                         ),
                                         onPressed: () {
-                                          vm.saveJourney(
-                                              vm.currentJourneyState.journey);
-                                          Navigator.popUntil(
-                                              context,
-                                              ModalRoute.withName(
-                                                  Routes.homePage));
+                                          vm.saveJourney(vm.currentJourneyState.journey);
+                                          Navigator.popUntil(context, ModalRoute.withName(Routes.homePage));
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) {
                                                 return MaterialApp(
                                                   title: 'Jornada',
-                                                  theme: ThemeData(
-                                                      primaryColor:
-                                                          primaryColor,
-                                                      fontFamily: 'Montserrat'),
-                                                  home: ChangeNotifierProvider<
-                                                      BottomNavigationBarProvider>(
-                                                    child:
-                                                        BottomNavigationBarWidget(),
-                                                    create: (BuildContext
-                                                            context) =>
-                                                        BottomNavigationBarProvider(),
+                                                  theme:
+                                                      ThemeData(primaryColor: primaryColor, fontFamily: 'Montserrat'),
+                                                  home: ChangeNotifierProvider<BottomNavigationBarProvider>(
+                                                    child: BottomNavigationBarWidget(),
+                                                    create: (BuildContext context) => BottomNavigationBarProvider(),
                                                   ),
                                                 );
                                               },
@@ -296,17 +277,13 @@ class _ViewModel {
   final Function(Journey) saveJourney;
   final Function(HuntedAnimal) addHuntedAnimal;
 
-  _ViewModel(
-      {@required this.currentJourneyState,
-      @required this.saveJourney,
-      @required this.addHuntedAnimal});
+  _ViewModel({@required this.currentJourneyState, @required this.saveJourney, @required this.addHuntedAnimal});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       currentJourneyState: store.state.currentJourneyState,
       saveJourney: (Journey journey) {
-        store.dispatch(postCurrentJourneyAction(
-            journey, store.state.firebaseState.firebaseUser.uid));
+        store.dispatch(postCurrentJourneyAction(journey, store.state.firebaseState.firebaseUser.uid));
       },
       addHuntedAnimal: (HuntedAnimal huntedAnimal) {
         store.dispatch(AddHuntedAnimalAction(huntedAnimal));

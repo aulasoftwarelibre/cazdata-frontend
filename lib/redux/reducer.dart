@@ -1,17 +1,19 @@
-import 'package:cazdata_frontend/animal/redux/reducer.dart';
-import 'package:cazdata_frontend/animal/redux/state.dart';
-import 'package:cazdata_frontend/journey/redux/reducer.dart';
-import 'package:cazdata_frontend/journey/redux/state.dart';
+import 'package:cazdata_frontend/features/animal-list/reducer.dart';
+import 'package:cazdata_frontend/features/animal-list/state.dart';
+import 'package:cazdata_frontend/features/journey-list/reducers.dart';
+import 'package:cazdata_frontend/features/current-journey/reducer.dart';
+import 'package:cazdata_frontend/features/current-journey/state.dart';
+import 'package:cazdata_frontend/features/journey-list/state.dart';
+import 'package:cazdata_frontend/features/login/reducers.dart';
+import 'package:cazdata_frontend/features/login/state.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 
 AppState mainReducer(AppState state, dynamic action) {
-  FirebaseState firebaseState = _reduceFirebaseState(state, action);
-  bool userIsNew = _reduceUserIsNew(state, action);
+  FirebaseState firebaseState = reduceFirebaseState(state, action);
+  bool userIsNew = reduceUserIsNew(state, action);
   AnimalsListState animalsListState = reduceAnimalsListState(state, action);
-  CurrentJourneyState currentJourneyState =
-      reduceCurrentJourneyStateState(state, action);
-  HunterJourneysState hunterJourneysState =
-      reduceHunterJourneysState(state.hunterJourneysState, action);
+  CurrentJourneyState currentJourneyState = reduceCurrentJourneyStateState(state, action);
+  HunterJourneysState hunterJourneysState = reduceHunterJourneysState(state.hunterJourneysState, action);
 
   return AppState(
       firebaseState: firebaseState,
@@ -19,24 +21,4 @@ AppState mainReducer(AppState state, dynamic action) {
       animalsListState: animalsListState,
       currentJourneyState: currentJourneyState,
       hunterJourneysState: hunterJourneysState);
-}
-
-FirebaseState _reduceFirebaseState(AppState state, dynamic action) {
-  FirebaseState newState = state.firebaseState;
-
-  if (action is UserLoadedAction) {
-    newState = newState.copyWith(
-        firebaseUser: action.firebaseUser, idTokenUser: action.idTokenUser);
-  }
-  return newState;
-}
-
-bool _reduceUserIsNew(AppState state, dynamic action) {
-  bool userIsNew = state.userIsNew;
-
-  if (action is UserIsNewAction) {
-    userIsNew = action.userIsNew;
-  }
-
-  return userIsNew;
 }

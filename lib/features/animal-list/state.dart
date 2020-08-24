@@ -1,6 +1,4 @@
-
-
-import 'package:cazdata_frontend/animal/model/animal.dart';
+import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -9,18 +7,13 @@ class AnimalsListState {
   final bool isLoading;
   final bool errorLoading;
 
-  const AnimalsListState(
-      {@required this.animals,
-      @required this.isLoading,
-      @required this.errorLoading});
+  const AnimalsListState({@required this.animals, @required this.isLoading, @required this.errorLoading});
 
   factory AnimalsListState.initial() {
-    return new AnimalsListState(
-        animals: null, isLoading: false, errorLoading: false);
+    return new AnimalsListState(animals: null, isLoading: false, errorLoading: false);
   }
 
-  AnimalsListState copyWith(
-      {List<Animal> animals, bool isLoading, bool errorLoading}) {
+  AnimalsListState copyWith({List<Animal> animals, bool isLoading, bool errorLoading}) {
     return new AnimalsListState(
         animals: animals ?? this.animals,
         isLoading: isLoading ?? this.isLoading,
