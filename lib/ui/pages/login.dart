@@ -15,14 +15,14 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-          user: store.state.firebaseState.firebaseUser,
+          user: store.state.loginState.firebaseUser,
           login: () {
-            final result = LoginWithGoogleAction();
+            final result = LoginWithGoogleRequestAction();
 
             store.dispatch(result);
 
             Future.wait([result.completer.future]).then((user) => {
-                  if (store.state.userIsNew)
+                  if (store.state.loginState.isNew)
                     {
                       showDialog(
                         context: context,
@@ -36,14 +36,10 @@ class LoginPage extends StatelessWidget {
                           builder: (context) {
                             return MaterialApp(
                               title: 'Group',
-                              theme: ThemeData(
-                                  primaryColor: primaryColor,
-                                  fontFamily: 'Montserrat'),
-                              home: ChangeNotifierProvider<
-                                  BottomNavigationBarProvider>(
+                              theme: ThemeData(primaryColor: primaryColor, fontFamily: 'Montserrat'),
+                              home: ChangeNotifierProvider<BottomNavigationBarProvider>(
                                 child: BottomNavigationBarWidget(),
-                                create: (BuildContext context) =>
-                                    BottomNavigationBarProvider(),
+                                create: (BuildContext context) => BottomNavigationBarProvider(),
                               ),
                             );
                           },
@@ -69,15 +65,11 @@ class LoginPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Cazdata",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 74,
-                          color: accentColor)),
+                  Text("Cazdata", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 74, color: accentColor)),
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(left:8.0, right: 8.0),
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -95,10 +87,7 @@ class LoginPage extends StatelessWidget {
                 children: [
                   Text(
                     "La aplicación CazData está diseñada para\ntener un historial de tu progreso y logros\ncomo cazador. Mira tu historial de jornadas\ny compártelo con la comunidad.",
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 15,
-                        color: Colors.grey),
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ],

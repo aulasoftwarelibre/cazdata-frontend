@@ -9,15 +9,13 @@ import 'package:cazdata_frontend/features/login/state.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 
 AppState mainReducer(AppState state, dynamic action) {
-  FirebaseState firebaseState = reduceFirebaseState(state, action);
-  bool userIsNew = reduceUserIsNew(state, action);
+  LoginState loginState = reduceLoginState(state.loginState, action);
   AnimalsListState animalsListState = reduceAnimalsListState(state.animalsListState, action);
   CurrentJourneyState currentJourneyState = reduceCurrentJourneysState(state.currentJourneyState, action);
   HunterJourneysState hunterJourneysState = reduceHunterJourneysState(state.hunterJourneysState, action);
 
   return AppState(
-      firebaseState: firebaseState,
-      userIsNew: userIsNew,
+      loginState: loginState,
       animalsListState: animalsListState,
       currentJourneyState: currentJourneyState,
       hunterJourneysState: hunterJourneysState);

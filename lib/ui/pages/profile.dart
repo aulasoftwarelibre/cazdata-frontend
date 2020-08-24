@@ -10,9 +10,9 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
       converter: (store) => _ViewModel(
-          user: store.state.firebaseState.firebaseUser,
+          user: store.state.loginState.firebaseUser,
           logout: () {
-            store.dispatch(LogoutAction());
+            store.dispatch(LogoutRequestAction());
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) {
               return LoginPage();

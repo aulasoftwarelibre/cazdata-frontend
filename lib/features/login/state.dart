@@ -2,18 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class FirebaseState {
+class LoginState {
   final FirebaseUser firebaseUser;
-  final String idTokenUser;
+  final bool isNew;
 
-  const FirebaseState({@required this.firebaseUser, @required this.idTokenUser});
+  const LoginState({@required this.firebaseUser, @required this.isNew});
 
-  factory FirebaseState.initial() {
-    return new FirebaseState(firebaseUser: null, idTokenUser: null);
+  factory LoginState.initial() {
+    return new LoginState(firebaseUser: null, isNew: false);
   }
 
-  FirebaseState copyWith({FirebaseUser firebaseUser, String idTokenUser}) {
-    return new FirebaseState(
-        firebaseUser: firebaseUser ?? this.firebaseUser, idTokenUser: idTokenUser ?? this.idTokenUser);
+  LoginState copyWith({FirebaseUser firebaseUser, bool isNew}) {
+    return new LoginState(firebaseUser: firebaseUser ?? this.firebaseUser, isNew: isNew ?? this.isNew);
   }
 }

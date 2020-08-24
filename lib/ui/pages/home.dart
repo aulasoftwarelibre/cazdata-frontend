@@ -37,7 +37,7 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
       converter: (store) =>
-          _ViewModel(user: store.state.firebaseState.firebaseUser),
+          _ViewModel(user: store.state.loginState.firebaseUser),
       builder: (BuildContext context, _ViewModel vm) => _homeView(context, vm),
     );
   }

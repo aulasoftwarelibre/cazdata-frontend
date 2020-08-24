@@ -1,21 +1,16 @@
 import 'package:cazdata_frontend/features/login/state.dart';
 import 'package:cazdata_frontend/redux/index.dart';
+import 'package:redux/redux.dart';
 
-FirebaseState reduceFirebaseState(AppState state, dynamic action) {
-  FirebaseState newState = state.firebaseState;
-
-  if (action is UserLoadedAction) {
-    newState = newState.copyWith(firebaseUser: action.firebaseUser, idTokenUser: action.idTokenUser);
-  }
-  return newState;
+LoginState _requestReducer(LoginState state, LoginWithGoogleSuccessAction action) {
+  return state.copyWith(firebaseUser: action.firebaseUser);
 }
 
-bool reduceUserIsNew(AppState state, dynamic action) {
-  bool userIsNew = state.userIsNew;
-
-  if (action is UserIsNewAction) {
-    userIsNew = action.userIsNew;
-  }
-
-  return userIsNew;
+LoginState _userIsNewReducer(LoginState state, UserIsNewAction action) {
+  return state.copyWith(isNew: action.userIsNew);
 }
+
+Reducer<LoginState> reduceLoginState = combineReducers<LoginState>([
+  new TypedReducer<LoginState, LoginWithGoogleSuccessAction>(_requestReducer),
+  new TypedReducer<LoginState, UserIsNewAction>(_userIsNewReducer)
+]);

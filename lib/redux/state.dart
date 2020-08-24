@@ -5,23 +5,20 @@ import 'package:cazdata_frontend/features/login/state.dart';
 import 'package:flutter/material.dart';
 
 class AppState {
-  final FirebaseState firebaseState;
-  final bool userIsNew;
+  final LoginState loginState;
   final AnimalsListState animalsListState;
   final CurrentJourneyState currentJourneyState;
   final HunterJourneysState hunterJourneysState;
 
   const AppState(
-      {@required this.firebaseState,
-      @required this.userIsNew,
+      {@required this.loginState,
       @required this.animalsListState,
       @required this.currentJourneyState,
       @required this.hunterJourneysState});
 
   factory AppState.initial() {
     return AppState(
-      firebaseState: FirebaseState.initial(),
-      userIsNew: false,
+      loginState: LoginState.initial(),
       animalsListState: AnimalsListState.initial(),
       currentJourneyState: CurrentJourneyState.initial(),
       hunterJourneysState: HunterJourneysState.initial(),
@@ -29,14 +26,13 @@ class AppState {
   }
 
   AppState copyWith(
-      {FirebaseState firebaseState,
+      {LoginState loginState,
       bool userIsNew,
       AnimalsListState animalsListState,
       CurrentJourneyState currentJourneyState,
       HunterJourneysState hunterJourneysState}) {
     return new AppState(
-        firebaseState: firebaseState ?? this.firebaseState,
-        userIsNew: userIsNew ?? this.userIsNew,
+        loginState: loginState ?? this.loginState,
         animalsListState: animalsListState ?? this.animalsListState,
         currentJourneyState: currentJourneyState ?? this.currentJourneyState,
         hunterJourneysState: hunterJourneysState ?? this.hunterJourneysState);

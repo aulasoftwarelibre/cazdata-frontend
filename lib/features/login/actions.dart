@@ -3,21 +3,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class LoginAction {}
 
-class LoginWithGoogleAction extends LoginAction {
+class LoginWithGoogleRequestAction extends LoginAction {
   final Completer completer;
 
-  LoginWithGoogleAction({Completer completer}) : this.completer = completer ?? Completer();
+  LoginWithGoogleRequestAction({Completer completer}) : this.completer = completer ?? Completer();
 }
 
-class LogoutAction extends LoginAction {
-  LogoutAction();
-}
-
-class UserLoadedAction extends LoginAction {
+class LoginWithGoogleSuccessAction extends LoginAction {
   final FirebaseUser firebaseUser;
-  final String idTokenUser;
 
-  UserLoadedAction(this.firebaseUser, this.idTokenUser);
+  LoginWithGoogleSuccessAction(this.firebaseUser);
+}
+
+class LogoutRequestAction extends LoginAction {
+  LogoutRequestAction();
 }
 
 class UserIsNewAction extends LoginAction {

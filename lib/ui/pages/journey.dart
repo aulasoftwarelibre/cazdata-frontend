@@ -283,7 +283,7 @@ class _ViewModel {
     return _ViewModel(
       currentJourneyState: store.state.currentJourneyState,
       saveJourney: (Journey journey) {
-        store.dispatch(postCurrentJourneyAction(journey, store.state.firebaseState.firebaseUser.uid));
+        store.dispatch(postCurrentJourneyAction(journey, store.state.loginState.firebaseUser.uid));
       },
       addHuntedAnimal: (HuntedAnimal huntedAnimal) {
         store.dispatch(AddHuntedAnimalAction(huntedAnimal));

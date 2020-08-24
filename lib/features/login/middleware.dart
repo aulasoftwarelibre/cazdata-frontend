@@ -7,14 +7,14 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 
 loginMiddleware(Store<AppState> store, LoginAction action, NextDispatcher next) {
-  if (action is LoginWithGoogleAction) {
+  if (action is LoginWithGoogleRequestAction) {
     _handleLoginWithGoogleAction(store, action, next);
-  } else if (action is LogoutAction) {
-    _handleLogoutAction(store, action);
+  } else if (action is LogoutRequestAction) {
+    _handleLogoutRequestAction(store, action);
   }
 }
 
-_handleLoginWithGoogleAction(Store<AppState> store, LoginWithGoogleAction action, NextDispatcher next) async {
+_handleLoginWithGoogleAction(Store<AppState> store, LoginWithGoogleRequestAction action, NextDispatcher next) async {
   GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
   GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
@@ -38,13 +38,11 @@ _handleLoginWithGoogleAction(Store<AppState> store, LoginWithGoogleAction action
   final FirebaseUser currentUser = await _auth.currentUser();
   assert(user.uid == currentUser.uid);
 
-  final IdTokenResult token = await currentUser.getIdToken();
-
-  store.dispatch(UserLoadedAction(currentUser, token.token));
+  store.dispatch(LoginWithGoogleSuccessAction(currentUser));
 
   action.completer.complete();
 }
 
-_handleLogoutAction(Store<AppState> store, LogoutAction action) async {
+_handleLogoutRequestAction(Store<AppState> store, LogoutRequestAction action) async {
   await _googleSignIn.signOut();
 }
