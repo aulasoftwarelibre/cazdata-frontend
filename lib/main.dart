@@ -1,5 +1,4 @@
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:cazdata_frontend/util/keys.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +28,6 @@ class MyApp extends StatelessWidget {
         navigatorKey: Keys.navKey,
         onGenerateRoute: Router.generateRoute,
         initialRoute: loginRoute,
-        routes: {
-          homeRoute: (context) {
-            return BottomNavigationBarWidget();
-          }
-        },
         theme: ThemeData(primaryColor: primaryColor, accentColor: accentColor, fontFamily: 'Montserrat'),
       ),
     );

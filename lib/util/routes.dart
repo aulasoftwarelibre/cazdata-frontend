@@ -6,10 +6,6 @@ import 'package:provider/provider.dart';
 const String homeRoute = "/";
 const String loginRoute = "/login";
 
-class Routes {
-  static final homePage = "HOME_PAGE";
-}
-
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {

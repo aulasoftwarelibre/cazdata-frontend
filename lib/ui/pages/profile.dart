@@ -13,7 +13,7 @@ class Profile extends StatelessWidget {
       converter: (store) => _ViewModel(
           hunter: store.state.hunterState.hunter,
           logout: () {
-            store.dispatch(handleLogoutAction());
+            store.dispatch(handleLogoutAction(context));
             Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {
               return LoginPage();
             }), ModalRoute.withName('/'));

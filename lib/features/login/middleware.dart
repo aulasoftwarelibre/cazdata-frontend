@@ -83,11 +83,12 @@ ThunkAction<AppState> handleAutoLoginAction(BuildContext context) {
   };
 }
 
-ThunkAction<AppState> handleLogoutAction() {
+ThunkAction<AppState> handleLogoutAction(BuildContext context) {
   return (Store<AppState> store) async {
     new Future(() async {
       store.dispatch(LogoutRequestAction());
       await _googleSignIn.signOut();
+      await _auth.signOut();
     });
   };
 }
