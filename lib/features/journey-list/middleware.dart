@@ -10,7 +10,7 @@ ThunkAction<AppState> handleLoadJourneysAction() {
   return (Store<AppState> store) async {
     new Future(() async {
       store.dispatch(LoadJourneysRequestAction());
-      _journeyRepository.getJourneys(store.state.loginState.firebaseUser.uid).then((journeysList) async {
+      _journeyRepository.getJourneys(store.state.hunterState.hunter.id).then((journeysList) async {
         store.dispatch(new LoadJourneysSuccessAction(journeysList));
       }, onError: (error) {
         store.dispatch(new LoadJourneysFailureAction());
