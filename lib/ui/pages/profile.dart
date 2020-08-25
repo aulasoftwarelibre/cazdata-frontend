@@ -23,70 +23,58 @@ class Profile extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: PageScrollPhysics(),
-          child: DefaultTextStyle(
-            style: TextStyle(
-                inherit: true,
-                fontSize: 14.0,
-                fontWeight: FontWeight.normal,
-                fontFamily: 'Montserrat',
-                decoration: TextDecoration.none,
-                decorationColor: Colors.black,
-                decorationStyle: TextDecorationStyle.solid,
-                color: Colors.black),
-            child: Center(
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            'Cuenta',
-                            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                          ),
+          child: Center(
+            child: Container(
+              margin: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          'Cuenta',
+                          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 12.0),
-                      child: Text(
-                        'Perfil',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                       ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 12.0),
+                    child: Text(
+                      'Perfil',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
-                    ProfileWidget(
-                        name: vm.hunter.displayName, location: vm.hunter.email, profilePic: vm.hunter.photoUrl),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Divider(color: Colors.black),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
-                      child: TextFieldWidget(header: 'Nivel Cazador', content: 'Novato (10)'),
-                    ),
-                    SizedBox(height: 15.0),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: FlatButton(
-                            onPressed: () {
-                              vm.logout();
-                            },
-                            color: Colors.red,
-                            textColor: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(18.0)),
-                            child: Text("Cerrar sesión", style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
+                  ),
+                  ProfileWidget(name: vm.hunter.displayName, location: vm.hunter.email, profilePic: vm.hunter.photoUrl),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Divider(color: Colors.black),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
+                    child: TextFieldWidget(header: 'Nivel Cazador', content: 'Novato (10)'),
+                  ),
+                  SizedBox(height: 15.0),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 3,
+                        child: FlatButton(
+                          onPressed: () {
+                            vm.logout();
+                          },
+                          color: Colors.red,
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(18.0)),
+                          child: Text("Cerrar sesión", style: TextStyle(fontWeight: FontWeight.bold)),
                         ),
-                      ],
-                    )
-                  ],
-                ),
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),

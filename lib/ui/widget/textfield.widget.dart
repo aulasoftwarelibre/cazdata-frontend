@@ -17,8 +17,6 @@ class TextFieldWidget extends StatelessWidget {
           AutoSizeText(
             header,
             style: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
               decoration: TextDecoration.none,
@@ -30,8 +28,6 @@ class TextFieldWidget extends StatelessWidget {
           AutoSizeText(
             content,
             style: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.black,
               fontSize: 14.0,
               fontWeight: FontWeight.normal,
               decoration: TextDecoration.none,
