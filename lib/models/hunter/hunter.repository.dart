@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HunterRepository {
   Future<bool> createHunter(Hunter hunter) async {
-    Firestore.instance
+    FirebaseFirestore.instance
         .collection('hunters')
-        .document()
-        .setData({
+        .doc()
+        .set({
           'hunterId': hunter.id,
           'email': hunter.email,
           'displayName': hunter.displayName,

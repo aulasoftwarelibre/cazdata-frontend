@@ -57,7 +57,7 @@ class JourneysList {
   factory JourneysList.fromFirestoreDocuments(List<DocumentSnapshot> documentsList) {
     List<Journey> journeys = new List<Journey>();
 
-    journeys = documentsList.map((document) => Journey.fromJson(document.documentID, document.data)).toList();
+    journeys = documentsList.map((document) => Journey.fromJson(document.id, document.data())).toList();
 
     return new JourneysList(journeys: journeys);
   }

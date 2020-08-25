@@ -6,8 +6,8 @@ class AnimalRepository {
     AnimalsList animalsList;
 
     try {
-      final documentsQuery = await Firestore.instance.collection('animals').getDocuments();
-      final animalDocuments = documentsQuery.documents;
+      final documentsQuery = await FirebaseFirestore.instance.collection('animals').get();
+      final animalDocuments = documentsQuery.docs;
       animalsList = AnimalsList.fromFirestoreDocuments(animalDocuments);
     } catch (exception) {}
 

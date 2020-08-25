@@ -28,12 +28,12 @@ class Hunter {
       isEmailVerified: json['isEmailVerified'],
     );
   }
-  factory Hunter.fromFirebaseUser(FirebaseUser user) {
+  factory Hunter.fromFirebaseUser(User user) {
     return new Hunter(
         id: user.uid,
         email: user.email,
         displayName: user.displayName,
-        photoUrl: user.photoUrl,
-        isEmailVerified: user.isEmailVerified);
+        photoUrl: user.photoURL,
+        isEmailVerified: user.emailVerified);
   }
 }

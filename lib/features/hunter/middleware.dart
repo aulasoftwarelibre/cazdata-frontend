@@ -15,18 +15,16 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 ThunkAction handleLoginWithGoogleAction(BuildContext context) {
   return (Store store) async {
     new Future(() async {
-      FirebaseUser user = await _auth.currentUser();
-
       GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
       GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
 
-      final AuthResult authResult = await _auth.signInWithCredential(credential);
-      user = authResult.user;
+      final UserCredential authResult = await _auth.signInWithCredential(credential);
+      User user = authResult.user;
 
       Hunter hunter = Hunter.fromFirebaseUser(user);
 
@@ -37,8 +35,7 @@ ThunkAction handleLoginWithGoogleAction(BuildContext context) {
       assert(!user.isAnonymous);
       assert(await user.getIdToken() != null);
 
-      final FirebaseUser currentUser = await _auth.currentUser();
-      assert(user.uid == currentUser.uid);
+      assert(user.uid == _auth.currentUser.uid);
 
       store.dispatch(HunterLoginAction(hunter));
       Navigator.pushNamedAndRemoveUntil(context, Routes.home, (Route<dynamic> route) => false);
@@ -51,8 +48,8 @@ ThunkAction<AppState> handleAutoLoginAction(BuildContext context) {
     final FirebaseAuth _auth = FirebaseAuth.instance;
 
     new Future(() async {
-      FirebaseUser user = await _auth.currentUser();
-      if (user is FirebaseUser) {
+      User user = _auth.currentUser;
+      if (user is User) {
         store.dispatch(HunterLoginAction(Hunter.fromFirebaseUser(user)));
 
         Navigator.pushNamedAndRemoveUntil(context, Routes.home, (Route<dynamic> route) => false);
