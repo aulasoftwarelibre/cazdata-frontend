@@ -1,5 +1,6 @@
 name: cazdata_frontend
-description: A new Flutter project.
+description: Mobile application for tracking hunting activities.
+repository: https://github.com/aulasoftwarelibre/cazdata-frontend
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -22,15 +23,15 @@ dependencies:
     # The following adds the Cupertino Icons font to your application.
     # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  http: 0.12.0+4
+  http: ^0.12.2
   provider: ^4.0.4
-  firebase_core: ^0.4.0+9
-  firebase_auth: ^0.15.4
-  firebase_database: ^3.0.7
+  firebase_core: ^0.5.0
+  firebase_auth: ^0.18.0+1
+  firebase_database: ^4.0.0
   google_sign_in: ^4.1.1
-  location: ^2.5.0
+  location: ^3.0.2
   google_maps_flutter: ^0.5.28+1
-  rxdart: 0.23.1
+  rxdart: ^0.24.1
   redux: ^4.0.0
   flutter_redux: ^0.6.0
   redux_thunk: ^0.3.0
@@ -40,7 +41,7 @@ dependencies:
   flutter_speed_dial: ^1.2.5
   flutter_polyline_points: ^0.2.2
   latlong: ^0.6.1
-  cloud_firestore: ^0.13.7
+  cloud_firestore: ^0.14.0
   big_tip: ^1.1.1
 
 dev_dependencies:
