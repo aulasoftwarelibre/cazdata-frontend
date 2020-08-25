@@ -216,7 +216,7 @@ class JourneyPageState extends State<JourneyPage> {
 
     // subscribe to changes in the user's location
     // by "listening" to the location's onLocationChanged event
-    _location.onLocationChanged().listen((LocationData cLoc) {
+    _location.onLocationChanged.listen((LocationData cLoc) {
       // cLoc contains the lat anrd long of the
       // current user's position in real time,
       // so we're holding on to it

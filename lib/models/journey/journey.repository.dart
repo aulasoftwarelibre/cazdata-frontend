@@ -7,8 +7,8 @@ class JourneyRepository {
 
     try {
       final documentsQuery =
-          await Firestore.instance.collection('journeys').where('hunterId', isEqualTo: userId).getDocuments();
-      final journeyDocuments = documentsQuery.documents;
+          await FirebaseFirestore.instance.collection('journeys').where('hunterId', isEqualTo: userId).get();
+      final journeyDocuments = documentsQuery.docs;
       journeysList = JourneysList.fromFirestoreDocuments(journeyDocuments);
     } catch (exception) {
       journeysList = JourneysList();
@@ -18,10 +18,10 @@ class JourneyRepository {
   }
 
   Future<bool> postJourney(Journey journey, String userId) async {
-    Firestore.instance
+    FirebaseFirestore.instance
         .collection('journeys')
-        .document()
-        .setData({
+        .doc()
+        .set({
           'hunterId': userId,
           'title': journey.title,
           'startsAt': Timestamp.fromDate(journey.startsAt),
