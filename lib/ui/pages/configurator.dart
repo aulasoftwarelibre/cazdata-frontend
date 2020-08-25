@@ -70,9 +70,10 @@ class ConfiguratorState extends State<Configurator> {
         _journey.type = "Menor";
       });
 
-      if (vm.journeyAnimals != null) {
+      if (vm.journeyAnimals.length != 0) {
         vm.saveJourney(_journey);
 
+        Navigator.pop(context);
         Navigator.pushNamed(context, Routes.journey);
       } else {
         _scaffoldKey.currentState.showSnackBar(
