@@ -1,16 +1,22 @@
-# cazdata_frontend
+<p align="center">
+  <img src="assets/hunter.jpg" width="300">
+</p>
+<h1 align="center">Cazdata</h1>
+<h3 align="center">Mobile application for tracking hunting activities</h3>
 
-A new Flutter project.
+<p align="center">
+  <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
+    <img src="https://img.shields.io/github/license/aulasoftwarelibre/cazdata-frontend.svg?style=for-the-badge">
+  </a>
+  <a href="https://github.com/aulasoftwarelibre/cazdata-frontend/stargazers">
+    <img src="https://img.shields.io/github/stars/aulasoftwarelibre/cazdata-frontend.svg?style=for-the-badge">
+  </a>
+</p>
 
-## Getting Started
+# Cazdata
 
-This project is a starting point for a Flutter application.
+This repository is one of the activities of the [Free Software Club from the University of Córdoba](https://uco.es/aulasoftwarelibre).
 
-A few resources to get you started if this is your first Flutter project:
+## About the project
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+TBA
