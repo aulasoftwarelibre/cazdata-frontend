@@ -1,15 +1,9 @@
-import 'dart:async';
-
-import 'package:cazdata_frontend/features/login/actions.dart';
-import 'package:cazdata_frontend/features/login/middleware.dart';
+import 'package:cazdata_frontend/features/hunter/middleware.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
-import 'package:cazdata_frontend/ui/widget/data-protection-dialog.widget.dart';
 import 'package:cazdata_frontend/ui/widget/oauth-login-button.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -18,32 +12,7 @@ class LoginPage extends StatelessWidget {
       store.dispatch(handleAutoLoginAction(context));
     }, converter: (store) {
       return new _ViewModel(login: () {
-        final result = LoginWithGoogleRequestAction();
-
-        store.dispatch(result);
-
-        Future.wait([result.completer.future]).then((user) => {
-              if (store.state.loginState.isNew)
-                {
-                  showDialog(
-                    context: context,
-                    child: DataProtectionWidget(),
-                  )
-                }
-              else
-                {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ChangeNotifierProvider<BottomNavigationBarProvider>(
-                          child: BottomNavigationBarWidget(),
-                          create: (BuildContext context) => BottomNavigationBarProvider(),
-                        );
-                      },
-                    ),
-                  )
-                }
-            });
+        store.dispatch(handleLoginWithGoogleAction(context));
       });
     }, builder: (BuildContext context, _ViewModel vm) {
       return _loginView(context, vm);

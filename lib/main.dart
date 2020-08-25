@@ -11,10 +11,10 @@ import 'util/colors.dart';
 
 Future main() async {
   await DotEnv().load('.env');
-  runApp(MyApp());
+  runApp(CazdataApp());
 }
 
-class MyApp extends StatelessWidget {
+class CazdataApp extends StatelessWidget {
   final Store<AppState> store = createStore();
 
   @override
@@ -24,11 +24,13 @@ class MyApp extends StatelessWidget {
     return StoreProvider(
       store: this.store,
       child: MaterialApp(
+        title: 'Cazdata',
+        theme: ThemeData(primaryColor: primaryColor, accentColor: accentColor, fontFamily: 'Montserrat'),
         debugShowCheckedModeBanner: false,
         navigatorKey: Keys.navKey,
-        onGenerateRoute: Router.generateRoute,
-        initialRoute: loginRoute,
-        theme: ThemeData(primaryColor: primaryColor, accentColor: accentColor, fontFamily: 'Montserrat'),
+        onGenerateRoute: Routes.generateRoute,
+        onUnknownRoute: Routes.errorRoute,
+        initialRoute: Routes.login,
       ),
     );
   }
