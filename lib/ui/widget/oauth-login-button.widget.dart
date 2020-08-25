@@ -6,8 +6,7 @@ class OAuthLoginButton extends StatelessWidget {
   final String assetName;
   final Color backgroundColor;
 
-  OAuthLoginButton(
-      {this.onPressed, this.text, this.assetName, this.backgroundColor});
+  OAuthLoginButton({this.onPressed, this.text, this.assetName, this.backgroundColor});
 
   Widget build(BuildContext context) {
     return OutlineButton(
@@ -30,7 +29,6 @@ class OAuthLoginButton extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,
-                  fontFamily: 'Montserrat',
                 ),
               ),
             )

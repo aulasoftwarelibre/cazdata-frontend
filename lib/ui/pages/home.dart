@@ -135,7 +135,7 @@ class HomeState extends State<Home> {
                             ),
                             child: Text(
                               "Iniciar jornada",
-                              style: TextStyle(fontFamily: "Montserrat", fontWeight: FontWeight.bold, fontSize: 16),
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                         ),
