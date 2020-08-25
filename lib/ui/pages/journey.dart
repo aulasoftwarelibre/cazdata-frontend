@@ -143,7 +143,7 @@ class JourneyPageState extends State<JourneyPage> {
                                           style: TextStyle(fontWeight: FontWeight.bold, color: accentColor),
                                         ),
                                         onPressed: () {
-                                          vm.saveJourney(vm.currentJourneyState.journey);
+                                          vm.saveJourney(vm.currentJourneyState.journey, polylineCoordinates.toList());
                                           Navigator.popUntil(context, ModalRoute.withName(Routes.home));
                                           Navigator.pushNamed(context, Routes.home);
                                         },
@@ -267,7 +267,7 @@ class _ViewModel {
     return _ViewModel(
       currentJourneyState: store.state.currentJourneyState,
       saveJourney: (Journey journey, List<LatLng> polylines) {
-        store.dispatch(postCurrentJourneyAction(context, journey, store.state.firebaseState.idTokenUser, polylines));
+        store.dispatch(postCurrentJourneyAction(context, journey, store.state.hunterState.hunter.id, polylines));
       },
       addHuntedAnimal: (HuntedAnimal huntedAnimal) {
         store.dispatch(AddHuntedAnimalAction(huntedAnimal));
