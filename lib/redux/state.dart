@@ -10,27 +10,28 @@ class AppState {
   final CurrentJourneyState currentJourneyState;
   final HunterJourneysState hunterJourneysState;
 
-  const AppState(
-      {@required this.hunterState,
-      @required this.animalsListState,
-      @required this.currentJourneyState,
-      @required this.hunterJourneysState});
+  const AppState({
+    @required this.hunterState,
+    @required this.animalsListState,
+    @required this.currentJourneyState,
+    @required this.hunterJourneysState,
+  });
 
   factory AppState.initial() {
     return AppState(
-      hunterState: HunterState.initial(),
-      animalsListState: AnimalsListState.initial(),
-      currentJourneyState: CurrentJourneyState.initial(),
-      hunterJourneysState: HunterJourneysState.initial(),
-    );
+        hunterState: HunterState.initial(),
+        animalsListState: AnimalsListState.initial(),
+        currentJourneyState: CurrentJourneyState.initial(),
+        hunterJourneysState: HunterJourneysState.initial());
   }
 
-  AppState copyWith(
-      {HunterState hunterState,
-      bool userIsNew,
-      AnimalsListState animalsListState,
-      CurrentJourneyState currentJourneyState,
-      HunterJourneysState hunterJourneysState}) {
+  AppState copyWith({
+    HunterState hunterState,
+    bool userIsNew,
+    AnimalsListState animalsListState,
+    CurrentJourneyState currentJourneyState,
+    HunterJourneysState hunterJourneysState,
+  }) {
     return new AppState(
         hunterState: hunterState ?? this.hunterState,
         animalsListState: animalsListState ?? this.animalsListState,

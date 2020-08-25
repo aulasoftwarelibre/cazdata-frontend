@@ -41,6 +41,7 @@ dependencies:
   flutter_polyline_points: ^0.2.2
   latlong: ^0.6.1
   cloud_firestore: ^0.13.7
+  big_tip: ^1.1.1
 
 dev_dependencies:
   flutter_test:

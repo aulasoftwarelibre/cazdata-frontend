@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 class Hunter {
   String id;
   String email;
@@ -5,8 +7,7 @@ class Hunter {
   String photoUrl;
   bool isEmailVerified;
 
-  Hunter(
-      {this.id, this.email, this.displayName, this.photoUrl,this.isEmailVerified});
+  Hunter({this.id, this.email, this.displayName, this.photoUrl, this.isEmailVerified});
 
   Map toJson() {
     return {
@@ -18,7 +19,6 @@ class Hunter {
     };
   }
 
-
   factory Hunter.fromJson(Map<String, dynamic> json) {
     return new Hunter(
       id: json['id'],
@@ -27,5 +27,13 @@ class Hunter {
       photoUrl: json['photoUrl'],
       isEmailVerified: json['isEmailVerified'],
     );
+  }
+  factory Hunter.fromFirebaseUser(FirebaseUser user) {
+    return new Hunter(
+        id: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoUrl: user.photoUrl,
+        isEmailVerified: user.isEmailVerified);
   }
 }

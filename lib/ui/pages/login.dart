@@ -1,54 +1,19 @@
-import 'dart:async';
-
-import 'package:cazdata_frontend/features/hunter/actions.dart';
-import 'package:cazdata_frontend/models/hunter/hunter.dart';
+import 'package:cazdata_frontend/features/hunter/middleware.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
-import 'package:cazdata_frontend/ui/widget/data-protection-dialog.widget.dart';
 import 'package:cazdata_frontend/ui/widget/oauth-login-button.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, _ViewModel>(converter: (store) {
-      return new _ViewModel(
-          hunter: store.state.hunterState.hunter,
-          login: () {
-            final result = LoginWithGoogleRequestAction();
-
-            store.dispatch(result);
-
-            Future.wait([result.completer.future]).then((user) => {
-                  if (store.state.hunterState.isNew)
-                    {
-                      showDialog(
-                        context: context,
-                        child: DataProtectionWidget(),
-                      )
-                    }
-                  else
-                    {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return MaterialApp(
-                              title: 'Group',
-                              theme: ThemeData(primaryColor: primaryColor, fontFamily: 'Montserrat'),
-                              home: ChangeNotifierProvider<BottomNavigationBarProvider>(
-                                child: BottomNavigationBarWidget(),
-                                create: (BuildContext context) => BottomNavigationBarProvider(),
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                    }
-                });
-          });
+    return new StoreConnector<AppState, _ViewModel>(onInit: (store) {
+      store.dispatch(handleAutoLoginAction(context));
+    }, converter: (store) {
+      return new _ViewModel(login: () {
+        store.dispatch(handleLoginWithGoogleAction(context));
+      });
     }, builder: (BuildContext context, _ViewModel vm) {
       return _loginView(context, vm);
     });
@@ -113,11 +78,9 @@ class LoginPage extends StatelessWidget {
 }
 
 class _ViewModel {
-  final Hunter hunter;
   final Function() login;
 
   _ViewModel({
-    @required this.hunter,
     @required this.login,
   });
 }

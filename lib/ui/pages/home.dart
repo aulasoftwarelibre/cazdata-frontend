@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
+import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-import 'configurator.dart';
 import '../../util/colors.dart';
 
 const double CAMERA_ZOOM = 16;
@@ -126,11 +126,7 @@ class HomeState extends State<Home> {
                         child: Expanded(
                           child: FlatButton(
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) {
-                                  return Configurator();
-                                },
-                              ));
+                              Navigator.pushNamed(context, Routes.configurator);
                             },
                             color: primaryColor,
                             textColor: Colors.white,
