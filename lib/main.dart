@@ -1,5 +1,4 @@
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/util/keys.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -27,7 +26,6 @@ class CazdataApp extends StatelessWidget {
         title: 'Cazdata',
         theme: ThemeData(primaryColor: primaryColor, accentColor: accentColor, fontFamily: 'Montserrat'),
         debugShowCheckedModeBanner: false,
-        navigatorKey: Keys.navKey,
         onGenerateRoute: Routes.generateRoute,
         onUnknownRoute: Routes.errorRoute,
         initialRoute: Routes.login,

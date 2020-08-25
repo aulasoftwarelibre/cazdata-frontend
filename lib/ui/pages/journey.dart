@@ -46,7 +46,7 @@ class JourneyPageState extends State<JourneyPage> {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
-      converter: (store) => _ViewModel.fromStore(store),
+      converter: (store) => _ViewModel.fromStore(store, context),
       builder: (BuildContext context, _ViewModel vm) => _homeView(context, vm),
     );
   }
@@ -263,11 +263,11 @@ class _ViewModel {
 
   _ViewModel({@required this.currentJourneyState, @required this.saveJourney, @required this.addHuntedAnimal});
 
-  static _ViewModel fromStore(Store<AppState> store) {
+  static _ViewModel fromStore(Store<AppState> store, BuildContext context) {
     return _ViewModel(
       currentJourneyState: store.state.currentJourneyState,
       saveJourney: (Journey journey) {
-        store.dispatch(postCurrentJourneyAction(journey, store.state.hunterState.hunter.id));
+        store.dispatch(postCurrentJourneyAction(journey, store.state.hunterState.hunter.id, context));
       },
       addHuntedAnimal: (HuntedAnimal huntedAnimal) {
         store.dispatch(AddHuntedAnimalAction(huntedAnimal));
