@@ -14,7 +14,7 @@ ThunkAction postCurrentJourneyAction(Journey journey, String userId) {
       store.dispatch(new SendJourneyRequestAction());
       _journeyRepository.postJourney(journey, userId).then((journey) async {
         store.dispatch(new SendJourneySuccessAction());
-        Keys.navKey.currentState.pushNamed(homeRoute);
+        Keys.navKey.currentState.pushNamed(Routes.home);
       }, onError: (error) {
         store.dispatch(new SendJourneyFailureAction());
       });

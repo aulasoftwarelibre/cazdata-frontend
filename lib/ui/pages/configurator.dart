@@ -1,10 +1,10 @@
 import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/pages/journey.dart';
 import 'package:cazdata_frontend/ui/widget/species-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
+import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -73,11 +73,7 @@ class ConfiguratorState extends State<Configurator> {
       if (vm.journeyAnimals != null) {
         vm.saveJourney(_journey);
 
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) {
-            return JourneyPage();
-          },
-        ));
+        Navigator.pushNamed(context, Routes.journey);
       } else {
         _scaffoldKey.currentState.showSnackBar(
           SnackBar(

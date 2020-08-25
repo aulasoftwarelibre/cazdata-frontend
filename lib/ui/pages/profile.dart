@@ -1,7 +1,6 @@
-import 'package:cazdata_frontend/features/login/middleware.dart';
+import 'package:cazdata_frontend/features/hunter/middleware.dart';
 import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/pages/login.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -14,9 +13,6 @@ class Profile extends StatelessWidget {
           hunter: store.state.hunterState.hunter,
           logout: () {
             store.dispatch(handleLogoutAction(context));
-            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {
-              return LoginPage();
-            }), ModalRoute.withName('/'));
           }),
       builder: (BuildContext context, _ViewModel vm) => _profileView(context, vm),
     );

@@ -6,14 +6,12 @@ import 'package:cazdata_frontend/features/current-journey/state.dart';
 import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 import '../../util/colors.dart';
@@ -136,7 +134,7 @@ class JourneyPageState extends State<JourneyPage> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          Navigator.of(context).pop();
+                                          Navigator.pop(context);
                                         },
                                       ),
                                       new FlatButton(
@@ -146,22 +144,8 @@ class JourneyPageState extends State<JourneyPage> {
                                         ),
                                         onPressed: () {
                                           vm.saveJourney(vm.currentJourneyState.journey);
-                                          Navigator.popUntil(context, ModalRoute.withName(homeRoute));
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return MaterialApp(
-                                                  title: 'Jornada',
-                                                  theme:
-                                                      ThemeData(primaryColor: primaryColor, fontFamily: 'Montserrat'),
-                                                  home: ChangeNotifierProvider<BottomNavigationBarProvider>(
-                                                    child: BottomNavigationBarWidget(),
-                                                    create: (BuildContext context) => BottomNavigationBarProvider(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          );
+                                          Navigator.popUntil(context, ModalRoute.withName(Routes.home));
+                                          Navigator.pushNamed(context, Routes.home);
                                         },
                                       )
                                     ],

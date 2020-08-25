@@ -1,5 +1,5 @@
 import 'package:cazdata_frontend/models/journey/journey.dart';
-import 'package:cazdata_frontend/ui/pages/details-journey.dart';
+import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 
 class JourneyTile extends StatelessWidget {
@@ -18,11 +18,7 @@ class JourneyTile extends StatelessWidget {
         subtitle: Text(this.journey.startsAt.toString().substring(0, 10)),
         trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) {
-              return DetailsJourney(journey: journey);
-            },
-          ));
+          Navigator.pushNamed(context, Routes.detailsJourney, arguments: {'journey': journey});
         },
       ),
     );
