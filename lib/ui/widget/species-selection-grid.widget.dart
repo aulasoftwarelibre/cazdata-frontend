@@ -24,7 +24,7 @@ class _SpeciesSelectionGridState extends State<SpeciesSelectionGrid> {
     super.initState();
   }
 
-  List<Widget> _animalsGrid() {
+  List<Widget> _speciesGrid() {
     return widget.buttonLabels.asMap().entries.map((entry) {
       int index = entry.key;
       Animal animal = entry.value;
@@ -57,7 +57,7 @@ class _SpeciesSelectionGridState extends State<SpeciesSelectionGrid> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        children: _animalsGrid(),
+        children: _speciesGrid(),
       ),
     );
   }
