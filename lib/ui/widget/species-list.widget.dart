@@ -3,9 +3,8 @@ import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:cazdata_frontend/features/animal-list/state.dart';
 import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/widget/grouped-button.widget.dart';
+import 'package:cazdata_frontend/ui/widget/species-selection-grid.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
-import 'package:cazdata_frontend/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -46,7 +45,9 @@ class SpeciesList extends StatelessWidget {
   Widget _widgetView(BuildContext context, _ViewModel viewModel) {
     if (viewModel._animalsListState.isLoading) {
       return CircularProgressIndicator();
-    } else if (viewModel._animalsListState.errorLoading) {
+    }
+
+    if (viewModel._animalsListState.errorLoading) {
       return Expanded(
         child: Card(
           color: Colors.white,
@@ -59,30 +60,23 @@ class SpeciesList extends StatelessWidget {
           ),
         ),
       );
-    } else if (viewModel._animalsListState.animals != null) {
-      List<Animal> animals = [];
-      for (int i = 0; i < viewModel._animalsListState.animals.length; i++) {
-        animals.add(viewModel._animalsListState.animals[i]);
-      }
+    }
+
+    if (viewModel._animalsListState.animals != null) {
+      List<Animal> animals = []..addAll(viewModel._animalsListState.animals);
 
       return Expanded(
-        child: CustomCheckBoxGroup(
-          buttonColor: Theme.of(context).canvasColor,
-          buttonLables: animals,
+        child: SpeciesSelectionGrid(
+          buttonLabels: animals,
           buttonValuesList: animals,
           checkBoxButtonValues: (values) {
             viewModel.updateAnimals(values);
           },
-          horizontal: true,
-          width: 120,
           // hight: 50,
-          selectedColor: primaryColor,
-          padding: 5,
-          enableShape: true,
         ),
       );
-    } else {
-      return Separator.none();
     }
+
+    return Separator.none();
   }
 }
