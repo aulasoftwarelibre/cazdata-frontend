@@ -43,6 +43,7 @@ dependencies:
   cloud_firestore: ^0.14.0+2
   big_tip: ^1.1.1
   google_fonts: ^1.1.0
+  cached_network_image: ^2.3.0
 
 dev_dependencies:
   flutter_test:
