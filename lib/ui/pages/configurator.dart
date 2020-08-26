@@ -204,7 +204,7 @@ class ConfiguratorState extends State<Configurator> {
                     Row(
                       children: <Widget>[
                         Text(
-                          'Buscador de especies',
+                          'Seleccione las especies',
                           style: TextStyle(
                             fontSize: 18,
                             color: Color.fromARGB(255, 150, 150, 150),
