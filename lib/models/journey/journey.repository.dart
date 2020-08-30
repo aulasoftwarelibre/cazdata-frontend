@@ -29,9 +29,7 @@ class JourneyRepository {
           'endsAt': Timestamp.fromDate(journey.endsAt),
           'distance': journey.distance,
           'calories': journey.calories,
-          'polylines': polylineCoordinates
-              .map((polyline) => {'polyline': GeoPoint(polyline.latitude, polyline.longitude)})
-              .toList()
+          'geopoints': polylineCoordinates.map((polyline) => GeoPoint(polyline.latitude, polyline.longitude)).toList()
         })
         .then((value) => null)
         .catchError(() => null);
