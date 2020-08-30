@@ -11,6 +11,7 @@ class Journey {
   int distance;
   int minutes;
   int calories;
+  List<GeoPoint> geopoints;
 
   Journey(
       {this.id,
@@ -22,7 +23,8 @@ class Journey {
       this.endsAt,
       this.distance,
       this.minutes,
-      this.calories});
+      this.calories,
+      this.geopoints});
 
   Map toJson() {
     return {
@@ -32,20 +34,27 @@ class Journey {
       'startsAt': this.startsAt,
       'endsAt': this.endsAt,
       'distance': this.distance,
-      'calories': calories
+      'calories': this.calories,
+      'geopoints': this
+          .geopoints
+          .map((GeoPoint geopoint) => {'geopoint': GeoPoint(geopoint.latitude, geopoint.longitude)})
+          .toList()
     };
   }
 
   factory Journey.fromJson(String id, Map<String, dynamic> json) {
+    List<GeoPoint> geopoints =
+        json['geopoints'].toList().map<GeoPoint>((e) => GeoPoint(e.latitude, e.longitude)).toList();
+
     return new Journey(
-      id: id,
-      title: json['title'],
-      hunterId: json['hunterId'],
-      startsAt: json['startsAt'].toDate(),
-      endsAt: json['endsAt'].toDate(),
-      distance: json['distance'],
-      calories: json['calories'],
-    );
+        id: id,
+        title: json['title'],
+        hunterId: json['hunterId'],
+        startsAt: json['startsAt'].toDate(),
+        endsAt: json['endsAt'].toDate(),
+        distance: json['distance'],
+        calories: json['calories'],
+        geopoints: geopoints);
   }
 }
 
