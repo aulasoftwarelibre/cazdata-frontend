@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/pages/journey.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
+import 'package:cazdata_frontend/util/constants.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
