@@ -1,7 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
+import 'package:cazdata_frontend/ui/pages/journey.dart';
 import 'package:cazdata_frontend/ui/widget/data-on-map.widget.dart';
+import 'package:cazdata_frontend/util/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DetailsJourney extends StatelessWidget {
   final Journey journey;
@@ -98,6 +101,31 @@ class DetailsJourney extends StatelessWidget {
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height / 2,
+                                  child: GoogleMap(
+                                    myLocationEnabled: false,
+                                    compassEnabled: true,
+                                    rotateGesturesEnabled: true,
+                                    scrollGesturesEnabled: true,
+                                    tiltGesturesEnabled: false,
+                                    zoomGesturesEnabled: true,
+                                    zoomControlsEnabled: true,
+                                    mapType: MapType.hybrid,
+                                    polylines: Set<Polyline>.of([
+                                      Polyline(
+                                        polylineId: PolylineId("poly"),
+                                        color: Color.fromARGB(255, 40, 122, 198),
+                                        width: 7,
+                                        points: journey.geopoints
+                                            .map<LatLng>((e) => LatLng(e.latitude, e.longitude))
+                                            .toList(),
+                                      )
+                                    ]),
+                                    initialCameraPosition: CameraPosition(
+                                        zoom: CAMERA_ZOOM,
+                                        tilt: CAMERA_TILT,
+                                        bearing: CAMERA_BEARING,
+                                        target: LatLng(journey.geopoints[0].latitude, journey.geopoints[0].longitude)),
+                                  ),
                                 ),
                               ],
                             ))),

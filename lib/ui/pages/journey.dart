@@ -6,6 +6,7 @@ import 'package:cazdata_frontend/features/current-journey/state.dart';
 import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
+import 'package:cazdata_frontend/util/constants.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -15,11 +16,6 @@ import 'package:location/location.dart';
 import 'package:redux/redux.dart';
 
 import '../../util/colors.dart';
-
-const double CAMERA_ZOOM = 16;
-const double CAMERA_TILT = 0;
-const double CAMERA_BEARING = 0;
-const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
 
 class JourneyPage extends StatefulWidget {
   @override
@@ -199,7 +195,7 @@ class JourneyPageState extends State<JourneyPage> {
   setPolylines() async {
     setState(() {
       Polyline polyline = Polyline(
-          polylineId: PolylineId("poly"),
+          polylineId: PolylineId("route"),
           color: Color.fromARGB(255, 40, 122, 198),
           width: 7,
           points: polylineCoordinates);
