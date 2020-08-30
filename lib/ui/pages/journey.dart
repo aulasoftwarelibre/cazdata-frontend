@@ -199,7 +199,7 @@ class JourneyPageState extends State<JourneyPage> {
   setPolylines() async {
     setState(() {
       Polyline polyline = Polyline(
-          polylineId: PolylineId("poly"),
+          polylineId: PolylineId("route"),
           color: Color.fromARGB(255, 40, 122, 198),
           width: 7,
           points: polylineCoordinates);
