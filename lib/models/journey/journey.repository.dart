@@ -1,5 +1,6 @@
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class JourneyRepository {
   Future<JourneysList> getJourneys(String userId) async {
@@ -17,7 +18,7 @@ class JourneyRepository {
     return journeysList;
   }
 
-  Future<bool> postJourney(Journey journey, String userId) async {
+  Future<bool> postJourney(Journey journey, String userId, List<LatLng> polylineCoordinates) async {
     FirebaseFirestore.instance
         .collection('journeys')
         .doc()
@@ -27,7 +28,10 @@ class JourneyRepository {
           'startsAt': Timestamp.fromDate(journey.startsAt),
           'endsAt': Timestamp.fromDate(journey.endsAt),
           'distance': journey.distance,
-          'calories': journey.calories
+          'calories': journey.calories,
+          'polylines': polylineCoordinates
+              .map((polyline) => {'polyline': GeoPoint(polyline.latitude, polyline.longitude)})
+              .toList()
         })
         .then((value) => null)
         .catchError(() => null);

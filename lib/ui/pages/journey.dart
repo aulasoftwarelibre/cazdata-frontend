@@ -143,7 +143,7 @@ class JourneyPageState extends State<JourneyPage> {
                                           style: TextStyle(fontWeight: FontWeight.bold, color: accentColor),
                                         ),
                                         onPressed: () {
-                                          vm.saveJourney(vm.currentJourneyState.journey);
+                                          vm.saveJourney(vm.currentJourneyState.journey, polylineCoordinates.toList());
                                           Navigator.popUntil(context, ModalRoute.withName(Routes.home));
                                           Navigator.pushNamed(context, Routes.home);
                                         },
@@ -258,7 +258,7 @@ class JourneyPageState extends State<JourneyPage> {
 
 class _ViewModel {
   final CurrentJourneyState currentJourneyState;
-  final Function(Journey) saveJourney;
+  final Function(Journey, List<LatLng>) saveJourney;
   final Function(HuntedAnimal) addHuntedAnimal;
 
   _ViewModel({@required this.currentJourneyState, @required this.saveJourney, @required this.addHuntedAnimal});
@@ -266,8 +266,8 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store, BuildContext context) {
     return _ViewModel(
       currentJourneyState: store.state.currentJourneyState,
-      saveJourney: (Journey journey) {
-        store.dispatch(postCurrentJourneyAction(journey, store.state.hunterState.hunter.id, context));
+      saveJourney: (Journey journey, List<LatLng> polylines) {
+        store.dispatch(postCurrentJourneyAction(context, journey, store.state.hunterState.hunter.id, polylines));
       },
       addHuntedAnimal: (HuntedAnimal huntedAnimal) {
         store.dispatch(AddHuntedAnimalAction(huntedAnimal));
