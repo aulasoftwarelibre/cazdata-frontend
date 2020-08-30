@@ -32,8 +32,22 @@ class Journey {
       'startsAt': this.startsAt,
       'endsAt': this.endsAt,
       'distance': this.distance,
-      'calories': calories
+      'calories': this.calories,
+      'modality': this.modality,
     };
+  }
+
+  factory Journey.copy(Journey other) {
+    return new Journey(
+      id: other.id,
+      title: other.title,
+      hunterId: other.hunterId,
+      startsAt: other.startsAt,
+      endsAt: other.endsAt,
+      distance: other.distance,
+      calories: other.calories,
+      modality: other.modality,
+    );
   }
 
   factory Journey.fromJson(String id, Map<String, dynamic> json) {
@@ -45,6 +59,7 @@ class Journey {
       endsAt: json['endsAt'].toDate(),
       distance: json['distance'],
       calories: json['calories'],
+      modality: json['modality'],
     );
   }
 }
