@@ -37,3 +37,9 @@ class AddHuntedAnimalAction extends CurrentJourneyAction {
 
   AddHuntedAnimalAction(this.huntedAnimal);
 }
+
+class UpdateModalityAction extends CurrentJourneyAction {
+  final String modality;
+
+  UpdateModalityAction(this.modality);
+}

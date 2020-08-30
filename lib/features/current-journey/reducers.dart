@@ -2,6 +2,7 @@ import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/features/current-journey/state.dart';
 import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
+import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:redux/redux.dart';
 
 CurrentJourneyState _updateAnimalsReducer(CurrentJourneyState state, UpdateAnimalsAction action) {
@@ -24,8 +25,16 @@ CurrentJourneyState _cleanCurrentJourneyReducer(CurrentJourneyState state, Clean
   return state.copyWith(journey: null, selectedAnimals: null, huntedAnimals: null, polylineCoordinates: null);
 }
 
+CurrentJourneyState _updateModality(CurrentJourneyState state, UpdateModalityAction action) {
+  Journey journey = Journey.copy(state.journey);
+  journey.modality = action.modality;
+
+  return state.copyWith(journey: journey);
+}
+
 Reducer<CurrentJourneyState> reduceCurrentJourneysState = combineReducers<CurrentJourneyState>([
   new TypedReducer<CurrentJourneyState, UpdateAnimalsAction>(_updateAnimalsReducer),
+  new TypedReducer<CurrentJourneyState, UpdateModalityAction>(_updateModality),
   new TypedReducer<CurrentJourneyState, SaveCurrentJourneyAction>(_saveCurrentJourneyReducer),
   new TypedReducer<CurrentJourneyState, AddHuntedAnimalAction>(_addHuntedAnimalReducer),
   new TypedReducer<CurrentJourneyState, CleanCurrentJourneyAction>(_cleanCurrentJourneyReducer)

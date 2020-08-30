@@ -1,6 +1,7 @@
 import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/redux/index.dart';
+import 'package:cazdata_frontend/ui/widget/modalities-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/species-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
 import 'package:cazdata_frontend/util/colors.dart';
@@ -22,40 +23,19 @@ class Configurator extends StatefulWidget {
 class ConfiguratorState extends State<Configurator> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
-  final _dropdownButtonFormFieldKey = GlobalKey<FormFieldState>();
 
   Journey _journey = Journey(
-    startsAt: DateTime.now(),
-    endsAt: DateTime.now(),
-    calories: 0,
-    distance: 0,
-    hunterId: "1",
-    minutes: 0,
-  );
-  String _modality;
-
-  List<DropdownMenuItem<dynamic>> _getHuntModalities() {
-    return <String>["En mano", "Ojeo", "Perdiz con reclamo", "Caza acuáticas", "Cetrería"]
-        .map<DropdownMenuItem<String>>((String value) {
-      return DropdownMenuItem<String>(
-        value: value,
-        child: Text(
-          value,
-        ),
-      );
-    }).toList();
-  }
+      startsAt: DateTime.now(),
+      endsAt: DateTime.now(),
+      calories: 0,
+      distance: 0,
+      hunterId: null,
+      minutes: 0,
+      modality: null);
 
   String _validateTitle(String title) {
     if (title.isEmpty) {
       return 'Introduzca un título para la jornada';
-    }
-    return null;
-  }
-
-  String _validateModality(dynamic modality) {
-    if (modality == null) {
-      return 'Seleccione una modalidad para la jornada';
     }
     return null;
   }
@@ -108,7 +88,7 @@ class ConfiguratorState extends State<Configurator> {
     );
   }
 
-  Widget _formView(BuildContext context, _ViewModel vm) {
+  Widget _formView(BuildContext context, _ViewModel _viewModel) {
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -175,29 +155,11 @@ class ConfiguratorState extends State<Configurator> {
                     Separator.spacer(
                       height: 24,
                     ),
-                    DropdownButtonFormField(
-                      key: _dropdownButtonFormFieldKey,
-                      value: _modality,
-                      icon: Icon(Icons.arrow_drop_down),
-                      decoration: InputDecoration(
-                        labelText: 'Modalidad',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      items: _getHuntModalities(),
-                      validator: _validateModality,
-                      onChanged: (modality) {
-                        setState(() {
-                          _modality = modality;
-                        });
-                      },
-                      onSaved: (modality) {
-                        setState(() {
-                          _journey.modality = modality;
-                        });
-                      },
-                    ),
+                    ModalitiesListWidget(
+                        _journey,
+                        (modality) => setState(() {
+                              _journey.modality = modality;
+                            })),
                     Separator.spacer(
                       height: 40,
                     ),
@@ -231,7 +193,7 @@ class ConfiguratorState extends State<Configurator> {
                             height: 50,
                             child: FlatButton(
                               onPressed: () {
-                                submit(vm);
+                                submit(_viewModel);
                               },
                               color: primaryColor,
                               textColor: Colors.white,
@@ -269,9 +231,10 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-        saveJourney: (Journey journey) {
-          store.dispatch(SaveCurrentJourneyAction(journey));
-        },
-        journeyAnimals: store.state.currentJourneyState.selectedAnimals);
+      saveJourney: (Journey journey) {
+        store.dispatch(SaveCurrentJourneyAction(journey));
+      },
+      journeyAnimals: store.state.currentJourneyState.selectedAnimals,
+    );
   }
 }
