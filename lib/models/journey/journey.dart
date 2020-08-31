@@ -1,3 +1,5 @@
+import 'package:cazdata_frontend/models/animal/animal.dart';
+import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Journey {
@@ -12,36 +14,22 @@ class Journey {
   int minutes;
   int calories;
   List<GeoPoint> geopoints;
+  List<HuntedAnimal> huntedAnimals;
 
-  Journey(
-      {this.id,
-      this.title,
-      this.hunterId,
-      this.modality,
-      this.type,
-      this.startsAt,
-      this.endsAt,
-      this.distance,
-      this.minutes,
-      this.calories,
-      this.geopoints});
-
-  Map toJson() {
-    return {
-      'id': this.id,
-      'hunterId': this.hunterId,
-      'title': this.title,
-      'startsAt': this.startsAt,
-      'endsAt': this.endsAt,
-      'distance': this.distance,
-      'calories': this.calories,
-      'modality': this.modality,
-      'geopoints': this
-          .geopoints
-          .map((GeoPoint geopoint) => {'geopoint': GeoPoint(geopoint.latitude, geopoint.longitude)})
-          .toList()
-    };
-  }
+  Journey({
+    this.id,
+    this.title,
+    this.hunterId,
+    this.modality,
+    this.type,
+    this.startsAt,
+    this.endsAt,
+    this.distance,
+    this.minutes,
+    this.calories,
+    this.geopoints,
+    this.huntedAnimals,
+  });
 
   factory Journey.copy(Journey other) {
     return new Journey(
@@ -60,16 +48,22 @@ class Journey {
     List<GeoPoint> geopoints =
         json['geopoints'].toList().map<GeoPoint>((e) => GeoPoint(e.latitude, e.longitude)).toList();
 
+    List<HuntedAnimal> huntedAnimals = json['huntedAnimals'].toList().map<HuntedAnimal>((e) {
+      return HuntedAnimal(animal: Animal(name: e['name'], contentUrl: e['photo']));
+    }).toList();
+
     return new Journey(
-        id: id,
-        title: json['title'],
-        hunterId: json['hunterId'],
-        startsAt: json['startsAt'].toDate(),
-        endsAt: json['endsAt'].toDate(),
-        distance: json['distance'],
-        calories: json['calories'],
-        modality: json['modality'],
-        geopoints: geopoints);
+      id: id,
+      title: json['title'],
+      hunterId: json['hunterId'],
+      startsAt: json['startsAt'].toDate(),
+      endsAt: json['endsAt'].toDate(),
+      distance: json['distance'],
+      calories: json['calories'],
+      modality: json['modality'],
+      geopoints: geopoints,
+      huntedAnimals: huntedAnimals,
+    );
   }
 }
 
