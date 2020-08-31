@@ -1,4 +1,5 @@
 import 'package:cazdata_frontend/models/animal/animal.dart';
+import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,8 +20,8 @@ class JourneyRepository {
     return journeysList;
   }
 
-  Future<bool> postJourney(
-      Journey journey, List<Animal> selectedAnimals, String userId, List<LatLng> polylineCoordinates) async {
+  Future<bool> postJourney(Journey journey, List<Animal> selectedAnimals, List<HuntedAnimal> huntedAnimals,
+      String userId, List<LatLng> polylineCoordinates) async {
     FirebaseFirestore.instance
         .collection('journeys')
         .doc()
@@ -33,6 +34,13 @@ class JourneyRepository {
           'calories': journey.calories,
           'modality': journey.modality,
           'selectedAnimals': selectedAnimals.map((selectedAnimal) => selectedAnimal.name).toList(),
+          'huntedAnimals': huntedAnimals
+              .map((huntedAnimal) => {
+                    "name": huntedAnimal.animal.name,
+                    "photo": huntedAnimal.animal.contentUrl,
+                    "position": GeoPoint(huntedAnimal.position.latitude, huntedAnimal.position.longitude)
+                  })
+              .toList(),
           'geopoints': polylineCoordinates.map((polyline) => GeoPoint(polyline.latitude, polyline.longitude)).toList()
         })
         .then((value) => null)
