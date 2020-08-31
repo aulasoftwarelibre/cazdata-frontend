@@ -216,14 +216,12 @@ class JourneyPageState extends State<JourneyPage> {
       // cLoc contains the lat anrd long of the
       // current user's position in real time,
       // so we're holding on to it
-      setState(() {
-        //Update camera position as the user moves
-        _currentLocation = cLoc;
+      //Update camera position as the user moves
+      _currentLocation = cLoc;
 
-        LatLng current = LatLng(cLoc.latitude, cLoc.longitude);
+      LatLng current = LatLng(cLoc.latitude, cLoc.longitude);
 
-        polylineCoordinates.add(current);
-      });
+      polylineCoordinates.add(current);
 
       goToCurrentLocation();
     });
