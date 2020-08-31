@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/ui/widget/data-on-map.widget.dart';
 import 'package:cazdata_frontend/util/constants.dart';
@@ -42,7 +43,7 @@ class DetailsJourney extends StatelessWidget {
                       Expanded(
                         flex: 3,
                         child: Text(
-                          'Detalle Jornada',
+                          'Detalle de Jornada',
                           style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -50,29 +51,10 @@ class DetailsJourney extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
-                    child: Text(
-                      'Información',
+                    child: AutoSizeText(
+                      journey.title,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Center(
-                            child: AutoSizeText(
-                              journey.title + " | " + journey.startsAt.toString().substring(0, 10),
-                              style: TextStyle(fontSize: 20),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              minFontSize: 10,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                   Row(
                     children: <Widget>[
@@ -131,6 +113,36 @@ class DetailsJourney extends StatelessWidget {
                       )
                     ],
                   ),
+                  journey.huntedAnimals.isNotEmpty
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      'Piezas cobradas',
+                                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Wrap(
+                              children: journey.huntedAnimals
+                                  .map((e) => Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: CircleAvatar(
+                                            backgroundImage: CachedNetworkImageProvider(e.animal.contentUrl),
+                                            radius: 24),
+                                      ))
+                                  .toList(),
+                            )
+                          ],
+                        )
+                      : Container()
                 ],
               ),
             ),

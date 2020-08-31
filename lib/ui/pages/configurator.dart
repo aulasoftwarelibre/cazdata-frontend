@@ -138,6 +138,7 @@ class ConfiguratorState extends State<Configurator> {
                       height: 24,
                     ),
                     TextFormField(
+                      maxLength: 50,
                       decoration: InputDecoration(
                         labelText: 'Título',
                         border: OutlineInputBorder(
