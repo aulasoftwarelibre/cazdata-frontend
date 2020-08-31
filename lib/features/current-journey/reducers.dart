@@ -22,7 +22,7 @@ CurrentJourneyState _addHuntedAnimalReducer(CurrentJourneyState state, AddHunted
 }
 
 CurrentJourneyState _cleanCurrentJourneyReducer(CurrentJourneyState state, CleanCurrentJourneyAction action) {
-  return state.copyWith(journey: null, selectedAnimals: null, huntedAnimals: null, polylineCoordinates: null);
+  return CurrentJourneyState.initial();
 }
 
 CurrentJourneyState _updateModality(CurrentJourneyState state, UpdateModalityAction action) {

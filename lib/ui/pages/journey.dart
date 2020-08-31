@@ -4,7 +4,6 @@ import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/features/current-journey/middleware.dart';
 import 'package:cazdata_frontend/features/current-journey/state.dart';
 import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
-import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/util/constants.dart';
 import 'package:cazdata_frontend/util/routes.dart';
@@ -139,7 +138,7 @@ class JourneyPageState extends State<JourneyPage> {
                                           style: TextStyle(fontWeight: FontWeight.bold, color: accentColor),
                                         ),
                                         onPressed: () {
-                                          vm.saveJourney(vm.currentJourneyState.journey, polylineCoordinates.toList());
+                                          vm.saveJourney(polylineCoordinates.toList());
                                           Navigator.popUntil(context, ModalRoute.withName(Routes.home));
                                           Navigator.pushNamed(context, Routes.home);
                                         },
@@ -252,7 +251,7 @@ class JourneyPageState extends State<JourneyPage> {
 
 class _ViewModel {
   final CurrentJourneyState currentJourneyState;
-  final Function(Journey, List<LatLng>) saveJourney;
+  final Function(List<LatLng>) saveJourney;
   final Function(HuntedAnimal) addHuntedAnimal;
 
   _ViewModel({@required this.currentJourneyState, @required this.saveJourney, @required this.addHuntedAnimal});
@@ -260,8 +259,8 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store, BuildContext context) {
     return _ViewModel(
       currentJourneyState: store.state.currentJourneyState,
-      saveJourney: (Journey journey, List<LatLng> polylines) {
-        store.dispatch(postCurrentJourneyAction(context, journey, store.state.hunterState.hunter.id, polylines));
+      saveJourney: (List<LatLng> polylines) {
+        store.dispatch(postCurrentJourneyAction(context, polylines));
       },
       addHuntedAnimal: (HuntedAnimal huntedAnimal) {
         store.dispatch(AddHuntedAnimalAction(huntedAnimal));
