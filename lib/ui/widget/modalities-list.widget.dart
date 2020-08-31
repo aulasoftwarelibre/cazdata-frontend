@@ -1,68 +1,72 @@
-import 'package:cazdata_frontend/features/current-journey/actions.dart';
-import 'package:cazdata_frontend/features/modalities-list/middleware.dart';
-import 'package:cazdata_frontend/features/modalities-list/state.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
-import 'package:cazdata_frontend/redux/index.dart';
+import 'package:cazdata_frontend/models/modality/modality.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
 
-class _ViewModel {
-  final ModalitiesListState _modalitiesListState;
-  final Function(String) updateModality;
-
-  _ViewModel(this._modalitiesListState, this.updateModality);
-
-  factory _ViewModel.create(Store<AppState> store) {
-    ModalitiesListState modalitiesListState = store.state.modalitiesListState;
-
-    return _ViewModel(modalitiesListState, (String modality) => store.dispatch(UpdateModalityAction(modality)));
-  }
-}
-
-class ModalitiesListWidget extends StatelessWidget {
-  final _dropdownButtonFormFieldKey = GlobalKey<FormFieldState>();
+class ModalitiesListWidget extends StatefulWidget {
   final Journey journey;
   final Function(String) update;
 
   ModalitiesListWidget(this.journey, this.update);
 
   @override
+  _ModalitiesListWidgetState createState() => _ModalitiesListWidgetState();
+}
+
+class _ModalitiesListWidgetState extends State<ModalitiesListWidget> {
+  final _dropdownButtonFormFieldKey = GlobalKey<FormFieldState>();
+  Widget _modalities;
+
+  @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, _ViewModel>(onInit: (store) {
-      if (store.state.modalitiesListState.modalities == null) store.dispatch(handleLoadModalitiesAction());
-    }, builder: (BuildContext context, _ViewModel viewModel) {
-      return _widgetView(context, viewModel);
-    }, converter: (Store<AppState> store) {
-      return new _ViewModel.create(store);
-    });
+    if (_modalities == null) {
+      // Create the form if it does not exist
+      _modalities = _createModalitiesButton(context); // Build the form
+    }
+    return _modalities; // Show the form in the application
   }
 
-  Widget _widgetView(BuildContext context, _ViewModel _viewModel) {
-    return DropdownButtonFormField(
-      key: _dropdownButtonFormFieldKey,
-      value: this.journey.modality,
-      icon: Icon(Icons.arrow_drop_down),
-      decoration: InputDecoration(
-        labelText: 'Modalidad',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-      items: _getHuntModalities(_viewModel),
-      validator: _validateModality,
-      onChanged: (modality) {
-        this.update(modality);
-      },
-      onSaved: (modality) {
-        this.update(modality);
-      },
-    );
+  _createModalitiesButton(BuildContext context) {
+    final Query modalities = FirebaseFirestore.instance.collection('modalities');
+
+    return StreamBuilder<QuerySnapshot>(
+        stream: modalities.snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text("Error al leer las jornadas");
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+
+          return DropdownButtonFormField(
+            key: _dropdownButtonFormFieldKey,
+            value: this.widget.journey.modality,
+            icon: Icon(Icons.arrow_drop_down),
+            decoration: InputDecoration(
+              labelText: 'Modalidad',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            items: _getHuntModalities(snapshot.data),
+            validator: _validateModality,
+            onChanged: (modality) {
+              this.widget.update(modality);
+            },
+            onSaved: (modality) {
+              this.widget.update(modality);
+            },
+          );
+        });
   }
 
-  List<DropdownMenuItem<String>> _getHuntModalities(_ViewModel _viewModel) {
-    return _viewModel._modalitiesListState.modalities.map((modality) {
-      return DropdownMenuItem(
+  List<DropdownMenuItem<String>> _getHuntModalities(QuerySnapshot snapshot) {
+    final modalitiesDocuments = snapshot.docs;
+    final modalitiesList = ModalitiesList.fromFirestoreDocuments(modalitiesDocuments);
+
+    return modalitiesList.modalities.map((modality) {
+      return DropdownMenuItem<String>(
         value: modality.name,
         child: Text(
           modality.name,

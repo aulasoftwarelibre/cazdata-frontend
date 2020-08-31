@@ -1,3 +1,4 @@
+import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/models/journey/journey.repository.dart';
@@ -14,10 +15,11 @@ ThunkAction<AppState> postCurrentJourneyAction(
 
   return (Store<AppState> store) async {
     final Journey journey = store.state.currentJourneyState.journey;
+    final List<Animal> seletedAnimals = store.state.currentJourneyState.selectedAnimals;
 
     new Future(() async {
       store.dispatch(new SendJourneyRequestAction());
-      _journeyRepository.postJourney(journey, userId, polylines).then((journey) async {
+      _journeyRepository.postJourney(journey, seletedAnimals, userId, polylines).then((journey) async {
         store.dispatch(new SendJourneySuccessAction());
         Navigator.pushNamed(context, Routes.home);
       }, onError: (error) {
