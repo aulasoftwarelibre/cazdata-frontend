@@ -3,15 +3,30 @@ import 'package:cazdata_frontend/models/modality/modality.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class ModalitiesListWidget extends StatelessWidget {
-  final _dropdownButtonFormFieldKey = GlobalKey<FormFieldState>();
+class ModalitiesListWidget extends StatefulWidget {
   final Journey journey;
   final Function(String) update;
 
   ModalitiesListWidget(this.journey, this.update);
 
   @override
+  _ModalitiesListWidgetState createState() => _ModalitiesListWidgetState();
+}
+
+class _ModalitiesListWidgetState extends State<ModalitiesListWidget> {
+  final _dropdownButtonFormFieldKey = GlobalKey<FormFieldState>();
+  Widget _modalities;
+
+  @override
   Widget build(BuildContext context) {
+    if (_modalities == null) {
+      // Create the form if it does not exist
+      _modalities = _createModalitiesButton(context); // Build the form
+    }
+    return _modalities; // Show the form in the application
+  }
+
+  _createModalitiesButton(BuildContext context) {
     final Query modalities = FirebaseFirestore.instance.collection('modalities');
 
     return StreamBuilder<QuerySnapshot>(
@@ -26,7 +41,7 @@ class ModalitiesListWidget extends StatelessWidget {
 
           return DropdownButtonFormField(
             key: _dropdownButtonFormFieldKey,
-            value: this.journey.modality,
+            value: this.widget.journey.modality,
             icon: Icon(Icons.arrow_drop_down),
             decoration: InputDecoration(
               labelText: 'Modalidad',
@@ -37,10 +52,10 @@ class ModalitiesListWidget extends StatelessWidget {
             items: _getHuntModalities(snapshot.data),
             validator: _validateModality,
             onChanged: (modality) {
-              this.update(modality);
+              this.widget.update(modality);
             },
             onSaved: (modality) {
-              this.update(modality);
+              this.widget.update(modality);
             },
           );
         });
