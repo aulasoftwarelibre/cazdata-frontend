@@ -3,14 +3,13 @@ import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/services.dart';
 
 Future main() async {
-  await DotEnv().load('.env');
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(CazdataApp());
 }

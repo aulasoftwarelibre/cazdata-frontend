@@ -36,7 +36,6 @@ dependencies:
   redux_thunk: ^0.3.0
   auto_size_text: ^2.1.0
   custom_radio_grouped_button: any
-  flutter_dotenv: ^2.1.0
   flutter_speed_dial: ^1.2.5
   flutter_polyline_points: ^0.2.2
   latlong: ^0.6.1
@@ -66,7 +65,6 @@ flutter:
           weight: 800
   assets:
     - assets/
-    - .env
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
