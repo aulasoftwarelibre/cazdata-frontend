@@ -5,7 +5,7 @@ class HunterRepository {
   Future<bool> createHunter(Hunter hunter) async {
     FirebaseFirestore.instance
         .collection('hunters')
-        .doc()
+        .doc(hunter.id)
         .set({
           'hunterId': hunter.id,
           'email': hunter.email,
