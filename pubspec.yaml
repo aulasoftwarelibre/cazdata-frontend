@@ -1,5 +1,5 @@
 name: cazdata_frontend
-description: A new Flutter project.
+description: Rastreador de actividades cinegéticas
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -46,6 +46,8 @@ dependencies:
   cached_network_image: ^2.3.0
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.7.3"
+  flutter_launcher_name: "^0.0.1"
   flutter_test:
     sdk: flutter
 
@@ -77,3 +79,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+flutter_launcher_name:
+  name: "CazData"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/icon/icon.png"
