@@ -28,9 +28,7 @@ ThunkAction handleLoginWithGoogleAction(BuildContext context) {
 
       Hunter hunter = Hunter.fromFirebaseUser(user);
 
-      if (authResult.additionalUserInfo.isNewUser) {
-        store.dispatch(createHunterAction(hunter));
-      }
+      store.dispatch(createHunterAction(hunter));
 
       assert(!user.isAnonymous);
       assert(await user.getIdToken() != null);
