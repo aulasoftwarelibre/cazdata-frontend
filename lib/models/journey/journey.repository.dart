@@ -30,6 +30,7 @@ class JourneyRepository {
           'title': journey.title,
           'startsAt': Timestamp.fromDate(journey.startsAt),
           'endsAt': Timestamp.fromDate(journey.endsAt),
+          'numberOfHunters': journey.numberOfHunters,
           'distance': journey.distance,
           'calories': journey.calories,
           'modality': journey.modality,
