@@ -1,6 +1,7 @@
 import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class CurrentJourneyAction {}
 
@@ -36,6 +37,12 @@ class AddHuntedAnimalAction extends CurrentJourneyAction {
   final HuntedAnimal huntedAnimal;
 
   AddHuntedAnimalAction(this.huntedAnimal);
+}
+
+class AddPolylinesAction extends CurrentJourneyAction {
+  final List<LatLng> polylineCoordinates;
+
+  AddPolylinesAction(this.polylineCoordinates);
 }
 
 class UpdateModalityAction extends CurrentJourneyAction {

@@ -21,6 +21,10 @@ CurrentJourneyState _addHuntedAnimalReducer(CurrentJourneyState state, AddHunted
   return state.copyWith(huntedAnimals: newHuntedAnimals);
 }
 
+CurrentJourneyState _addPolylineCoordinatesReducer(CurrentJourneyState state, AddPolylinesAction action) {
+  return state.copyWith(polylineCoordinates: action.polylineCoordinates);
+}
+
 CurrentJourneyState _cleanCurrentJourneyReducer(CurrentJourneyState state, CleanCurrentJourneyAction action) {
   return CurrentJourneyState.initial();
 }
@@ -37,5 +41,6 @@ Reducer<CurrentJourneyState> reduceCurrentJourneysState = combineReducers<Curren
   new TypedReducer<CurrentJourneyState, UpdateModalityAction>(_updateModality),
   new TypedReducer<CurrentJourneyState, SaveCurrentJourneyAction>(_saveCurrentJourneyReducer),
   new TypedReducer<CurrentJourneyState, AddHuntedAnimalAction>(_addHuntedAnimalReducer),
-  new TypedReducer<CurrentJourneyState, CleanCurrentJourneyAction>(_cleanCurrentJourneyReducer)
+  new TypedReducer<CurrentJourneyState, CleanCurrentJourneyAction>(_cleanCurrentJourneyReducer),
+  new TypedReducer<CurrentJourneyState, AddPolylinesAction>(_addPolylineCoordinatesReducer)
 ]);

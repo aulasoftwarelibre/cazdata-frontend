@@ -138,9 +138,11 @@ class JourneyPageState extends State<JourneyPage> {
                                           style: TextStyle(fontWeight: FontWeight.bold, color: accentColor),
                                         ),
                                         onPressed: () {
-                                          vm.saveJourney(polylineCoordinates.toList());
+                                          vm.savePolylines(polylineCoordinates);
+                                          vm.saveJourney();
                                           Navigator.popUntil(context, ModalRoute.withName(Routes.home));
-                                          Navigator.pushNamed(context, Routes.home);
+                                          Navigator.pushNamed(context, Routes.detailsJourney,
+                                              arguments: {'journey': vm.currentJourneyState.journey});
                                         },
                                       )
                                     ],
@@ -251,16 +253,24 @@ class JourneyPageState extends State<JourneyPage> {
 
 class _ViewModel {
   final CurrentJourneyState currentJourneyState;
-  final Function(List<LatLng>) saveJourney;
+  final Function(List<LatLng>) savePolylines;
+  final Function() saveJourney;
   final Function(HuntedAnimal) addHuntedAnimal;
 
-  _ViewModel({@required this.currentJourneyState, @required this.saveJourney, @required this.addHuntedAnimal});
+  _ViewModel(
+      {@required this.currentJourneyState,
+      @required this.savePolylines,
+      @required this.saveJourney,
+      @required this.addHuntedAnimal});
 
   static _ViewModel fromStore(Store<AppState> store, BuildContext context) {
     return _ViewModel(
       currentJourneyState: store.state.currentJourneyState,
-      saveJourney: (List<LatLng> polylines) {
-        store.dispatch(postCurrentJourneyAction(context, polylines));
+      savePolylines: (List<LatLng> polylines) {
+        store.dispatch(AddPolylinesAction(polylines));
+      },
+      saveJourney: () {
+        store.dispatch(postCurrentJourneyAction(context));
       },
       addHuntedAnimal: (HuntedAnimal huntedAnimal) {
         store.dispatch(AddHuntedAnimalAction(huntedAnimal));
