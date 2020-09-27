@@ -151,7 +151,7 @@ class JourneyPageState extends State<JourneyPage> {
                           shape: CircleBorder(),
                           padding: EdgeInsets.all(15.0),
                           child: Icon(
-                            Icons.flag,
+                            Icons.power_settings_new,
                             color: Colors.white,
                             size: 22,
                           )),
@@ -167,10 +167,10 @@ class JourneyPageState extends State<JourneyPage> {
         // both default to 16
         marginRight: 18,
         marginBottom: 20,
-        animatedIcon: AnimatedIcons.menu_close,
-        animatedIconTheme: IconThemeData(size: 22.0),
-        // this is ignored if animatedIcon is non null
-        // child: Icon(Icons.add),
+        child: Icon(
+          Icons.pets,
+          size: 32,
+        ),
         visible: true,
         // If true user is forced to close dial manually
         // by tapping main button and overlay is not rendered.
@@ -182,8 +182,8 @@ class JourneyPageState extends State<JourneyPage> {
         onClose: () => print('DIAL CLOSED'),
         tooltip: 'Speed Dial',
         heroTag: 'speed-dial-hero-tag',
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
         elevation: 8.0,
         shape: CircleBorder(),
         children: buttons,
