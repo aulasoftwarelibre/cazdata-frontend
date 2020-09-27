@@ -10,6 +10,7 @@ class Journey {
   String type;
   DateTime startsAt;
   DateTime endsAt;
+  int numberOfHunters;
   int distance;
   int minutes;
   int calories;
@@ -24,6 +25,7 @@ class Journey {
     this.type,
     this.startsAt,
     this.endsAt,
+    this.numberOfHunters,
     this.distance,
     this.minutes,
     this.calories,
@@ -38,6 +40,7 @@ class Journey {
       hunterId: other.hunterId,
       startsAt: other.startsAt,
       endsAt: other.endsAt,
+      numberOfHunters: other.numberOfHunters,
       distance: other.distance,
       calories: other.calories,
       modality: other.modality,
@@ -58,6 +61,7 @@ class Journey {
       hunterId: json['hunterId'],
       startsAt: json['startsAt'].toDate(),
       endsAt: json['endsAt'].toDate(),
+      numberOfHunters: json['numberOfHunters'],
       distance: json['distance'],
       calories: json['calories'],
       modality: json['modality'],

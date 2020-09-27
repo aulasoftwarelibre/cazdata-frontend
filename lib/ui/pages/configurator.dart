@@ -8,6 +8,7 @@ import 'package:cazdata_frontend/util/colors.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
+import 'package:flutter_counter/flutter_counter.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
@@ -29,6 +30,7 @@ class ConfiguratorState extends State<Configurator> {
       endsAt: DateTime.now(),
       calories: 0,
       distance: 0,
+      numberOfHunters: 1,
       hunterId: null,
       minutes: 0,
       modality: null);
@@ -185,7 +187,39 @@ class ConfiguratorState extends State<Configurator> {
                       ],
                     ),
                     Separator.spacer(
-                      height: 40,
+                      height: 24,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Indique cuántos cazadores sois',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 150, 150, 150),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Separator.spacer(
+                      height: 12,
+                    ),
+                    Counter(
+                      initialValue: _journey.numberOfHunters,
+                      minValue: 1,
+                      maxValue: 15,
+                      step: 1,
+                      decimalPlaces: 0,
+                      color: primaryColor,
+                      buttonSize: 40,
+                      textStyle: TextStyle(fontSize: 32, letterSpacing: 50),
+                      onChanged: (value) {
+                        setState(() {
+                          _journey.numberOfHunters = value;
+                        });
+                      },
+                    ),
+                    Separator.spacer(
+                      height: 24,
                     ),
                     Row(
                       children: <Widget>[
