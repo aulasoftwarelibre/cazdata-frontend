@@ -43,6 +43,7 @@ dependencies:
   big_tip: ^1.1.1
   google_fonts: ^1.1.0
   cached_network_image: ^2.3.0
+  flutter_counter: ^1.0.3
 
 dev_dependencies:
   flutter_launcher_icons: "^0.7.3"
