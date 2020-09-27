@@ -1,6 +1,7 @@
 import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:cazdata_frontend/features/current-journey/actions.dart';
 import 'package:cazdata_frontend/redux/index.dart';
+import 'package:cazdata_frontend/ui/widget/hunters-counter.widget.dart';
 import 'package:cazdata_frontend/ui/widget/modalities-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/species-list.widget.dart';
 import 'package:cazdata_frontend/ui/widget/separator.widget.dart';
@@ -8,7 +9,6 @@ import 'package:cazdata_frontend/util/colors.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
-import 'package:flutter_counter/flutter_counter.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
@@ -209,9 +209,6 @@ class ConfiguratorState extends State<Configurator> {
                       maxValue: 15,
                       step: 1,
                       decimalPlaces: 0,
-                      color: primaryColor,
-                      buttonSize: 40,
-                      textStyle: TextStyle(fontSize: 32, letterSpacing: 50),
                       onChanged: (value) {
                         setState(() {
                           _journey.numberOfHunters = value;
