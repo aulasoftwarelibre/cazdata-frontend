@@ -7,6 +7,7 @@ import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/util/constants.dart';
 import 'package:cazdata_frontend/util/routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -142,7 +143,7 @@ class JourneyPageState extends State<JourneyPage> {
                                           vm.saveJourney();
                                           Navigator.popUntil(context, ModalRoute.withName(Routes.home));
                                           Navigator.pushNamed(context, Routes.detailsJourney,
-                                              arguments: {'journey': vm.currentJourneyState.journey});
+                                              arguments: {'journey': vm.getCurrentJourney()});
                                         },
                                       )
                                     ],
@@ -252,29 +253,35 @@ class JourneyPageState extends State<JourneyPage> {
 }
 
 class _ViewModel {
-  final CurrentJourneyState currentJourneyState;
+  CurrentJourneyState currentJourneyState;
   final Function(List<LatLng>) savePolylines;
   final Function() saveJourney;
   final Function(HuntedAnimal) addHuntedAnimal;
+  final Function() getCurrentJourney;
 
   _ViewModel(
       {@required this.currentJourneyState,
       @required this.savePolylines,
       @required this.saveJourney,
-      @required this.addHuntedAnimal});
+      @required this.addHuntedAnimal,
+      @required this.getCurrentJourney});
 
   static _ViewModel fromStore(Store<AppState> store, BuildContext context) {
     return _ViewModel(
-      currentJourneyState: store.state.currentJourneyState,
-      savePolylines: (List<LatLng> polylines) {
-        store.dispatch(AddPolylinesAction(polylines));
-      },
-      saveJourney: () {
-        store.dispatch(postCurrentJourneyAction(context));
-      },
-      addHuntedAnimal: (HuntedAnimal huntedAnimal) {
-        store.dispatch(AddHuntedAnimalAction(huntedAnimal));
-      },
-    );
+        currentJourneyState: store.state.currentJourneyState,
+        savePolylines: (List<LatLng> polylinePoints) {
+          final List<GeoPoint> route =
+              polylinePoints.map((point) => GeoPoint(point.latitude, point.longitude)).toList();
+          store.dispatch(AddRouteAction(route));
+        },
+        saveJourney: () {
+          store.dispatch(postCurrentJourneyAction(context));
+        },
+        addHuntedAnimal: (HuntedAnimal huntedAnimal) {
+          store.dispatch(AddHuntedAnimalAction(huntedAnimal));
+        },
+        getCurrentJourney: () {
+          return store.state.currentJourneyState.journey;
+        });
   }
 }

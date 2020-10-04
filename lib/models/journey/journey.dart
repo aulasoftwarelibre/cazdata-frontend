@@ -7,14 +7,13 @@ class Journey {
   String title;
   String hunterId;
   String modality;
-  String type;
   DateTime startsAt;
   DateTime endsAt;
   int numberOfHunters;
   int distance;
   int minutes;
   int calories;
-  List<GeoPoint> geopoints;
+  List<GeoPoint> route;
   List<HuntedAnimal> huntedAnimals;
 
   Journey({
@@ -22,34 +21,50 @@ class Journey {
     this.title,
     this.hunterId,
     this.modality,
-    this.type,
     this.startsAt,
     this.endsAt,
     this.numberOfHunters,
     this.distance,
     this.minutes,
     this.calories,
-    this.geopoints,
+    this.route,
     this.huntedAnimals,
   });
 
-  factory Journey.copy(Journey other) {
+  factory Journey.initial() {
     return new Journey(
-      id: other.id,
-      title: other.title,
-      hunterId: other.hunterId,
-      startsAt: other.startsAt,
-      endsAt: other.endsAt,
-      numberOfHunters: other.numberOfHunters,
-      distance: other.distance,
-      calories: other.calories,
-      modality: other.modality,
-    );
+        id: null,
+        title: null,
+        hunterId: null,
+        modality: null,
+        startsAt: DateTime.now(),
+        endsAt: DateTime.now(),
+        numberOfHunters: 1,
+        distance: 0,
+        minutes: 0,
+        calories: 0,
+        route: [],
+        huntedAnimals: []);
+  }
+
+  Journey copyWith(Journey journey) {
+    return new Journey(
+        id: journey.id ?? this.id,
+        title: journey.title ?? this.title,
+        hunterId: journey.hunterId ?? this.hunterId,
+        modality: journey.modality ?? this.modality,
+        startsAt: journey.startsAt ?? this.startsAt,
+        endsAt: journey.endsAt ?? this.endsAt,
+        numberOfHunters: journey.numberOfHunters ?? this.numberOfHunters,
+        distance: journey.distance ?? this.distance,
+        minutes: journey.minutes ?? this.minutes,
+        calories: journey.calories ?? this.calories,
+        route: journey.route ?? this.route,
+        huntedAnimals: journey.huntedAnimals ?? this.huntedAnimals);
   }
 
   factory Journey.fromJson(String id, Map<String, dynamic> json) {
-    List<GeoPoint> geopoints =
-        json['geopoints'].toList().map<GeoPoint>((e) => GeoPoint(e.latitude, e.longitude)).toList();
+    List<GeoPoint> route = json['route'].toList().map<GeoPoint>((e) => GeoPoint(e.latitude, e.longitude)).toList();
 
     List<HuntedAnimal> huntedAnimals = json['huntedAnimals'].toList().map<HuntedAnimal>((e) {
       return HuntedAnimal(animal: Animal(name: e['name'], contentUrl: e['photo']));
@@ -65,7 +80,7 @@ class Journey {
       distance: json['distance'],
       calories: json['calories'],
       modality: json['modality'],
-      geopoints: geopoints,
+      route: route,
       huntedAnimals: huntedAnimals,
     );
   }

@@ -6,8 +6,8 @@ import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:redux/redux.dart';
 
 CurrentJourneyState _updateAnimalsReducer(CurrentJourneyState state, UpdateAnimalsAction action) {
-  List<Animal> newAnimals = action.animals;
-  return state.copyWith(selectedAnimals: newAnimals);
+  List<Animal> selectedAnimals = action.animals;
+  return state.copyWith(selectedAnimals: selectedAnimals);
 }
 
 CurrentJourneyState _saveCurrentJourneyReducer(CurrentJourneyState state, SaveCurrentJourneyAction action) {
@@ -15,14 +15,21 @@ CurrentJourneyState _saveCurrentJourneyReducer(CurrentJourneyState state, SaveCu
 }
 
 CurrentJourneyState _addHuntedAnimalReducer(CurrentJourneyState state, AddHuntedAnimalAction action) {
-  List<HuntedAnimal> newHuntedAnimals = state.huntedAnimals;
+  List<HuntedAnimal> huntedAnimals = state.journey.huntedAnimals;
+  Journey journey = state.journey.copyWith(state.journey);
 
-  newHuntedAnimals.add((action.huntedAnimal));
-  return state.copyWith(huntedAnimals: newHuntedAnimals);
+  huntedAnimals.add(action.huntedAnimal);
+
+  journey.huntedAnimals = huntedAnimals;
+
+  return state.copyWith(journey: journey);
 }
 
-CurrentJourneyState _addPolylineCoordinatesReducer(CurrentJourneyState state, AddPolylinesAction action) {
-  return state.copyWith(polylineCoordinates: action.polylineCoordinates);
+CurrentJourneyState _addRouteReducer(CurrentJourneyState state, AddRouteAction action) {
+  Journey journey = state.journey.copyWith(state.journey);
+  journey.route = action.route;
+
+  return state.copyWith(journey: journey);
 }
 
 CurrentJourneyState _cleanCurrentJourneyReducer(CurrentJourneyState state, CleanCurrentJourneyAction action) {
@@ -30,7 +37,7 @@ CurrentJourneyState _cleanCurrentJourneyReducer(CurrentJourneyState state, Clean
 }
 
 CurrentJourneyState _updateModality(CurrentJourneyState state, UpdateModalityAction action) {
-  Journey journey = Journey.copy(state.journey);
+  Journey journey = state.journey.copyWith(state.journey);
   journey.modality = action.modality;
 
   return state.copyWith(journey: journey);
@@ -42,5 +49,5 @@ Reducer<CurrentJourneyState> reduceCurrentJourneysState = combineReducers<Curren
   new TypedReducer<CurrentJourneyState, SaveCurrentJourneyAction>(_saveCurrentJourneyReducer),
   new TypedReducer<CurrentJourneyState, AddHuntedAnimalAction>(_addHuntedAnimalReducer),
   new TypedReducer<CurrentJourneyState, CleanCurrentJourneyAction>(_cleanCurrentJourneyReducer),
-  new TypedReducer<CurrentJourneyState, AddPolylinesAction>(_addPolylineCoordinatesReducer)
+  new TypedReducer<CurrentJourneyState, AddRouteAction>(_addRouteReducer)
 ]);
