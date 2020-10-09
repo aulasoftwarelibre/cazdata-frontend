@@ -96,7 +96,7 @@ class DetailsJourney extends StatelessWidget {
                                         polylineId: PolylineId("poly"),
                                         color: Color.fromARGB(255, 40, 122, 198),
                                         width: 7,
-                                        points: journey.geopoints
+                                        points: journey.route
                                             .map<LatLng>((e) => LatLng(e.latitude, e.longitude))
                                             .toList(),
                                       )
@@ -105,7 +105,7 @@ class DetailsJourney extends StatelessWidget {
                                         zoom: CAMERA_ZOOM,
                                         tilt: CAMERA_TILT,
                                         bearing: CAMERA_BEARING,
-                                        target: LatLng(journey.geopoints[0].latitude, journey.geopoints[0].longitude)),
+                                        target: LatLng(journey.route[0].latitude, journey.route[0].longitude)),
                                   ),
                                 ),
                               ],

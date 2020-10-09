@@ -1,6 +1,7 @@
 import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class CurrentJourneyAction {}
 
@@ -36,6 +37,12 @@ class AddHuntedAnimalAction extends CurrentJourneyAction {
   final HuntedAnimal huntedAnimal;
 
   AddHuntedAnimalAction(this.huntedAnimal);
+}
+
+class AddRouteAction extends CurrentJourneyAction {
+  final List<GeoPoint> route;
+
+  AddRouteAction(this.route);
 }
 
 class UpdateModalityAction extends CurrentJourneyAction {

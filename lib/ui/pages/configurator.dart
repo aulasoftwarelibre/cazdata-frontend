@@ -25,15 +25,7 @@ class ConfiguratorState extends State<Configurator> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
-  Journey _journey = Journey(
-      startsAt: DateTime.now(),
-      endsAt: DateTime.now(),
-      calories: 0,
-      distance: 0,
-      numberOfHunters: 1,
-      hunterId: null,
-      minutes: 0,
-      modality: null);
+  Journey _journey = Journey.initial();
 
   String _validateTitle(String title) {
     if (title.isEmpty) {
@@ -46,11 +38,6 @@ class ConfiguratorState extends State<Configurator> {
     // First validate form.
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
-
-      //Save the hunt type
-      setState(() {
-        _journey.type = "Menor";
-      });
 
       if (vm.journeyAnimals.length != 0) {
         vm.saveJourney(_journey);
