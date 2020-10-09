@@ -50,7 +50,7 @@ class Profile extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Expanded(flex: 1, child: Center(child: CircularProgressIndicator()));
+          return CircularProgressIndicator();
         }
 
         return Scaffold(
