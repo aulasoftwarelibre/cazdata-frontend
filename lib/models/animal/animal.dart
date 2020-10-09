@@ -34,6 +34,6 @@ class Animal {
 
   factory Animal.fromJson(String id, Map<String, dynamic> json) {
     return new Animal(
-        id: id, name: json['name'], isEnabled: json['isEnabled'], type: json['type'], contentUrl: json['image']['src']);
+        id: json['id'], name: json['name'], isEnabled: json['isEnabled'], type: json['type'], contentUrl: json['image']['src']);
   }
 }

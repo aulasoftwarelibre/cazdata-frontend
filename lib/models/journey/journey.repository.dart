@@ -34,6 +34,7 @@ class JourneyRepository {
           'selectedAnimals': selectedAnimals.map((selectedAnimal) => selectedAnimal.name).toList(),
           'huntedAnimals': journey.huntedAnimals
               .map((huntedAnimal) => {
+                    "id": huntedAnimal.animal.id,
                     "name": huntedAnimal.animal.name,
                     "photo": huntedAnimal.animal.contentUrl,
                     "position": GeoPoint(huntedAnimal.position.latitude, huntedAnimal.position.longitude)
