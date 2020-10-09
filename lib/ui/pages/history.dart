@@ -1,4 +1,4 @@
-import 'package:cazdata_frontend/ui/widget/journey-list.widget.dart';
+import 'package:cazdata_frontend/ui/widget/hunter-journeys-list.widget.dart';
 import 'package:flutter/material.dart';
 
 class History extends StatelessWidget {
@@ -38,7 +38,7 @@ class History extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      JourneysList(),
+                      Expanded(child: HunterJourneysList()),
                     ],
                   )
                 ],

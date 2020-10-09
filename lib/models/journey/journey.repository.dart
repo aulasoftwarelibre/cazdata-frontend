@@ -29,6 +29,7 @@ class JourneyRepository {
           'endsAt': Timestamp.fromDate(journey.endsAt),
           'numberOfHunters': journey.numberOfHunters,
           'distance': journey.distance,
+          'minutes': journey.minutes,
           'calories': journey.calories,
           'modality': journey.modality,
           'selectedAnimals': selectedAnimals.map((selectedAnimal) => selectedAnimal.name).toList(),

@@ -2,10 +2,10 @@ import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 
-class JourneyTile extends StatelessWidget {
+class HunterJourney extends StatelessWidget {
   final Journey journey;
 
-  const JourneyTile({
+  const HunterJourney({
     this.journey,
     Key key,
   }) : super(key: key);

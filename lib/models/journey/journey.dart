@@ -78,6 +78,7 @@ class Journey {
       endsAt: json['endsAt'].toDate(),
       numberOfHunters: json['numberOfHunters'],
       distance: json['distance'],
+      minutes: json['minutes'],
       calories: json['calories'],
       modality: json['modality'],
       route: route,
