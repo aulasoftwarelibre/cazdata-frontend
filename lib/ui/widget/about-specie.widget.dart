@@ -10,10 +10,10 @@ _launchURL(String url) async {
   }
 }
 
-class AnimalSpecie extends StatelessWidget {
+class AnimalSpecieTile extends StatelessWidget {
   final Animal animal;
 
-  const AnimalSpecie({
+  const AnimalSpecieTile({
     this.animal,
     Key key,
   }) : super(key: key);
