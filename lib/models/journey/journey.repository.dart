@@ -7,8 +7,11 @@ class JourneyRepository {
     JourneysList journeysList;
 
     try {
-      final documentsQuery =
-          await FirebaseFirestore.instance.collection('journeys').where('hunterId', isEqualTo: userId).get();
+      final documentsQuery = await FirebaseFirestore.instance
+          .collection('journeys')
+          .where('hunterId', isEqualTo: userId)
+          .orderBy('endsAt', descending: true)
+          .get();
       final journeyDocuments = documentsQuery.docs;
       journeysList = JourneysList.fromFirestoreDocuments(journeyDocuments);
     } catch (exception) {
