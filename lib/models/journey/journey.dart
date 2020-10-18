@@ -67,7 +67,7 @@ class Journey {
     List<GeoPoint> route = json['route'].toList().map<GeoPoint>((e) => GeoPoint(e.latitude, e.longitude)).toList();
 
     List<HuntedAnimal> huntedAnimals = json['huntedAnimals'].toList().map<HuntedAnimal>((animal) {
-      return HuntedAnimal(animal: Animal(id: id, name: animal['name'], contentUrl: animal['photo']));
+      return HuntedAnimal(animal: Animal(id: animal['id'], name: animal['name'], contentUrl: animal['photo']));
     }).toList();
 
     return new Journey(
