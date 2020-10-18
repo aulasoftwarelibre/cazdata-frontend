@@ -22,6 +22,11 @@ class Animal {
 
   Animal({this.id, this.name, this.isEnabled, this.type, this.contentUrl});
 
+  @override
+  bool operator ==(Object other) {
+    return (other is Animal) && other.id == this.id;
+  }
+
   Map toJson() {
     return {
       'id': this.id,
@@ -36,4 +41,7 @@ class Animal {
     return new Animal(
         id: id, name: json['name'], isEnabled: json['isEnabled'], type: json['type'], contentUrl: json['image']['src']);
   }
+
+  @override
+  int get hashCode => id.hashCode;
 }
