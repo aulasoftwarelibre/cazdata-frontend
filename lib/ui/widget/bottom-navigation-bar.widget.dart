@@ -45,15 +45,15 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
-            title: Text('Historial'),
+            label: 'Historial',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Inicio'),
+            label: 'Inicio',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            title: Text('Cuenta'),
+            label: 'Cuenta',
           ),
         ],
       ),
