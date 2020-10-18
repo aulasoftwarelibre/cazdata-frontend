@@ -35,7 +35,10 @@ class HunterJourneysList extends StatelessWidget {
   Widget _widgetView(BuildContext context, _ViewModel _viewModel) {
     final String userId = _viewModel._hunterState.hunter.id;
 
-    final Query journeys = FirebaseFirestore.instance.collection('journeys').where('hunterId', isEqualTo: userId);
+    final Query journeys = FirebaseFirestore.instance
+        .collection('journeys')
+        .where('hunterId', isEqualTo: userId)
+        .orderBy('endsAt', descending: true);
 
     return StreamBuilder<QuerySnapshot>(
       stream: journeys.snapshots(),

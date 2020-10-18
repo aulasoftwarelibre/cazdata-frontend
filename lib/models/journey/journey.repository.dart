@@ -7,8 +7,11 @@ class JourneyRepository {
     JourneysList journeysList;
 
     try {
-      final documentsQuery =
-          await FirebaseFirestore.instance.collection('journeys').where('hunterId', isEqualTo: userId).get();
+      final documentsQuery = await FirebaseFirestore.instance
+          .collection('journeys')
+          .where('hunterId', isEqualTo: userId)
+          .orderBy('endsAt', descending: true)
+          .get();
       final journeyDocuments = documentsQuery.docs;
       journeysList = JourneysList.fromFirestoreDocuments(journeyDocuments);
     } catch (exception) {
@@ -35,6 +38,7 @@ class JourneyRepository {
           'selectedAnimals': selectedAnimals.map((selectedAnimal) => selectedAnimal.name).toList(),
           'huntedAnimals': journey.huntedAnimals
               .map((huntedAnimal) => {
+                    "id": huntedAnimal.animal.id,
                     "name": huntedAnimal.animal.name,
                     "photo": huntedAnimal.animal.contentUrl,
                     "position": GeoPoint(huntedAnimal.position.latitude, huntedAnimal.position.longitude)
