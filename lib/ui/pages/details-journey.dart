@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/ui/widget/data-on-map.widget.dart';
 import 'package:cazdata_frontend/util/constants.dart';
@@ -19,6 +20,23 @@ class DetailsJourney extends StatelessWidget {
     DateTime startTime = journey.startsAt;
     DateTime endTime = journey.endsAt;
     final int difference = endTime.difference(startTime).inMinutes;
+
+    List<Widget> huntedAnimals = [];
+
+    if (journey.huntedAnimals.isNotEmpty) {
+      Map<HuntedAnimal, int> huntedAnimalsWithCounts = _getNumberOfOccurrences(journey.huntedAnimals);
+      huntedAnimalsWithCounts.forEach((key, value) {
+        huntedAnimals.add(Padding(
+          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+          child: Row(
+            children: [
+              CircleAvatar(backgroundImage: CachedNetworkImageProvider(key.animal.contentUrl), radius: 24),
+              Text(" x " + value.toString(), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
+            ],
+          ),
+        ));
+      });
+    }
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -96,9 +114,8 @@ class DetailsJourney extends StatelessWidget {
                                         polylineId: PolylineId("poly"),
                                         color: Color.fromARGB(255, 40, 122, 198),
                                         width: 7,
-                                        points: journey.route
-                                            .map<LatLng>((e) => LatLng(e.latitude, e.longitude))
-                                            .toList(),
+                                        points:
+                                            journey.route.map<LatLng>((e) => LatLng(e.latitude, e.longitude)).toList(),
                                       )
                                     ]),
                                     initialCameraPosition: CameraPosition(
@@ -131,14 +148,7 @@ class DetailsJourney extends StatelessWidget {
                               ],
                             ),
                             Wrap(
-                              children: journey.huntedAnimals
-                                  .map((e) => Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: CircleAvatar(
-                                            backgroundImage: CachedNetworkImageProvider(e.animal.contentUrl),
-                                            radius: 24),
-                                      ))
-                                  .toList(),
+                              children: huntedAnimals,
                             )
                           ],
                         )
@@ -150,5 +160,25 @@ class DetailsJourney extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Map<HuntedAnimal, int> _getNumberOfOccurrences(List<HuntedAnimal> huntedAnimals) {
+    Map<String, int> huntedAnimalsIdsCount = new Map<String, int>();
+
+    for (int i = 0; i < huntedAnimals.length; i++) {
+      huntedAnimalsIdsCount.update(huntedAnimals[i].animal.id, (v) => v = v + 1, ifAbsent: () => 1);
+    }
+
+    Map<HuntedAnimal, int> huntedAnimalsWithCounts = new Map<HuntedAnimal, int>();
+
+    huntedAnimalsIdsCount.forEach((huntedAnimalId, huntedAnimalCount) {
+      huntedAnimalsWithCounts[getHuntedAnimalById(huntedAnimals, huntedAnimalId)] = huntedAnimalCount;
+    });
+
+    return huntedAnimalsWithCounts;
+  }
+
+  HuntedAnimal getHuntedAnimalById(List<HuntedAnimal> huntedAnimals, String huntedAnimalId) {
+    return huntedAnimals.firstWhere((huntedAnimal) => huntedAnimal.animal.id == huntedAnimalId);
   }
 }
