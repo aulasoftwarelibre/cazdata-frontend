@@ -3,6 +3,7 @@ import 'package:cazdata_frontend/features/hunter/middleware.dart';
 import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
+import 'package:cazdata_frontend/ui/widget/profile-captures-grid.widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -112,6 +113,10 @@ class Profile extends StatelessWidget {
                             ],
                           ),
                         ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
+                        child: Container(margin: const EdgeInsets.only(bottom: 10), child: ProfileCapturesGrid()),
                       ),
                       SizedBox(height: 15.0),
                       Row(
