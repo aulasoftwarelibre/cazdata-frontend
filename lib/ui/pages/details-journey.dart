@@ -4,6 +4,7 @@ import 'package:cazdata_frontend/models/animal/hunted-animal.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/ui/widget/data-on-map.widget.dart';
 import 'package:cazdata_frontend/util/constants.dart';
+import 'package:cazdata_frontend/util/reducers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -24,7 +25,7 @@ class DetailsJourney extends StatelessWidget {
     List<Widget> huntedAnimals = [];
 
     if (journey.huntedAnimals.isNotEmpty) {
-      Map<HuntedAnimal, int> huntedAnimalsWithCounts = _getNumberOfOccurrences(journey.huntedAnimals);
+      Map<HuntedAnimal, int> huntedAnimalsWithCounts = getNumberOfOccurrences(journey.huntedAnimals);
       huntedAnimalsWithCounts.forEach((key, value) {
         huntedAnimals.add(Padding(
           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
@@ -160,25 +161,5 @@ class DetailsJourney extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Map<HuntedAnimal, int> _getNumberOfOccurrences(List<HuntedAnimal> huntedAnimals) {
-    Map<String, int> huntedAnimalsIdsCount = new Map<String, int>();
-
-    for (int i = 0; i < huntedAnimals.length; i++) {
-      huntedAnimalsIdsCount.update(huntedAnimals[i].animal.id, (v) => v = v + 1, ifAbsent: () => 1);
-    }
-
-    Map<HuntedAnimal, int> huntedAnimalsWithCounts = new Map<HuntedAnimal, int>();
-
-    huntedAnimalsIdsCount.forEach((huntedAnimalId, huntedAnimalCount) {
-      huntedAnimalsWithCounts[getHuntedAnimalById(huntedAnimals, huntedAnimalId)] = huntedAnimalCount;
-    });
-
-    return huntedAnimalsWithCounts;
-  }
-
-  HuntedAnimal getHuntedAnimalById(List<HuntedAnimal> huntedAnimals, String huntedAnimalId) {
-    return huntedAnimals.firstWhere((huntedAnimal) => huntedAnimal.animal.id == huntedAnimalId);
   }
 }
