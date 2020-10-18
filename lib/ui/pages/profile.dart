@@ -3,6 +3,7 @@ import 'package:cazdata_frontend/features/hunter/middleware.dart';
 import 'package:cazdata_frontend/models/hunter/hunter.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/index.dart';
+import 'package:cazdata_frontend/util/colors.dart';
 import 'package:cazdata_frontend/util/routes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -66,17 +67,16 @@ class Profile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              'Cuenta',
-                              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                            ),
+                          Text(
+                            'Cuenta',
+                            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                           ),
                           IconButton(
-                            iconSize: 42,
-                            color: Colors.blue,
+                            iconSize: 36,
+                            color: accentColor,
                             icon: new Icon(Icons.info),
                             onPressed: () {
                               Navigator.pushNamed(context, Routes.about);
