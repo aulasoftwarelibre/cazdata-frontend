@@ -1,7 +1,7 @@
 import 'package:cazdata_frontend/features/hunter/state.dart';
 import 'package:cazdata_frontend/models/journey/journey.dart';
 import 'package:cazdata_frontend/redux/index.dart';
-import 'package:cazdata_frontend/ui/widget/journey-tile.widget.dart';
+import 'package:cazdata_frontend/ui/widget/hunter-journey.widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,8 +20,8 @@ class _ViewModel {
   }
 }
 
-class JourneysList extends StatelessWidget {
-  JourneysList();
+class HunterJourneysList extends StatelessWidget {
+  HunterJourneysList();
 
   @override
   Widget build(BuildContext context) {
@@ -48,20 +48,18 @@ class JourneysList extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Expanded(flex: 1, child: Center(child: CircularProgressIndicator()));
+          return CircularProgressIndicator();
         }
 
-        return Expanded(
-          child: ListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: snapshot.data.docs.map((DocumentSnapshot document) {
-              return new JourneyTile(
-                key: Key(document.id),
-                journey: Journey.fromJson(document.id, document.data()),
-              );
-            }).toList(),
-          ),
+        return ListView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: snapshot.data.docs.map((DocumentSnapshot document) {
+            return new HunterJourney(
+              key: Key(document.id),
+              journey: Journey.fromJson(document.id, document.data()),
+            );
+          }).toList(),
         );
       },
     );

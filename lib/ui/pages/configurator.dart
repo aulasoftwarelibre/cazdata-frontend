@@ -190,12 +190,10 @@ class ConfiguratorState extends State<Configurator> {
                     Separator.spacer(
                       height: 12,
                     ),
-                    Counter(
-                      initialValue: _journey.numberOfHunters,
+                    HuntersInJourneyCounter(
                       minValue: 1,
                       maxValue: 15,
                       step: 1,
-                      decimalPlaces: 0,
                       onChanged: (value) {
                         setState(() {
                           _journey.numberOfHunters = value;

@@ -5,27 +5,20 @@ import 'package:flutter/rendering.dart';
 
 typedef void CounterChangeCallback(num value);
 
-class Counter extends StatelessWidget {
-  final CounterChangeCallback onChanged;
-
-  Counter({
+class HuntersInJourneyCounter extends StatefulWidget {
+  HuntersInJourneyCounter({
     Key key,
-    @required num initialValue,
     @required this.minValue,
     @required this.maxValue,
     @required this.onChanged,
-    @required this.decimalPlaces,
-    this.color,
-    this.textStyle,
     this.step = 1,
-  })  : assert(initialValue != null),
-        assert(minValue != null),
+  })  : assert(minValue != null),
         assert(maxValue != null),
         assert(maxValue > minValue),
-        assert(initialValue >= minValue && initialValue <= maxValue),
         assert(step > 0),
-        selectedValue = initialValue,
         super(key: key);
+
+  final CounterChangeCallback onChanged;
 
   ///min value user can pick
   final num minValue;
@@ -33,39 +26,32 @@ class Counter extends StatelessWidget {
   ///max value user can pick
   final num maxValue;
 
-  /// decimal places required by the counter
-  final int decimalPlaces;
-
-  ///Currently selected integer value
-  num selectedValue;
-
   /// if min=0, max=5, step=3, then items will be 0 and 3.
   final num step;
 
-  /// indicates the color of fab used for increment and decrement
-  Color color;
+  @override
+  _HuntersInJourneyCounterState createState() => _HuntersInJourneyCounterState();
+}
 
-  /// text syle
-  TextStyle textStyle;
+class _HuntersInJourneyCounterState extends State<HuntersInJourneyCounter> {
+  num selectedValue = 1;
 
   void _incrementCounter() {
-    if (selectedValue + step <= maxValue) {
-      onChanged((selectedValue + step));
+    if (selectedValue + widget.step <= widget.maxValue) {
+      selectedValue++;
+      widget.onChanged((selectedValue));
     }
   }
 
   void _decrementCounter() {
-    if (selectedValue - step >= minValue) {
-      onChanged((selectedValue - step));
+    if (selectedValue - widget.step >= widget.minValue) {
+      selectedValue--;
+      widget.onChanged((selectedValue));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    color = color ?? themeData.accentColor;
-    textStyle = textStyle ?? new TextStyle(fontSize: 32, letterSpacing: 50);
-
     return new Container(
       padding: new EdgeInsets.all(4.0),
       child: new Row(
@@ -85,8 +71,8 @@ class Counter extends StatelessWidget {
             ),
           ),
           new Container(
-            padding: EdgeInsets.all(4.0),
-            child: new Text('${num.parse((selectedValue).toStringAsFixed(decimalPlaces))}', style: textStyle),
+            padding: EdgeInsets.only(left: 15.0, right: 15.0),
+            child: new Text(selectedValue.toString(), style: TextStyle(fontSize: 32)),
           ),
           new SizedBox(
             width: 40,
