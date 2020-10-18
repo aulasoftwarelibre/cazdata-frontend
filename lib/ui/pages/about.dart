@@ -1,5 +1,4 @@
 import 'package:cazdata_frontend/ui/widget/about-species-list.widget.dart';
-import 'package:cazdata_frontend/util/routes.dart';
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {

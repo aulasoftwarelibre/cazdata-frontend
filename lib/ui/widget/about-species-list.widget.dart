@@ -1,4 +1,3 @@
-import 'package:cazdata_frontend/features/animal-list/state.dart';
 import 'package:cazdata_frontend/models/animal/animal.dart';
 import 'package:cazdata_frontend/redux/index.dart';
 import 'package:cazdata_frontend/ui/widget/about-specie.widget.dart';
