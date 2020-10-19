@@ -20,6 +20,11 @@ class AnimalSpecie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get attribution_url
+    RegExp exp = new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
+    RegExpMatch match = exp.firstMatch(animal.attribution);
+    String attributionUrl = match != null ? animal.attribution.substring(match.start, match.end) : '';
+    
     return Card(
       child: ListTile(
         leading: CircleAvatar(
@@ -28,7 +33,7 @@ class AnimalSpecie extends StatelessWidget {
         title: Text(this.animal.name),
         trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
-          _launchURL('https://pub.dev/packages/url_launcher');
+          _launchURL(attributionUrl);
         },
       ),
     );
