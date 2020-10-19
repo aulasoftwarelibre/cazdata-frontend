@@ -15,16 +15,17 @@ class AboutPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 3,
-                        child: Text(
-                          'Acerca de',
-                          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    padding: EdgeInsets.zero,
+                    iconSize: 50,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Text(
+                    'Acerca de',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),

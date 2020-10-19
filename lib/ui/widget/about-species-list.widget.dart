@@ -45,7 +45,7 @@ class AnimalSpeciesList extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: snapshot.data.docs.map((DocumentSnapshot document) {
-            return new AnimalSpecie(
+            return new AnimalSpecieTile(
               key: Key(document.id),
               animal: Animal.fromJson(document.id, document.data()),
             );
