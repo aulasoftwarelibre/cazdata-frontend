@@ -19,8 +19,9 @@ class Animal {
   bool isEnabled;
   String type;
   String contentUrl;
+  String attribution;
 
-  Animal({this.id, this.name, this.isEnabled, this.type, this.contentUrl});
+  Animal({this.id, this.name, this.isEnabled, this.type, this.contentUrl, this.attribution});
 
   Map toJson() {
     return {
@@ -28,12 +29,18 @@ class Animal {
       'name': this.name,
       'isEnabled': this.isEnabled,
       'type': this.type,
-      'contentUrl': this.contentUrl
+      'contentUrl': this.contentUrl,
+      'attribution': this.attribution
     };
   }
 
   factory Animal.fromJson(String id, Map<String, dynamic> json) {
     return new Animal(
-        id: id, name: json['name'], isEnabled: json['isEnabled'], type: json['type'], contentUrl: json['image']['src']);
+        id: id,
+        name: json['name'],
+        isEnabled: json['isEnabled'],
+        type: json['type'],
+        contentUrl: json['image']['src'],
+        attribution: json['attribution']);
   }
 }

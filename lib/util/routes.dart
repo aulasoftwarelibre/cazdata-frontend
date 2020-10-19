@@ -1,4 +1,5 @@
 import 'package:cazdata_frontend/models/journey/journey.dart';
+import 'package:cazdata_frontend/ui/pages/about.dart';
 import 'package:cazdata_frontend/ui/pages/configurator.dart';
 import 'package:cazdata_frontend/ui/pages/details-journey.dart';
 import 'package:cazdata_frontend/ui/pages/error.dart';
@@ -13,6 +14,7 @@ class Routes {
   static const journey = '/journey';
   static const configurator = '/configurator';
   static const detailsJourney = '/details-journey';
+  static const about = '/about';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     try {
@@ -34,6 +36,9 @@ class Routes {
         case detailsJourney:
           final journey = args['journey'] as Journey;
           return MaterialPageRoute(settings: routeSettings, builder: (_) => DetailsJourney(journey: journey));
+
+        case about:
+          return MaterialPageRoute(settings: routeSettings, builder: (_) => AboutPage());
 
         default:
           return errorRoute(routeSettings);

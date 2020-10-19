@@ -6,3 +6,4 @@ export 'home.dart';
 export 'login.dart';
 export 'main-page.dart';
 export 'profile.dart';
+export 'about.dart';
